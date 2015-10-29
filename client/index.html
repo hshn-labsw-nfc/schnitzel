@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="schnitzelApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/icon.css" rel="stylesheet">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/controllers.js"></script>
+</head>
+<body>
+<div class="container" ng-controller="RoomCtrl">
+    <div class="page-header">
+        <h1 class="text-center">{{location.room}}<br><small>{{location.name}}</small></h1>
+    </div>
+    <img class="preview-image" ng-if="location.image" ng-src="media/{{location.image}}.jpg" />
+    <div class="text-center">
+        <span ng-repeat="(feature, count) in location.features">
+            <span class="icon {{feature}} {{(count>0)?'':'disabled'}}"></span>
+            <span class="badge" ng-if="count>1">{{count}}</span>
+        </span>
+    </div>
+
+    <div>{{location.description}}</div>
+    <a class="btn btn-default" href="schnitzel.html" role="button">Schnitzeljagt-Mock</a>
+</div>
+</body>
+</html>
