@@ -6,33 +6,33 @@
 }
 
 .icon.chair{
-     background-image: url("../media/icon/chair.png");
+     background-image: url("../icon/chair.png");
 }
 
 .icon.chair.disabled{
-    background-image: url("../media/icon/chair_disabled.png");
+    background-image: url("../icon/chair_disabled.png");
 }
 
 .icon.pc{
-    background-image: url("../media/icon/pc.png");
+    background-image: url("../icon/pc.png");
 }
 
 .icon.pc.disabled{
-    background-image: url("../media/icon/pc_disabled.png");
+    background-image: url("../icon/pc_disabled.png");
 }
 
 .icon.printer{
-    background-image: url("../media/icon/printer.png");
+    background-image: url("../icon/printer.png");
 }
 
 .icon.printer.disabled{
-    background-image: url("../media/icon/printer_disabled.png");
+    background-image: url("../icon/printer_disabled.png");
 }
 
 .icon.projector{
-    background-image: url("../media/icon/projector.png");
+    background-image: url("../icon/projector.png");
 }
 
 .icon.projector.disabled{
-    background-image: url("../media/icon/projector_disabled.png");
+    background-image: url("../icon/projector_disabled.png");
 }
