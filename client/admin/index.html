@@ -51,11 +51,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl">
-            <ul class="nav nav-sidebar" ng-repeat="item in items">
-                <li><span>{{item}}</span></li>
-                <li><a href="#">add</a></li>
-                <li><a href="#">edit</a></li>
-                <li><a href="#">remove</a></li>
+            <ul class="nav nav-sidebar" ng-repeat="(item, name) in items">
+                <li><span>{{name}}</span></li>
+                <li><a href="#/list{{item}}s">Liste</a></li>
+                <li><a href="#/add{{item}}">Hinzufügen</a></li>
             </ul>
         </div>
         <!--mit angular seite laden -->

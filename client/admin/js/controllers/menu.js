@@ -4,8 +4,10 @@
     app.controller('MenuCtrl', MenuCtrl);
 
     function MenuCtrl($scope){
-        $scope.items = [
-            'Orte', 'Rätsel', 'Tags'
-        ];
+        $scope.items = {
+            location:'Orte',
+            riddles:'Rätsel',
+            tags:'Tags'
+        };
     }
 })();

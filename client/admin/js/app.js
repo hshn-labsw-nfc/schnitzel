@@ -7,7 +7,7 @@
 
     function routeProvider($routeProvider){
         $routeProvider.
-        when('/locationlist', {
+        when('/listlocations', {
             templateUrl: 'templates/listview.html',
             controller: 'LocationListCtrl'
         }).
