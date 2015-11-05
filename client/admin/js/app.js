@@ -1,9 +1,11 @@
-var app = angular.module('schnitzelAdmin', [
-    'ngRoute'
-]);
+(function () {
+    var app = angular.module('schnitzelAdmin', [
+        'ngRoute'
+    ]);
 
-app.config(['$routeProvider',
-    function($routeProvider) {
+    app.config(['$routeProvider',routeProvider]);
+
+    function routeProvider($routeProvider){
         $routeProvider.
         when('/locationlist', {
             templateUrl: 'templates/locationlist.html'
@@ -14,4 +16,5 @@ app.config(['$routeProvider',
         otherwise({
             redirectTo: '/'
         });
-    }]);
+    }
+})();
