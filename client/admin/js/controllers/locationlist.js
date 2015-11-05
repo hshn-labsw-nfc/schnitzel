@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('controllers', []);
+    var app = angular.module('controllers');
 
     app.controller('LocationListCtrl', LocationListCtrl);
 

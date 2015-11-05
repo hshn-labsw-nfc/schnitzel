@@ -18,4 +18,7 @@
             redirectTo: '/'
         });
     }
+
+    // initializing modules
+    angular.module('controllers', []);
 })();
