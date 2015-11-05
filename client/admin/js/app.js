@@ -12,7 +12,8 @@
             controller: 'LocationListCtrl'
         }).
         when('/addlocation', {
-            templateUrl: 'templates/locationform.html'
+            templateUrl: 'templates/locationform.html',
+            controller: 'LocationAddCtrl'
         }).
         when('/', {
             templateUrl: 'templates/overview.html'
