@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('controllers');
+    var app = angular.module('menu', []);
 
     app.controller('MenuCtrl', MenuCtrl);
 

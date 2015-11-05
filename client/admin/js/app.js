@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('schnitzelAdmin', [
-        'ngRoute', 'controllers'
+        'ngRoute', 'menu', 'location'
     ]);
 
     app.config(['$routeProvider',routeProvider]);
@@ -19,6 +19,4 @@
         });
     }
 
-    // initializing modules
-    angular.module('controllers', []);
 })();
