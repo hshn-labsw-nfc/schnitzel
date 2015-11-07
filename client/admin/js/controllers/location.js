@@ -16,4 +16,5 @@
     function LocationListCtrl($scope){
         $scope.name = 'Orte';
     }
+
 })();

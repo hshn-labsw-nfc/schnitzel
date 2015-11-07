@@ -6,7 +6,7 @@
     function MenuCtrl($scope){
         $scope.items = {
             location:'Orte',
-            riddles:'Rätsel',
+            riddle:'Rätsel',
             tags:'Tags'
         };
     }
