@@ -15,6 +15,23 @@
 
     function LocationListCtrl($scope){
         $scope.name = 'Orte';
+        $scope.tableheaders = {
+            room: 'Raumnummer',
+            name: 'Raumname',
+            description: 'Beschreibung'
+        };
+        $scope.data = [
+            {
+                room: 'A105',
+                name: 'Labor',
+                description: 'das ist ne beschreibung'
+            },
+            {
+                room: 'A106',
+                name: 'Labor',
+                description: 'das ist ne andere beschreibung'
+            }
+        ];
     }
 
 })();
