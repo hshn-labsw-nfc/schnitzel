@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('schnitzelAdmin', [
-        'ngRoute', 'menu', 'location', 'riddle'
+        'ngRoute', 'menu', 'location', 'riddle', 'tag'
     ]);
 
     app.config(['$routeProvider',routeProvider]);
@@ -30,6 +30,18 @@
         when('/editlocation/:id', {
             templateUrl: 'templates/locationform.html',
             controller: 'LocationEditCtrl'
+        }).
+        when('/listtags', {
+            templateUrl: 'templates/listview.html',
+            controller: 'LocationListCtrl'
+        }).
+        when('/addtag', {
+            templateUrl: 'templates/tagform.html',
+            controller: 'TagAddCtrl'
+        }).
+        when('/edittg/:id', {
+            templateUrl: 'templates/tgform.html',
+            controller: 'TagEditCtrl'
         }).
         when('/', {
             templateUrl: 'templates/overview.html'
