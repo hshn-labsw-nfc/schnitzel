@@ -15,7 +15,7 @@
             templateUrl: 'templates/riddleform.html',
             controller: 'RiddleAddCtrl'
         }).
-        when('/editriddle', {
+        when('/editriddle/:id', {
             templateUrl: 'templates/riddleform.html',
             controller: 'RiddleEditCtrl'
         }).
@@ -27,7 +27,7 @@
             templateUrl: 'templates/locationform.html',
             controller: 'LocationAddCtrl'
         }).
-        when('/editlocation', {
+        when('/editlocation/:id', {
             templateUrl: 'templates/locationform.html',
             controller: 'LocationEditCtrl'
         }).
