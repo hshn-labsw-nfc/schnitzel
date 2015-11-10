@@ -14,6 +14,7 @@
     }
 
     function LocationListCtrl($scope){
+        $scope.entity = 'location';
         $scope.name = 'Orte';
         $scope.tableheaders = {
             room: 'Raumnummer',

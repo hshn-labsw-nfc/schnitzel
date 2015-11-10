@@ -15,6 +15,10 @@
             templateUrl: 'templates/riddleform.html',
             controller: 'RiddleAddCtrl'
         }).
+        when('/editriddle', {
+            templateUrl: 'templates/riddleform.html',
+            controller: 'RiddleEditCtrl'
+        }).
         when('/listlocations', {
             templateUrl: 'templates/listview.html',
             controller: 'LocationListCtrl'
@@ -22,6 +26,10 @@
         when('/addlocation', {
             templateUrl: 'templates/locationform.html',
             controller: 'LocationAddCtrl'
+        }).
+        when('/editlocation', {
+            templateUrl: 'templates/locationform.html',
+            controller: 'LocationEditCtrl'
         }).
         when('/', {
             templateUrl: 'templates/overview.html'
