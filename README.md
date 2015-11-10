@@ -14,4 +14,5 @@
 
 #### install client dependencies
 - got to /client
+- open  console
 - `bower install`
