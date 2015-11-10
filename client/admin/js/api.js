@@ -10,7 +10,7 @@
     });
 
     api.service('tagApi', function($resource) {
-        return $resource("/api/tag/:id");
+        return $resource("/api/tags/:id");
     });
 })();
 
