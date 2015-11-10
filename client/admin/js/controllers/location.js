@@ -9,7 +9,9 @@
             state: "general",
             name: 'Hinzufügen einer Location',
             general: 'Allgemein',
-            room: 'Vorlesungsraum'
+            room: 'Vorlesungsraum',
+            tags: {1: 'tagA106', 2: 'tagMensa'},
+            selectedTag: null
         }
     }
 
