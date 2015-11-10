@@ -14,4 +14,9 @@
     function TagListCtrl($scope){
         $scope.name = 'Tag';
     }
+
+    tagApi.query((function(data){
+        console.log(data);
+        $scope.data = data;
+    }));
 })();

@@ -16,4 +16,9 @@
     function RiddleListCtrl($scope){
         $scope.name = 'Rätsel';
     }
+
+    riddleApi.query((function(data){
+        console.log(data);
+        $scope.data = data;
+    }));
 })();
