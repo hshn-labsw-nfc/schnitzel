@@ -24,20 +24,10 @@
             name: 'Raumname',
             description: 'Beschreibung'
         };
-        $scope.data = [
-            {
-                _id: 0,
-                room: 'A105',
-                name: 'Labor',
-                description: 'das ist ne beschreibung'
-            },
-            {
-                _id: 1,
-                room: 'A106',
-                name: 'Labor',
-                description: 'das ist ne andere beschreibung'
-            }
-        ];
+        locationApi.query((function(data){
+            console.log(data);
+            $scope.data = data;
+        }));
     }
 
 })();
