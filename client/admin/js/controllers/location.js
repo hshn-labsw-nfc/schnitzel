@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('location', ['ui.bootstrap']);
+    var app = angular.module('location', ['ui.bootstrap', 'api']);
 
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationAddCtrl', LocationAddCtrl);
@@ -15,7 +15,8 @@
         }
     }
 
-    function LocationListCtrl($scope){
+    function LocationListCtrl($scope, locationApi){
+        console.log(locationApi.query());
         $scope.entity = 'location';
         $scope.name = 'Orte';
         $scope.tableheaders = {
