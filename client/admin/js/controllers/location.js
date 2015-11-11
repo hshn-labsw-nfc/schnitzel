@@ -27,7 +27,7 @@
     function LocationListCtrl($scope, locationApi){
         console.log(locationApi.query());
         $scope.entity = 'location';
-        $scope.name = 'Orte';
+        $scope.name = 'Ort';
         $scope.tableheaders = {
             room: 'Raumnummer',
             name: 'Raumname',
