@@ -26,11 +26,15 @@
         }));
 
         $scope.save = function (){
-            console.log($scope.data);
-            locationApi.save($scope.data,function(){
-                location.href='#/listlocations';
-            });
-
+            if($routeParams.id){
+                $scope.data.$update(function () {
+                    location.href = '#/listlocations';
+                });
+            } else {
+                locationApi.save($scope.data, function () {
+                    location.href = '#/listlocations';
+                });
+            }
         }
     }
 
@@ -43,13 +47,17 @@
             name: 'Raumname',
             description: 'Beschreibung'
         };
-        locationApi.query((function(data){
+        function loadEntries(){
+            locationApi.query((function(data){
             console.log(data);
             $scope.data = data;
-        }));
-        $scope.delete = function (id) {
-            console.log('delete function called '+id);
+        }));}
+
+        $scope.delete = function(id) {
+            locationApi.delete({id:id});
+            loadEntries();
         }
+        loadEntries();
     }
 
 })();

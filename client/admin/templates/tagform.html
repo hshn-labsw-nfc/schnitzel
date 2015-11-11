@@ -12,10 +12,10 @@
         <label class="control-label">
             Tag ID
         </label>
-        <input ng-model="data._id" class="form-control">
+        <input ng-model="data.id" class="form-control">
     </div>
     <div class="text-right">
-        <input class="btn btn-success" type="submit" value="Speichern">
+        <a class="btn btn-success" ng-click="save()" >Speichern</a>
         <a class="btn btn-default" href="#/listtags" >Abbrechen</a>
     </div>
 </form>

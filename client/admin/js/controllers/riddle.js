@@ -16,11 +16,15 @@
         }
 
         $scope.save = function (){
-            console.log($scope.data);
-            riddleApi.save($scope.data,function(){
-                location.href='#/listriddles';
-            });
-
+            if($routeParams.id){
+                $scope.data.$update(function () {
+                    location.href = '#/listriddles';
+                });
+            } else {
+                riddleApi.save($scope.data, function () {
+                    location.href = '#/listriddles';
+                });
+            }
         }
     }
 
@@ -31,15 +35,17 @@
             name: 'Rätselname',
             description: 'Beschreibung'
         };
-        riddleApi.query((function(data){
-            console.log(data);
-            $scope.data = data;
-        }));
+        function loadEntries(){
+            riddleApi.query((function(data){
+                console.log(data);
+                $scope.data = data;
+            }));}
 
         $scope.delete = function(id) {
-            console.log("try to delete"+id);
-            //TODO connect with database
+            riddleApi.delete({id:id});
+            loadEntries();
         }
+        loadEntries();
     }
 
 

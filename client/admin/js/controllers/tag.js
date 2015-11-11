@@ -13,13 +13,21 @@
             });
         }else{
             $scope.heading = 'Hinzufügen eines Tags';
+
         }
 
         $scope.save = function () {
             console.log($scope.data);
-            tagApi.save($scope.data, function () {
-                location.href = '#/listtags';
-            });
+            if($routeParams.id){
+                $scope.data.$update(function () {
+                    location.href = '#/listtags';
+                });
+            } else {
+                tagApi.save($scope.data, function () {
+                    location.href = '#/listtags';
+                });
+            }
+
         }
     }
 
@@ -28,19 +36,21 @@
         $scope.entity = 'tag';
 
         $scope.tableheaders = {
-            _id: 'ID',
+            id: 'ID',
             alias: 'Alias'
         };
 
-        tagApi.query((function(data){
-            console.log(data);
-            $scope.data = data;
-        }));
+        function loadEntries(){
+            tagApi.query((function(data){
+                console.log(data);
+                $scope.data = data;
+            }));}
 
         $scope.delete = function(id) {
-            console.log("try to delete"+id);
-            //TODO connect with database
+            tagApi.delete({id:id});
+            loadEntries();
         }
+        loadEntries();
     }
 
 })();
