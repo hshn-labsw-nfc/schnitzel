@@ -2,10 +2,19 @@
     var app = angular.module('riddle', ['ui.bootstrap','api']);
 
     app.controller('RiddleListCtrl', RiddleListCtrl);
-    app.controller('RiddleEntryCtrl', RiddleEntryCtrl);
+    app.controller('RiddleEntryCtrl', ['$scope', '$routeParams', 'riddleApi', RiddleEntryCtrl]);
 
-    function RiddleEntryCtrl($scope) {
-        $scope.heading = 'Hinzufügen eines Rätsels'
+    function RiddleEntryCtrl($scope, $routeParams, riddleApi) {
+        $scope.data = {};
+        if($routeParams.id){
+            $scope.heading = 'Editieren eines Rätsels'
+            riddleApi.get({id:$routeParams.id},function(data){
+                $scope.data = data;
+            });
+        }else{
+            $scope.heading = 'Hinzufügen eines Rätsels'
+        }
+
     }
 
     function RiddleListCtrl($scope, riddleApi){
