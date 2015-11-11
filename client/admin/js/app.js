@@ -27,6 +27,10 @@
             templateUrl: 'templates/locationform.html',
             controller: 'LocationAddCtrl'
         }).
+        when('/addlocation/:id', {
+            templateUrl: 'templates/locationform.html',
+            controller: 'LocationAddCtrl'
+        }).
         when('/editlocation/:id', {
             templateUrl: 'templates/locationform.html',
             controller: 'LocationEditCtrl'
