@@ -2,15 +2,10 @@
     var app = angular.module('riddle', ['ui.bootstrap','api']);
 
     app.controller('RiddleListCtrl', RiddleListCtrl);
-    app.controller('RiddleAddCtrl', RiddleAddCtrl);
+    app.controller('RiddleEntryCtrl', RiddleEntryCtrl);
 
-    function RiddleAddCtrl($scope) {
-        $scope.riddle = {
-            state: "general",
-            name: 'Hinzufügen eines Rätsels',
-            general: 'Größerer Ort',
-            room: 'Vorlesungsraum'
-        }
+    function RiddleEntryCtrl($scope) {
+        $scope.heading = 'Hinzufügen eines Rätsels'
     }
 
     function RiddleListCtrl($scope, riddleApi){
