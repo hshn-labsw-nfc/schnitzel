@@ -26,8 +26,11 @@ function getEntry(Model) {
 function createEntry(Model) {
     return function (req, res, next) {
         var model = new Model();
-        model.id = req.body.id;
-        model.alias = req.body.alias;
+        Model.schema.eachPath(function(path) {
+            if(req.body[path]){
+                model[path] = req.body[path];
+            }
+        });
 
         model.save(function (err) {
             if (err) {
@@ -45,8 +48,11 @@ function updateEntry(Model) {
             if (err) {
                 res.send(err);
             }
-            entry.id = req.body.id;
-            entry.alias = req.body.alias;
+            Model.schema.eachPath(function(path) {
+                if(req.body[path]){
+                    entry[path] = req.body[path];
+                }
+            });
             entry.save(function (err) {
                 if (err) {
                     res.send(err);
