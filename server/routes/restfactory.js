@@ -1,3 +1,5 @@
+var express = require('express');
+
 function getEntries(model){
     return function(req, res, next){
         model.find(function(err, entries){
@@ -31,7 +33,7 @@ function createEntry(model) {
             if (err) {
                 res.send(err);
             }
-            res.send({message: 'tag created'});
+            res.send({message: model.modelName + ' created'});
         });
     }
 }
@@ -49,7 +51,7 @@ function updateEntry(model) {
                 if (err) {
                     res.send(err);
                 }
-                res.send({message: 'tag updated'});
+                res.send({message: model.modelName + ' updated'});
             });
         });
     }
@@ -64,15 +66,23 @@ function deleteEntry(model) {
             if (err) {
                 res.send(err);
             }
-            res.send({message: 'tag deleted'});
+            res.send({message: model.modelName + ' deleted'});
         });
     }
 }
 
-module.exports = {
-    getEntries: getEntries,
-    getEntry: getEntry,
-    createEntry: createEntry,
-    updateEntry: updateEntry,
-    deleteEntry: deleteEntry
-};
+function buildRouter(model){
+    var router = express.Router();
+
+    router.route('/')
+        .get(getEntries(model))
+        .post(createEntry(model));
+    router.route('/:id')
+        .get(getEntry(model))
+        .put(updateEntry(model))
+        .delete(deleteEntry(model));
+
+    return router;
+}
+
+module.exports = buildRouter;
