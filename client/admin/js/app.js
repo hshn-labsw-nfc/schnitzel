@@ -13,11 +13,11 @@
         }).
         when('/addriddle', {
             templateUrl: 'templates/riddleform.html',
-            controller: 'RiddleAddCtrl'
+            controller: 'RiddleEntryCtrl'
         }).
         when('/editriddle/:id', {
             templateUrl: 'templates/riddleform.html',
-            controller: 'RiddleEditCtrl'
+            controller: 'RiddleEntryCtrl'
         }).
         when('/listlocations', {
             templateUrl: 'templates/listview.html',
