@@ -4,7 +4,7 @@
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationAddCtrl', LocationAddCtrl);
 
-    function LocationAddCtrl($scope, locationApi, tagApi) {
+    function LocationAddCtrl($scope, $routeParams, locationApi, tagApi) {
         $scope.location = {
             state: "general",
             name: 'Hinzufügen einer Location',
@@ -12,7 +12,8 @@
             room: 'Vorlesungsraum',
             selectedTag: null
         };
-        $scope.data = locationApi.get({id: 1});
+        $scope.data = locationApi.get({id: $routeParams.id});
+        console.log($scope.data);
         tagApi.query((function (data) {
             console.log(data);
             $scope.tags = data;
