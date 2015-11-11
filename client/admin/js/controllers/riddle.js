@@ -14,6 +14,14 @@
         }else{
             $scope.heading = 'Hinzufügen eines Rätsels'
         }
+
+        $scope.save = function (){
+            console.log($scope.data);
+            riddleApi.save($scope.data,function(){
+                location.href='#/listriddles';
+            });
+
+        }
     }
 
     function RiddleListCtrl($scope, riddleApi){

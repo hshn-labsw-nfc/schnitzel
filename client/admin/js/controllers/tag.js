@@ -7,12 +7,19 @@
     function TagEntryCtrl($scope, $routeParams, tagApi) {
         $scope.data = {};
         if($routeParams.id){
-            $scope.heading = 'Editieren eines Tags'
+            $scope.heading = 'Editieren eines Tags';
             tagApi.get({id:$routeParams.id},function(data){
                 $scope.data = data;
             });
         }else{
             $scope.heading = 'Hinzufügen eines Tags';
+        }
+
+        $scope.save = function () {
+            console.log($scope.data);
+            tagApi.save($scope.data, function () {
+                location.href = '#/listtags';
+            });
         }
     }
 
