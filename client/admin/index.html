@@ -41,18 +41,6 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Schnitzeljagt - Admin</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a href="#">Logout</a></li>
-            </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
-        </div>
     </div>
 </nav>
 
@@ -64,6 +52,7 @@
                 <li><a href="#/list{{item}}s">Liste</a></li>
                 <li><a href="#/add{{item}}">Hinzufügen</a></li>
             </ul>
+            <span><a href="#">Logout</a></span>
         </div>
         <!--mit angular seite laden -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-view>
