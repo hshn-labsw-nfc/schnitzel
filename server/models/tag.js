@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var TagSchema   = new mongoose.Schema({
-    id: String,
+    tagID: String,
     alias: String
 });
 

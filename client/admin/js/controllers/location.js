@@ -5,13 +5,22 @@
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
 
     function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
-        $scope.data = {};
-        if ($routeParams.id) {
-            $scope.heading = 'Location Bearbeiten';
-            $scope.data = locationApi.get({id: $routeParams.id});
-        } else {
-            $scope.heading = 'Hinzufügen einer Location';
-        }
+
+        tagApi.query((function (data) {
+            console.log(data);
+            $scope.tags = data;
+
+            $scope.data = {};
+            if ($routeParams.id) {
+                $scope.heading = 'Location Bearbeiten';
+                $scope.data = locationApi.get({id: $routeParams.id});
+            } else {
+                $scope.heading = 'Hinzufügen einer Location';
+            }
+
+        }));
+
+
         $scope.location = {
             state: 'general',
             general: 'Allgemein',
@@ -20,12 +29,8 @@
         };
         console.log($scope.data);
 
-        tagApi.query((function (data) {
-            console.log(data);
-            $scope.tags = data;
-        }));
-
         $scope.save = function (){
+            console.log($scope.data);
             if($routeParams.id){
                 $scope.data.$update(function () {
                     location.href = '#/listlocations';

@@ -36,7 +36,7 @@
         $scope.entity = 'tag';
 
         $scope.tableheaders = {
-            id: 'ID',
+            tagID: 'TagID',
             alias: 'Alias'
         };
 
