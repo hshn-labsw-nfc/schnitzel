@@ -28,6 +28,11 @@
             console.log(data);
             $scope.data = data;
         }));
+
+        $scope.delete = function(id) {
+            console.log("try to delete"+id);
+            //TODO connect with database
+        }
     }
 
 

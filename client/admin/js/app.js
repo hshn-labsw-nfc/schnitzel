@@ -43,8 +43,8 @@
             templateUrl: 'templates/tagform.html',
             controller: 'TagAddCtrl'
         }).
-        when('/edittg/:id', {
-            templateUrl: 'templates/tgform.html',
+        when('/edittag/:id', {
+            templateUrl: 'templates/tagform.html',
             controller: 'TagEditCtrl'
         }).
         when('/', {
