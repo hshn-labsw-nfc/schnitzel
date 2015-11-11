@@ -2,9 +2,9 @@
     var app = angular.module('location', ['ui.bootstrap', 'api']);
 
     app.controller('LocationListCtrl', LocationListCtrl);
-    app.controller('LocationAddCtrl', LocationAddCtrl);
+    app.controller('LocationEntryCtrl', LocationEntryCtrl);
 
-    function LocationAddCtrl($scope, $routeParams, locationApi, tagApi) {
+    function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
         if ($routeParams.id) {
             $scope.heading = 'Location Bearbeiten';
         } else {

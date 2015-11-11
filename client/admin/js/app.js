@@ -25,23 +25,23 @@
         }).
         when('/addlocation', {
             templateUrl: 'templates/locationform.html',
-            controller: 'LocationAddCtrl'
+            controller: 'LocationEntryCtrl'
         }).
         when('/editlocation/:id', {
             templateUrl: 'templates/locationform.html',
-            controller: 'LocationAddCtrl'
+            controller: 'LocationEntryCtrl'
         }).
         when('/listtags', {
             templateUrl: 'templates/listview.html',
-            controller: 'LocationListCtrl'
+            controller: 'TagListCtrl'
         }).
         when('/addtag', {
             templateUrl: 'templates/tagform.html',
-            controller: 'TagAddCtrl'
+            controller: 'TagEntryCtrl'
         }).
         when('/edittag/:id', {
             templateUrl: 'templates/tagform.html',
-            controller: 'TagEditCtrl'
+            controller: 'TagEntryCtrl'
         }).
         when('/', {
             templateUrl: 'templates/overview.html'
