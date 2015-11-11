@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var api = require('./routes/api');
 
@@ -22,6 +23,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/api', api);
+
+// connect to db
+mongoose.connect('mongodb://localhost/schnitzel');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
