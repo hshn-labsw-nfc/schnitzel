@@ -9,7 +9,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="entry in data">
+            <tr ng-repeat="entry in data" ng-if="data">
                 <td ng-repeat="(id, name) in tableheaders">{{entry[id]}}</td>
                 <td>
                     <div class="btn-group" role="group">
