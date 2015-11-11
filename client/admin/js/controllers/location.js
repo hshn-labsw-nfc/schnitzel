@@ -10,9 +10,10 @@
             $scope.data = locationApi.get({id: $routeParams.id});
         } else {
             $scope.heading = 'Hinzufügen einer Location';
+            $scope.data = {};
         }
         $scope.location = {
-            state: "general",
+            state: 'general',
             general: 'Allgemein',
             room: 'Vorlesungsraum',
             selectedTag: null
@@ -22,6 +23,14 @@
             console.log(data);
             $scope.tags = data;
         }));
+
+        $scope.save = function (){
+            console.log($scope.data);
+            locationApi.save($scope.data,function(){
+                location.href='#/listlocations';
+            });
+
+        }
     }
 
     function LocationListCtrl($scope, locationApi){
