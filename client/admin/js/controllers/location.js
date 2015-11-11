@@ -21,7 +21,7 @@
         tagApi.query((function (data) {
             console.log(data);
             $scope.tags = data;
-        }))
+        }));
     }
 
     function LocationListCtrl($scope, locationApi){
@@ -37,6 +37,9 @@
             console.log(data);
             $scope.data = data;
         }));
+        $scope.delete = function (id) {
+            console.log('delete function called '+id);
+        }
     }
 
 })();
