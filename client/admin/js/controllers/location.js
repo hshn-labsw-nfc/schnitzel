@@ -4,15 +4,19 @@
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationAddCtrl', LocationAddCtrl);
 
-    function LocationAddCtrl($scope) {
+    function LocationAddCtrl($scope, locationApi, tagApi) {
         $scope.location = {
             state: "general",
             name: 'Hinzufügen einer Location',
             general: 'Allgemein',
             room: 'Vorlesungsraum',
-            tags: {1: 'tagA106', 2: 'tagMensa'},
             selectedTag: null
-        }
+        };
+        $scope.data = locationApi.get({id: 1});
+        tagApi.query((function (data) {
+            console.log(data);
+            $scope.tags = data;
+        }))
     }
 
     function LocationListCtrl($scope, locationApi){
