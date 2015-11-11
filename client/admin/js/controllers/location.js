@@ -7,6 +7,7 @@
     function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
         if ($routeParams.id) {
             $scope.heading = 'Location Bearbeiten';
+            $scope.data = locationApi.get({id: $routeParams.id});
         } else {
             $scope.heading = 'Hinzufügen einer Location';
         }
@@ -16,7 +17,6 @@
             room: 'Vorlesungsraum',
             selectedTag: null
         };
-        $scope.data = locationApi.get({id: $routeParams.id});
         console.log($scope.data);
         tagApi.query((function (data) {
             console.log(data);

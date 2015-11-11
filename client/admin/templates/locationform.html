@@ -50,7 +50,7 @@
     <div class="form-group">
         <label class="control-label">Verlinkter NFC-Tag</label>
         <select class="form-control">
-            <option ng-repeat="(Key, value) in location.tags">{{value}}</option>
+            <option ng-repeat="(Key, value) in tags">{{value.alias}}</option>
         </select>
     </div>
     <input class="btn btn-success" type="submit" value="Speichern">
