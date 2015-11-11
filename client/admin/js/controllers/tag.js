@@ -2,10 +2,18 @@
     var app = angular.module('tag', ['ui.bootstrap', 'api']);
 
     app.controller('TagListCtrl', TagListCtrl);
-    app.controller('TagEntryCtrl', TagEntryCtrl);
+    app.controller('TagEntryCtrl', ['$scope', '$routeParams', 'tagApi', TagEntryCtrl]);
 
-    function TagEntryCtrl($scope) {
-        $scope.heading = 'Hinzufügen eines Tags';
+    function TagEntryCtrl($scope, $routeParams, tagApi) {
+        $scope.data = {};
+        if($routeParams.id){
+            $scope.heading = 'Editieren eines Tags'
+            tagApi.get({id:$routeParams.id},function(data){
+                $scope.data = data;
+            });
+        }else{
+            $scope.heading = 'Hinzufügen eines Tags';
+        }
     }
 
     function TagListCtrl($scope, tagApi){

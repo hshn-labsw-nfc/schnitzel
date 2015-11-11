@@ -14,7 +14,6 @@
         }else{
             $scope.heading = 'Hinzufügen eines Rätsels'
         }
-
     }
 
     function RiddleListCtrl($scope, riddleApi){

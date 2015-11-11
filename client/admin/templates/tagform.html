@@ -2,24 +2,17 @@
 <form role="form">
 
     <div class="form-group">
-        <label class="control-label">Tag auswählen</label>
-        <select class="form-control" ng-model="">
-            <option>Option</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label">
+        <label  class="control-label">
             Tagname
         </label>
-        <input class="form-control">
+        <input ng-model="data.alias" class="form-control">
     </div>
 
     <div class="form-group">
         <label class="control-label">
-            Beschreibung
+            Tag ID
         </label>
-        <textarea class="form-control" rows="10"></textarea>
+        <input ng-model="data._id" class="form-control">
     </div>
 
     <input class="btn btn-success" type="submit" value="Speichern">
