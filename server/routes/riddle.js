@@ -22,10 +22,10 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next){
     var id = req.params.id;
     console.log(id);
-    res.send(findUser(id));
+    res.send(findById(id));
 });
 
-function findUser(id){
+function findById(id){
     for(var i = 0; i < data.length; i++){
         if(data[i]._id == id){
             return data[i];
