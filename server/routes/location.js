@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var LocationDB = require('../models/location');
+
 var data = [
     {
         _id: 0,

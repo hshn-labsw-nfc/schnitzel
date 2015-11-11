@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var TagDB = require('../models/tag');
+
 var data = [
     {
         _id: 0,
