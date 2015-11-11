@@ -1,8 +1,8 @@
 var express = require('express');
 
-function getEntries(model){
+function getEntries(Model){
     return function(req, res, next){
-        model.find(function(err, entries){
+        Model.find(function(err, entries){
             if(err){
                 res.send(err);
             }
@@ -11,10 +11,10 @@ function getEntries(model){
     }
 }
 
-function getEntry(model) {
+function getEntry(Model) {
     return function (req, res, next) {
         var id = req.params.id;
-        model.findById(id, function (err, entry) {
+        Model.findById(id, function (err, entry) {
             if (err) {
                 res.send(err);
             }
@@ -23,25 +23,25 @@ function getEntry(model) {
     }
 }
 
-function createEntry(model) {
+function createEntry(Model) {
     return function (req, res, next) {
-        var tag = new model();
-        tag.id = req.body.id;
-        tag.alias = req.body.alias;
+        var model = new Model();
+        model.id = req.body.id;
+        model.alias = req.body.alias;
 
-        tag.save(function (err) {
+        model.save(function (err) {
             if (err) {
                 res.send(err);
             }
-            res.send({message: model.modelName + ' created'});
+            res.send({message: Model.modelName + ' created'});
         });
     }
 }
 
-function updateEntry(model) {
+function updateEntry(Model) {
     return function (req, res, next) {
         var id = req.params.id;
-        model.findById(id, function (err, entry) {
+        Model.findById(id, function (err, entry) {
             if (err) {
                 res.send(err);
             }
@@ -51,36 +51,36 @@ function updateEntry(model) {
                 if (err) {
                     res.send(err);
                 }
-                res.send({message: model.modelName + ' updated'});
+                res.send({message: Model.modelName + ' updated'});
             });
         });
     }
 }
 
-function deleteEntry(model) {
+function deleteEntry(Model) {
     return function (req, res, next) {
         var id = req.params.id;
-        model.remove({
+        Model.remove({
             _id: id
         }, function (err, entry) {
             if (err) {
                 res.send(err);
             }
-            res.send({message: model.modelName + ' deleted'});
+            res.send({message: Model.modelName + ' deleted'});
         });
     }
 }
 
-function buildRouter(model){
+function buildRouter(Model){
     var router = express.Router();
 
     router.route('/')
-        .get(getEntries(model))
-        .post(createEntry(model));
+        .get(getEntries(Model))
+        .post(createEntry(Model));
     router.route('/:id')
-        .get(getEntry(model))
-        .put(updateEntry(model))
-        .delete(deleteEntry(model));
+        .get(getEntry(Model))
+        .put(updateEntry(Model))
+        .delete(deleteEntry(Model));
 
     return router;
 }

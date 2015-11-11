@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
+var RestFactory = require('./restfactory');
 
-var location = require('./location');
-var riddle = require('./riddle');
-var tag = require('./tag');
+var Location = require('../models/location');
+var Riddle = require('../models/riddle');
+var Tag = require('../models/tag');
 
-router.use('/locations', location);
-router.use('/riddles', riddle);
-router.use('/tags', tag);
+router.use('/locations', RestFactory(Location));
+router.use('/riddles', RestFactory(Riddle));
+router.use('/tags', RestFactory(Tag));
 
 module.exports = router;
