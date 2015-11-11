@@ -5,9 +5,13 @@
     app.controller('LocationAddCtrl', LocationAddCtrl);
 
     function LocationAddCtrl($scope, $routeParams, locationApi, tagApi) {
+        if ($routeParams.id) {
+            $scope.heading = 'Location Bearbeiten';
+        } else {
+            $scope.heading = 'Hinzufügen einer Location';
+        }
         $scope.location = {
             state: "general",
-            name: 'Hinzufügen einer Location',
             general: 'Allgemein',
             room: 'Vorlesungsraum',
             selectedTag: null
