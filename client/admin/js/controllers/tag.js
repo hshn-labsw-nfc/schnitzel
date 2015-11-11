@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('tag', ['ui.bootstrap']);
+    var app = angular.module('tag', ['ui.bootstrap', 'api']);
 
     app.controller('TagListCtrl', TagListCtrl);
     app.controller('TagAddCtrl', TagAddCtrl);
@@ -11,12 +11,13 @@
         }
     }
 
-    function TagListCtrl($scope){
+    function TagListCtrl($scope, tagApi){
         $scope.name = 'Tag';
+
+        tagApi.query((function(data){
+            console.log(data);
+            $scope.data = data;
+        }));
     }
 
-    tagApi.query((function(data){
-        console.log(data);
-        $scope.data = data;
-    }));
 })();
