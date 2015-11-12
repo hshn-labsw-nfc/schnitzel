@@ -5,7 +5,6 @@ var LocationSchema   = new mongoose.Schema({
     name: String,
     description: String,
     tagID: String,
-    riddleID: String,
     category: String,
     seatingCount: Number,
     pcCount: Number,
