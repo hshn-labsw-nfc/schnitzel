@@ -22,7 +22,7 @@
 
 
         $scope.location = {
-            state: 'general',
+            category: 'general',
             general: 'Allgemein',
             room: 'Vorlesungsraum',
             selectedTag: null
