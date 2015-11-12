@@ -4,7 +4,12 @@
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
 
-    function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
+    function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi, riddleApi) {
+
+        riddleApi.query((function (data) {
+            console.log(data);
+            $scope.riddles = data;
+        }));
 
         tagApi.query((function (data) {
             console.log(data);
