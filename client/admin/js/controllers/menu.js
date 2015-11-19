@@ -8,7 +8,6 @@
             location:'Orte',
             riddle:'Rätsel',
             tag:'Tags',
-            schnitzel: 'Schnitzel'
         };
     }
 })();

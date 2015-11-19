@@ -25,14 +25,6 @@
         });
     });
 
-    api.service('schnitzelApi', function($resource) {
-        return $resource('/api/schnitzel/:id', { id: '@_id' }, {
-            update: {
-                method: 'PUT' // this method issues a PUT request
-            }
-        });
-    });
-
     api.service('tagApi', function($resource) {
         return $resource('/api/tags/:id', { id: '@_id' }, {
             update: {
