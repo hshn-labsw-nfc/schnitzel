@@ -10,6 +10,6 @@ var Schnitzel = require('../models/schnitzel');
 router.use('/locations', RestFactory(Location));
 router.use('/riddles', RestFactory(Riddle));
 router.use('/tags', RestFactory(Tag));
-router.use('/schnitzels', RestFactory(Schnitzel));
+router.use('/schnitzel', RestFactory(Schnitzel));
 
 module.exports = router;

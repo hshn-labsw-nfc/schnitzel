@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
 
 var SchnitzelSchema   = new mongoose.Schema({
-    tagID: String,
-    alias: String
+    tagID: String
 });
 
 module.exports = mongoose.model('Schnitzel', SchnitzelSchema);

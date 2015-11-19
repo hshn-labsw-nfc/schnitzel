@@ -26,7 +26,7 @@
     });
 
     api.service('schnitzelApi', function($resource) {
-        return $resource('/api/schnitzels/:id', { id: '@_id' }, {
+        return $resource('/api/schnitzel/:id', { id: '@_id' }, {
             update: {
                 method: 'PUT' // this method issues a PUT request
             }

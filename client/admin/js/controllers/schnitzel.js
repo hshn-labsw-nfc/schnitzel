@@ -8,14 +8,14 @@
 
     function SchnitzelEntryCtrl($scope, tagApi, schnitzelApi) {
         $scope.heading = 'Festlegen des Start-Tags';
-/*
-        schnitzelApi.get({id:1},function(data){
-            $scope.data = data;
+
+        schnitzelApi.query(function(data){
+            if(data.length < 1){
+                $scope.data = {};
+            }else{
+                $scope.data = data[0];
+            }
         });
-*/
-        if($scope.data == null){
-            $scope.data = {id: 1};
-        }
 
         tagApi.query((function (data) {
             console.log(data);
@@ -24,7 +24,6 @@
 
         $scope.save = function () {
             console.log($scope.data);
-            console.log($routeParams.id);
             schnitzelApi.save($scope.data, function () {
                 alert("Speichern erfolgreich")
             });
