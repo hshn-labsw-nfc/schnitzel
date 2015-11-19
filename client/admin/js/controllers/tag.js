@@ -4,7 +4,7 @@
     app.controller('TagListCtrl', TagListCtrl);
     app.controller('TagEntryCtrl', ['$scope', '$routeParams', 'tagApi', TagEntryCtrl]);
 
-    function TagEntryCtrl($scope, $routeParams, tagApi) {
+        function TagEntryCtrl($scope, $routeParams, tagApi) {
         $scope.data = {};
         if($routeParams.id){
             $scope.heading = 'Editieren eines Tags';
