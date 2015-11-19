@@ -1,12 +1,16 @@
 (function () {
     var app = angular.module('schnitzelAdmin', [
-        'ngRoute', 'menu', 'location', 'riddle', 'tag'
+        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'schnitzel'
     ]);
 
     app.config(['$routeProvider',routeProvider]);
 
     function routeProvider($routeProvider){
         $routeProvider.
+        when('/listschnitzels', {
+            templateUrl: 'templates/schnitzelform.html',
+            controller: 'SchnitzelEntryCtrl'
+        }).
         when('/listriddles', {
             templateUrl: 'templates/listview.html',
             controller: 'RiddleListCtrl'

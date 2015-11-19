@@ -7,7 +7,8 @@
         $scope.items = {
             location:'Orte',
             riddle:'Rätsel',
-            tag:'Tags'
+            tag:'Tags',
+            schnitzel: 'Schnitzel'
         };
     }
 })();

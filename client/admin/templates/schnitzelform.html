@@ -1,0 +1,12 @@
+<h1 class="page-header">{{heading}}</h1>
+<form role="form">
+    <div class="form-group">
+        <label class="control-label">Verlinkter NFC-Tag</label>
+        <select class="form-control" ng-model="data.tagID">
+            <option ng-repeat="(Key, value) in tags" ng-value="value.id">{{value.alias}}</option>
+        </select>
+    </div>
+    <div class="text-right">
+        <a class="btn btn-success" ng-click="save()" >Speichern</a>
+    </div>
+</form>
