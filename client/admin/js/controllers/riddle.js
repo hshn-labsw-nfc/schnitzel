@@ -2,17 +2,24 @@
     var app = angular.module('riddle', ['ui.bootstrap','api']);
 
     app.controller('RiddleListCtrl', RiddleListCtrl);
-    app.controller('RiddleEntryCtrl', ['$scope', '$routeParams', 'riddleApi', RiddleEntryCtrl]);
+    app.controller('RiddleEntryCtrl', ['$scope', '$routeParams', 'riddleApi', 'locationApi', RiddleEntryCtrl]);
 
-    function RiddleEntryCtrl($scope, $routeParams, riddleApi) {
+    function RiddleEntryCtrl($scope, $routeParams, riddleApi, locationApi) {
         $scope.data = {};
+        $scope.locations = {};
+
+        locationApi.query((function(data){
+            console.log(data);
+            $scope.locations = data;
+        }));
+
         if($routeParams.id){
-            $scope.heading = 'Editieren eines Rätsels'
+            $scope.heading = 'Editieren eines Rätsels';
             riddleApi.get({id:$routeParams.id},function(data){
                 $scope.data = data;
             });
         }else{
-            $scope.heading = 'Hinzufügen eines Rätsels'
+            $scope.heading = 'Hinzufügen eines Rätsels';
         }
 
         $scope.save = function (){
@@ -44,7 +51,7 @@
         $scope.delete = function(id) {
             riddleApi.delete({id:id});
             loadEntries();
-        }
+        };
         loadEntries();
     }
 

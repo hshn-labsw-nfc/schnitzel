@@ -20,7 +20,6 @@
 
         }));
 
-
         $scope.location = {
             category: 'general',
             general: 'Allgemein',
@@ -61,7 +60,7 @@
         $scope.delete = function(id) {
             locationApi.delete({id:id});
             loadEntries();
-        }
+        };
         loadEntries();
     }
 
