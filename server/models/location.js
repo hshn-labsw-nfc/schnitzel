@@ -4,7 +4,7 @@ var LocationSchema   = new mongoose.Schema({
     room: String,
     name: String,
     description: String,
-    tagID: String,
+    isActive: Boolean,
     category: String,
     seatingCount: Number,
     pcCount: Number,

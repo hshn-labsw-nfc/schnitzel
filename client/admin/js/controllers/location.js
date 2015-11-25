@@ -6,30 +6,24 @@
 
     function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
 
-        tagApi.query((function (data) {
-            console.log(data);
-            $scope.tags = data;
-
-            $scope.data = {};
-            if ($routeParams.id) {
-                $scope.heading = 'Location Bearbeiten';
-                $scope.data = locationApi.get({id: $routeParams.id});
-            } else {
-                $scope.heading = 'Hinzufügen einer Location';
-            }
-
-        }));
+        $scope.data = {};
+        if ($routeParams.id) {
+            $scope.heading = 'Location Bearbeiten';
+            $scope.data = locationApi.get({id: $routeParams.id});
+        } else {
+            $scope.heading = 'Hinzufügen einer Location';
+        }
 
         $scope.location = {
             category: 'general',
             general: 'Allgemein',
-            room: 'Vorlesungsraum',
-            selectedTag: null
+            room: 'Vorlesungsraum'
         };
         console.log($scope.data);
 
         $scope.save = function (){
             console.log($scope.data);
+            console.log($scope.data.isActive)
             if($routeParams.id){
                 $scope.data.$update(function () {
                     location.href = '#/listlocations';

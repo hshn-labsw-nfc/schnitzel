@@ -2,9 +2,9 @@
     var app = angular.module('tag', ['ui.bootstrap', 'api']);
 
     app.controller('TagListCtrl', TagListCtrl);
-    app.controller('TagEntryCtrl', ['$scope', '$routeParams', 'tagApi', TagEntryCtrl]);
+    app.controller('TagEntryCtrl', ['$scope', '$routeParams', 'tagApi','locationApi', TagEntryCtrl]);
 
-        function TagEntryCtrl($scope, $routeParams, tagApi) {
+    function TagEntryCtrl($scope, $routeParams, tagApi, locationApi) {
         $scope.data = {};
         if($routeParams.id){
             $scope.heading = 'Editieren eines Tags';
@@ -15,6 +15,11 @@
             $scope.heading = 'Hinzufügen eines Tags';
 
         }
+
+        locationApi.query((function (data) {
+            console.log(data);
+            $scope.locations = data;
+        }));
 
         $scope.save = function () {
             console.log($scope.data);
