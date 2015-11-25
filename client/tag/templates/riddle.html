@@ -1,1 +1,10 @@
-Imagine a riddle here
+
+
+<div ng-if="game.state.riddleSolved">
+    Du hast das Rätsel gelöst, gehe jetzt zu dem Raum {{location.name}} <span ng-if="location.room">({{location.room}})</span>
+</div>
+
+<div ng-if="!game.state.riddleSolved">
+    <h4>{{game.state.riddle.question}}</h4>
+
+</div>

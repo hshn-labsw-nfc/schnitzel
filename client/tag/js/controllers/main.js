@@ -23,6 +23,7 @@
                 if(res.status == 200){
                     $scope.game.sessionID = sessionID;
                     $scope.game.state = res.data;
+                    $scope.location = res.data.location;
                 }else{
                     $scope.game.running = false;
                 }

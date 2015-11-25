@@ -26,12 +26,21 @@ function getState(req, res, next) {
     res.send({
         progress: {
             count: 10,
-            done: 2
+            done: 4
         },
-        riddleSolved: false,
+        riddleSolved: true,
         riddle: {
             id: 43535,
             question: "Wer wie was?"
+        },
+        location: {
+            _id: "5655bd825c01ac3816364652",
+            isActive: true,
+            __v: 0,
+            category: "Allgemein",
+            description: "dfgfdgfd",
+            name: "fgdg",
+            room: "fdgfdgfd"
         }
     });
 }
