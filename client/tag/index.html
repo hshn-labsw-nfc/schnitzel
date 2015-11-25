@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
@@ -17,13 +16,11 @@
 
     <script src="js/app.js"></script>
 
-    <script src="js/controllers/controllers.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/controllers/location.js"></script>
+    <script src="js/controllers/main.js"></script>
 
 </head>
-<body>
-<div class="alert alert-success" role="alert">
+<body ng-controller="MainCtrl">
+<div class="alert alert-success" role="alert" ng-if="">
     <div class="progress">
         <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
     </div>

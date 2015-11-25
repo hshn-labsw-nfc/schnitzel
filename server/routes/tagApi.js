@@ -9,7 +9,7 @@ var PlaySession = require('../models/playSession');
 router.post('/start', startPlaySession);
 router.get('/state', getState);
 router.post('/riddle', solveRiddle);
-router.get('location/:id', getLocation)
+router.get('location/:id', getLocation);
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
