@@ -6,10 +6,11 @@ var Riddle = require('../models/riddle');
 var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
 
-router.post('/playSession', startPlaySession);
-router.delete('/playSession/:sessionid', deletePlaySession);
+router.post('/playsession', startPlaySession);
+router.delete('/playsession/:sessionid', deletePlaySession);
 router.get('/state/:sessionid', getState);
 router.post('/solve/:sessionid', solveRiddle);
+router.post('/location/:sessionid', checkLocation);
 router.get('/location/:id', getLocation);
 
 function getRandomInt(min, max) {
@@ -35,7 +36,7 @@ function startPlaySession(req, res, next) {
 
 function advanceState(playSession, res, callback){
     playSession.lastUpdated = new Date();
-    playSession.riddleSolved = true;
+    playSession.atLocation = false;
     if(playSession.locationID){
         playSession.locationsVisited.push(playSession.locationID);
     }
@@ -94,7 +95,7 @@ function getState(req, res, next) {
             return;
         }
         console.log(session);
-        var result = filterObject(session, ['riddleSolved']);
+        var result = filterObject(session, ['atLocation']);
 
         if(session.locationID){
             Location.findById(session.locationID, function(err, location){
@@ -139,10 +140,46 @@ function solveRiddle(req, res, next) {
             }
             if(riddle.answer == answer){
                 advanceState(session, res, function(){
-                    res.send({answerWasRight: true});
+                    res.send({correctAnswer: true});
                 });
             }else{
-                res.send({answerWasRight: false});
+                res.send({correctAnswer: false});
+            }
+        });
+    });
+}
+
+// Will check if the location is right. if it is, will allow to solve riddle
+function checkLocation(req, res, next){
+    var sessionID = req.params.sessionid;
+    var tagID = req.body.tagID;
+    PlaySession.findById(sessionID, function(err, session){
+       if(err){
+           res.send(err);
+           return;
+       }
+
+        Tag.findOne({'tagID': tagID}, function(err, tag){
+            console.log(arguments);
+            if(err){
+                res.send(err);
+                return;
+            }
+            console.log(tagID);
+            if(session.locationID == tag.locationID){
+
+                // Correct locaction, lets update the session then
+                session.atLocation = true;
+                session.save(function(){
+                    if(err){
+                        res.send(err);
+                        return;
+                    }
+
+                    res.send({correctLocation: true});
+                });
+            }else{
+                res.send({correctLocation: false});
             }
         });
     });

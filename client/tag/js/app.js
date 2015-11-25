@@ -7,7 +7,7 @@
 
     function routeProvider($routeProvider){
         $routeProvider.
-        when('/:id', {
+        when('/:tagID', {
             templateUrl: 'templates/tag.html',
             controller: 'TagCtrl'
         }).

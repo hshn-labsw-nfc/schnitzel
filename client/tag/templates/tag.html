@@ -5,5 +5,6 @@
 </div>
 
 <div ng-if="game.running">
-    <ng-include src="'templates/riddle.html'"></ng-include>
+    <ng-include ng-if="rightLocation" src="'templates/riddle.html'"></ng-include>
+    <div ng-if="!rightLocation"> NOPE </div>
 </div>

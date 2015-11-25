@@ -1,10 +1,10 @@
 
 <div ng-controller="RiddleCtrl">
-    <div ng-if="game.state.riddleSolved">
+    <div ng-if="!game.state.atLocation">
         Gehe zu dem Raum {{game.state.location.name}} <span ng-if="game.state.location.room">({{game.state.location.room}})</span>
     </div>
 
-    <div ng-if="!game.state.riddleSolved">
+    <div ng-if="game.state.atLocation">
         <h4>{{game.state.riddle.name}}</h4>
         {{game.state.riddle.description}}
         <br><br>

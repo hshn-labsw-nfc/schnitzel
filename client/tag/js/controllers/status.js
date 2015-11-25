@@ -7,7 +7,7 @@
     function StatusCtrl($scope, $http, $rootScope) {
         $scope.startGame = function(){
             console.log('clicked startbutton');
-            $http.post('/api/game/playSession').then(function(res){
+            $http.post('/api/game/playsession').then(function(res){
                 if(res.status == 200){
                     localStorage['gameSession'] = res.data;
                     $scope.game.running = true;
@@ -18,7 +18,7 @@
             });
         };
         $scope.endGame = function(){
-            $http.delete('/api/game/playSession/' + localStorage['gameSession']).then(function(res){
+            $http.delete('/api/game/playsession/' + localStorage['gameSession']).then(function(res){
                 localStorage.removeItem('gameSession');
                 $scope.game.running = false;
             });

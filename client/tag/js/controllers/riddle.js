@@ -11,7 +11,7 @@
             console.log($scope.riddle.answer);
             $http.post('/api/game/solve/'+$scope.game.sessionID, {answer: $scope.riddle.answer}).then(function(res){
                 if(res.status == 200){
-                    if(res.data.answerWasRight){
+                    if(res.data.correctAnswer){
                         console.log('Right answer !!!');
                         $rootScope.$broadcast('fetchState');
                     }else{
