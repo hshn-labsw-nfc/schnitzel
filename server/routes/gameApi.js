@@ -7,9 +7,9 @@ var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
 
 router.post('/start', startPlaySession);
-router.get('/state', getState);
-router.post('/riddle', solveRiddle);
-router.get('location/:id', getLocation);
+router.get('/state/:sessionid', getState);
+router.post('/riddle/:sessionid', solveRiddle);
+router.get('/location/:id', getLocation);
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
@@ -23,7 +23,17 @@ function startPlaySession(req, res, next) {
 //    nextLocation: Location-Description (?)
 //}
 function getState(req, res, next) {
-    res.send('404567357489');
+    res.send({
+        progress: {
+            count: 10,
+            done: 2
+        },
+        riddleSolved: false,
+        riddle: {
+            id: 43535,
+            question: "Wer wie was?"
+        }
+    });
 }
 
 // Will return whether the sent solution was right

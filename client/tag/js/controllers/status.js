@@ -10,12 +10,12 @@
             $http.post('/api/game/start').then(function(res){
                 console.log(res);
                 localStorage['gameSession'] = res.data;
-                $scope.main.game.running = true;
+                $scope.game.running = true;
             });
         };
         $scope.endGame = function(){
             localStorage.removeItem('gameSession');
-            $scope.main.game.running = false;
+            $scope.game.running = false;
         };
     }
 })();

@@ -22,11 +22,11 @@
 
 </head>
 <body ng-controller="MainCtrl">
-<div class="alert alert-success" role="alert" ng-if="main.game && main.game.running">
+<div class="alert alert-success" role="alert" ng-if="game && game.running">
     <div class="progress">
-        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{(main.game.progress.done / main.game.progress.count) * 100}}%"></div>
+        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{(game.state.progress.done / game.state.progress.count) * 100}}%"></div>
     </div>
-    {{main.game.progress.done}} von {{main.game.progress.count}} Orten gefunden
+    {{game.state.progress.done}} von {{game.state.progress.count}} Orten gefunden
 </div>
 <div class="container" ng-view>
 
