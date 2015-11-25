@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('schnitzelApp', [
-        'ngRoute'
+        'ngRoute', 'ui.bootstrap'
     ]);
 
     app.config(['$routeProvider',routeProvider]);

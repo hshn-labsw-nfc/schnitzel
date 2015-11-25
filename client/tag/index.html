@@ -10,6 +10,7 @@
     <link href="../shared/css/bootstrap.min.css" rel="stylesheet">
     <link href="../shared/css/style.css" rel="stylesheet">
     <link href="../shared/css/icon.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
@@ -21,8 +22,13 @@
     <script src="js/controllers/tag.js"></script>
     <script src="js/controllers/riddle.js"></script>
 
+    <script src="../shared/js/ui-bootstrap-tpls-0.14.3.js"></script>
+
 </head>
 <body ng-controller="MainCtrl">
+<div class="alertoverlay">
+    <div class="alert alert-danger" ng-repeat="alert in alerts" role="alert">{{alert.msg}}</div>
+</div>
 <div class="alert alert-success" role="alert" ng-if="game && game.running">
     <div class="progress">
         <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{(game.state.progress.done / game.state.progress.count) * 100}}%"></div>

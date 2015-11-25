@@ -5,11 +5,24 @@
 
     function MainCtrl($scope, $http) {
         $scope.game = {running: false};
+        $scope.alerts = [];
 
         $scope.$on('fetchState', getState);
 
+        $scope.$on('alert', showAlert);
+
         if(localStorage.hasOwnProperty('gameSession')){
             $scope.game.running = true;
+        }
+
+        function showAlert(u, message){
+            console.log(arguments);
+            $scope.alerts.push({msg: message});
+            setTimeout(function(){
+                $scope.$apply(function(){
+                    $scope.alerts.shift();
+                });
+            }, 2000);
         }
 
         function getState(){

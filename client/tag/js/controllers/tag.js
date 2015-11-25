@@ -10,10 +10,10 @@
             console.log('/api/game/location/' + $scope.game.sessionID);
             $http.post('/api/game/location/' + $scope.game.sessionID, {tagID: tagID}).then(function(res){
                 if(res.status == 200){
-                    $scope.correctLocation = res.data.correctLocation;
-                    if($scope.correctLocation){
+                    if(res.data.correctLocation){
                         $rootScope.$broadcast('fetchState');
                     }else{
+                        $rootScope.$broadcast('alert', 'Das ist der falsche Raum!');
                         location.hash = '/';
                     }
                 }else{

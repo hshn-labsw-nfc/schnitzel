@@ -165,7 +165,10 @@ function checkLocation(req, res, next){
                 res.send(err);
                 return;
             }
-            console.log(tagID);
+            if(!session || !tag){
+                res.send({'ERROR': 'WOW, SHIIIIIT'});
+                return;
+            }
             if(session.locationID == tag.locationID){
 
                 // Correct locaction, lets update the session then
