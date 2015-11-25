@@ -25,6 +25,7 @@
                     $scope.game.state = res.data;
                     $scope.location = res.data.location;
                 }else{
+                    // TODO: Errorhandling
                     $scope.game.running = false;
                 }
             });

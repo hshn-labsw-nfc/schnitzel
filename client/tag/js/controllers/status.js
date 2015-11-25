@@ -8,9 +8,12 @@
         $scope.startGame = function(){
             console.log('clicked startbutton');
             $http.post('/api/game/start').then(function(res){
-                console.log(res);
-                localStorage['gameSession'] = res.data;
-                $scope.game.running = true;
+                if(res.status == 200){
+                    localStorage['gameSession'] = res.data;
+                    $scope.game.running = true;
+                }else {
+                    // TODO: Errorhandling
+                }
             });
         };
         $scope.endGame = function(){
