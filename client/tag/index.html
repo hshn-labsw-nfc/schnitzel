@@ -20,13 +20,13 @@
 
 </head>
 <body ng-controller="MainCtrl">
-<div class="alert alert-success" role="alert" ng-if="">
+<div class="alert alert-success" role="alert" ng-if="gameRunning">
     <div class="progress">
         <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
     </div>
     4 von 10 Orten gefunden
 </div>
-<div class="container" ng-controller="RoomCtrl">
+<div class="container">
     <div class="page-header">
         <h1 class="text-center">{{location.room}}<br><small>{{location.name}}</small></h1>
     </div>
