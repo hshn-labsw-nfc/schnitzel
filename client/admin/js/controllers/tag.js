@@ -54,7 +54,7 @@
         $scope.delete = function(id) {
             tagApi.delete({id:id});
             loadEntries();
-        }
+        };
         loadEntries();
     }
 

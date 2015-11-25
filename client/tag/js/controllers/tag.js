@@ -10,7 +10,8 @@
             console.log('/api/game/location/' + $scope.game.sessionID);
             $http.post('/api/game/location/' + $scope.game.sessionID, {tagID: tagID}).then(function(res){
                 if(res.status == 200){
-                    console.log(res.data);
+                    console.log(res.data.correctLocation);
+                    $scope.correctLocation = res.data.correctLocation;
                 }else{
 
                 }
