@@ -1,14 +1,19 @@
 <div class="page-header">
     <h1 class="text-center">{{location.room}}<br><small>{{location.name}}</small></h1>
 </div>
-<img class="preview-image" ng-if="location.image" ng-src="media/{{location.image}}.jpg" />
-<div class="text-center">
-        <span ng-repeat="(feature, count) in location.features">
-            <span class="icon {{feature}} {{(count>0)?'':'disabled'}}"></span>
-            <span class="badge" ng-if="count>1">{{count}}</span>
-        </span>
+
+<div ng-if="!main.game.running">
+    <img class="preview-image" ng-if="location.image" ng-src="media/{{location.image}}.jpg" />
+    <div class="text-center">
+            <span ng-repeat="(feature, count) in location.features">
+                <span class="icon {{feature}} {{(count>0)?'':'disabled'}}"></span>
+                <span class="badge" ng-if="count>1">{{count}}</span>
+            </span>
+    </div>
+
+    <div>{{location.description}}</div>
 </div>
 
-<div>{{location.description}}</div>
-<a class="btn btn-default" href="schnitzel.html" role="button">Schnitzeljagt-Mock</a>
-<a class="btn btn-default" href="startform.html" role="button">Start</a>
+<div ng-if="main.game.running">
+    <ng-include src="'templates/riddle.html'"></ng-include>
+</div>

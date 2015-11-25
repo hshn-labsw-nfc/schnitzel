@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var adminApi = require('./adminApi');
-var tagApi = require('./tagApi');
+var gameApi = require('./gameApi');
 
 router.use('/admin', adminApi);
-router.use('/tag', tagApi);
+router.use('/game', gameApi);
 
 module.exports = router;

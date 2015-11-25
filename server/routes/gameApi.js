@@ -13,7 +13,7 @@ router.get('location/:id', getLocation);
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
-    res.send('This will be the route to start a schnitzeljagt');
+    res.send('4635978');
 }
 
 // Will return the current state
@@ -23,7 +23,7 @@ function startPlaySession(req, res, next) {
 //    nextLocation: Location-Description (?)
 //}
 function getState(req, res, next) {
-    res.send('This will be the route to get the current state (next location, next riddle, progress)');
+    res.send('404567357489');
 }
 
 // Will return whether the sent solution was right

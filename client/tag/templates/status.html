@@ -3,7 +3,7 @@
         <h1 class="text-center">Willkommen bei der Schnitzeljagd</h1>
     </div>
     <div class="text-center">
-        <a class="btn btn-default" href="/tag/#/start">Schnitzeljagt beginnen</a>
+        <a class="btn btn-default" ng-click="startGame()">Schnitzeljagd beginnen</a>
     </div>
 </div>
 
@@ -12,9 +12,8 @@
     <div class="page-header">
         <h1 class="text-center">Status</h1>
     </div>
-    <div>
-        Begibt dich als nächstes zum Ort "dfghdfgoldfgol"
-
-
+    <ng-include src="'templates/riddle.html'"></ng-include>
+    <div class="text-center">
+        <a class="btn btn-default" ng-click="endGame()">Schnitzeljagd abbrechen</a>
     </div>
 </div>
