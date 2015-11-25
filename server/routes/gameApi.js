@@ -108,30 +108,31 @@ function getState(req, res, next) {
             res.send(result);
         }
     });
-    return;
-    res.send({
-        progress: {
-            count: 10,
-            done: 4
-        },
-        riddleSolved: false,
-        riddle: {
-            question: "Wer wie was?"
-        },
-        location: {
-            _id: "5655bd825c01ac3816364652",
-            isActive: true,
-            __v: 0,
-            category: "Allgemein",
-            description: "dfgfdgfd",
-            name: "fgdg",
-            room: "fdgfdgfd"
-        }
-    });
 }
 
 // Will return whether the sent solution was right
 function solveRiddle(req, res, next) {
+    var sessionID = req.params.sessionid;
+    var answer = req.body.answer;
+    PlaySession.findById(sessionID, function(err, session) {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        Riddle.findById(session.riddleID, function(err, riddle){
+            if (err) {
+                res.send(err);
+                return;
+            }
+            if(riddle.answer == answer){
+                res.send({answerWasRight: true});
+            }else{
+                res.send({answerWasRight: false});
+            }
+        });
+    });
+    return;
     if(req.params.sessionid == 4635978 && req.body.answer == "so"){
         res.send({answerWasRight: true});
     }else{
