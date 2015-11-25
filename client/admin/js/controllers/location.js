@@ -19,11 +19,10 @@
             general: 'Allgemein',
             room: 'Vorlesungsraum'
         };
-        console.log($scope.data);
 
         $scope.save = function (){
+            console.log('DATA TO SAVE');
             console.log($scope.data);
-            console.log($scope.data.isActive)
             if($routeParams.id){
                 $scope.data.$update(function () {
                     location.href = '#/listlocations';
@@ -41,6 +40,7 @@
         $scope.entity = 'location';
         $scope.name = 'Ort';
         $scope.tableheaders = {
+            isActive: 'Aktiv?',
             room: 'Raumnummer',
             name: 'Raumname',
             description: 'Beschreibung'
