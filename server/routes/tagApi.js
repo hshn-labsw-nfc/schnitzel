@@ -4,6 +4,7 @@ var router = express.Router();
 var Location = require('../models/location');
 var Riddle = require('../models/riddle');
 var Tag = require('../models/tag');
+var PlaySession = require('../models/playSession');
 
 router.post('/start', startSchnitzel);
 router.get('/state', getState);
