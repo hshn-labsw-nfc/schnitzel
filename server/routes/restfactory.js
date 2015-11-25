@@ -1,3 +1,5 @@
+// TODO: Improve errormessages: hide the real messages, write a errorhandler, ...
+
 var express = require('express');
 
 function getEntries(Model){
@@ -5,6 +7,7 @@ function getEntries(Model){
         Model.find(function(err, entries){
             if(err){
                 res.send(err);
+                return;
             }
             res.send(entries);
         });
@@ -17,6 +20,7 @@ function getEntry(Model) {
         Model.findById(id, function (err, entry) {
             if (err) {
                 res.send(err);
+                return;
             }
             res.send(entry);
         });
@@ -35,6 +39,7 @@ function createEntry(Model) {
         model.save(function (err) {
             if (err) {
                 res.send(err);
+                return;
             }
             res.send({message: Model.modelName + ' created'});
         });
@@ -47,6 +52,7 @@ function updateEntry(Model) {
         Model.findById(id, function (err, entry) {
             if (err) {
                 res.send(err);
+                return;
             }
             Model.schema.eachPath(function(path) {
                 if(req.body[path]){
@@ -56,6 +62,7 @@ function updateEntry(Model) {
             entry.save(function (err) {
                 if (err) {
                     res.send(err);
+                    return;
                 }
                 res.send({message: Model.modelName + ' updated'});
             });
@@ -71,6 +78,7 @@ function deleteEntry(Model) {
         }, function (err, entry) {
             if (err) {
                 res.send(err);
+                return;
             }
             res.send({message: Model.modelName + ' deleted'});
         });
