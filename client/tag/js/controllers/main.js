@@ -4,10 +4,11 @@
     app.controller('MainCtrl', MainCtrl);
 
     function MainCtrl($scope) {
-        $scope.game = {
+        $scope.main = {};
+        $scope.main.game = {
             running: true,
                 progress: {
-                done: 7,
+                done: 2,
                 count: 8
             }
         };

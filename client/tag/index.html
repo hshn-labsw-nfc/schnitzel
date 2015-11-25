@@ -17,30 +17,19 @@
     <script src="js/app.js"></script>
 
     <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/status.js"></script>
+    <script src="js/controllers/tag.js"></script>
 
 </head>
 <body ng-controller="MainCtrl">
-<div class="alert alert-success" role="alert" ng-if="game && game.running">
+<div class="alert alert-success" role="alert" ng-if="main.game && main.game.running">
     <div class="progress">
-        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{(game.progress.done / game.progress.count) * 100}}%"></div>
+        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{(main.game.progress.done / main.game.progress.count) * 100}}%"></div>
     </div>
-    {{game.progress.done}} von {{game.progress.count}} Orten gefunden
+    {{main.game.progress.done}} von {{main.game.progress.count}} Orten gefunden
 </div>
-<div class="container">
-    <div class="page-header">
-        <h1 class="text-center">{{location.room}}<br><small>{{location.name}}</small></h1>
-    </div>
-    <img class="preview-image" ng-if="location.image" ng-src="media/{{location.image}}.jpg" />
-    <div class="text-center">
-        <span ng-repeat="(feature, count) in location.features">
-            <span class="icon {{feature}} {{(count>0)?'':'disabled'}}"></span>
-            <span class="badge" ng-if="count>1">{{count}}</span>
-        </span>
-    </div>
+<div class="container" ng-view>
 
-    <div>{{location.description}}</div>
-    <a class="btn btn-default" href="schnitzel.html" role="button">Schnitzeljagt-Mock</a>
-    <a class="btn btn-default" href="startform.html" role="button">Start</a>
 </div>
 </body>
 </html>

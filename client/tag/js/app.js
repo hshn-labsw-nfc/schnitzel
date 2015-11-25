@@ -7,17 +7,13 @@
 
     function routeProvider($routeProvider){
         $routeProvider.
-
-        when('/start', {
-            templateUrl: 'templates/start.html',
-            controller: 'StartCtrl'
-        }).
-        when('/tag/:id', {
+        when('/:id', {
             templateUrl: 'templates/tag.html',
             controller: 'TagCtrl'
         }).
         when('/', {
-            templateUrl: 'templates/error.html'
+            templateUrl: 'templates/status.html',
+            controller: 'StatusCtrl'
         }).
         otherwise({
             redirectTo: '/'
