@@ -4,8 +4,8 @@ var PlaySessionSchema = new mongoose.Schema({
     lastUpdated: Date,
     locationsVisited: [String],
     riddleToSolve: Boolean,
-    nextRiddle: String,
-    nextLocation: String
+    riddleID: String,
+    locationID: String
 });
 
 module.exports = mongoose.model('PlaySession', PlaySessionSchema);

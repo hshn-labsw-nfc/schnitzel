@@ -6,14 +6,57 @@ var Riddle = require('../models/riddle');
 var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
 
-router.post('/start', startPlaySession);
+router.post('/playSession', startPlaySession);
+router.delete('/playSession/:sessionid', deletePlaySession);
 router.get('/state/:sessionid', getState);
 router.post('/solve/:sessionid', solveRiddle);
 router.get('/location/:id', getLocation);
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function filterObject(obj, keys){
+    var filteredObj = {};
+    keys.forEach(function(key){
+        filteredObj[key] = obj[key];
+    });
+    return filteredObj;
+}
+
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
-    res.send('4635978');
+    var playSession = new PlaySession();
+    playSession.lastUpdated = new Date();
+    playSession.riddleToSolve = false;
+    Location.find({'isActive': true}, function(err, locations){
+        if(err){
+            res.send(err);
+            return;
+        }
+        playSession.locationID = locations[getRandomInt(0,locations.length)]._id;
+
+        playSession.save(function(err, savedPlaySession){
+            if(err){
+                res.send(err);
+                return;
+            }
+            res.send(savedPlaySession._id);
+        });
+    });
+}
+
+function deletePlaySession(req, res, next){
+    var id = req.params.id;
+    PlaySession.remove({
+        _id: id
+    }, function (err, entry) {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.send({deleted: true});
+    });
 }
 
 // Will return the current state
@@ -23,6 +66,40 @@ function startPlaySession(req, res, next) {
 //    nextLocation: Location-Description (?)
 //}
 function getState(req, res, next) {
+    var sessionID = req.params.sessionid;
+    PlaySession.findById(sessionID, function(err, session){
+        if(err){
+            res.send(err);
+            return;
+        }
+        console.log(session);
+        var result = filterObject(session, ['riddleToSolve']);
+
+        if(session.locationID){
+            Location.findById(session.locationID, function(err, location){
+                if(err){
+                    res.send(err);
+                    return;
+                }
+                result.location = filterObject(location, ['room', 'name']);
+                if(session.riddleID){
+                    Riddle.findById(session.riddleID, function(err, riddle){
+                        if(err){
+                            res.send(err);
+                            return;
+                        }
+                        result.riddle = filterObject(riddle, ['name', 'description']);
+                        res.send(result);
+                    })
+                }else{
+                    res.send(result);
+                }
+            });
+        }else{
+            res.send(result);
+        }
+    });
+    return;
     res.send({
         progress: {
             count: 10,
