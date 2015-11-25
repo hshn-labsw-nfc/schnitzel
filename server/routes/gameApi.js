@@ -8,7 +8,7 @@ var PlaySession = require('../models/playSession');
 
 router.post('/start', startPlaySession);
 router.get('/state/:sessionid', getState);
-router.post('/riddle/:sessionid', solveRiddle);
+router.post('/solve/:sessionid', solveRiddle);
 router.get('/location/:id', getLocation);
 
 // Will return the sessionid of the playsession
@@ -28,9 +28,8 @@ function getState(req, res, next) {
             count: 10,
             done: 4
         },
-        riddleSolved: true,
+        riddleSolved: false,
         riddle: {
-            id: 43535,
             question: "Wer wie was?"
         },
         location: {
@@ -47,7 +46,11 @@ function getState(req, res, next) {
 
 // Will return whether the sent solution was right
 function solveRiddle(req, res, next) {
-    res.send('This will be the route to send a riddlesolution to the server');
+    if(req.params.sessionid == 4635978 && req.body.answer == "so"){
+        res.send({answerWasRight: true});
+    }else{
+        res.send({answerWasRight: false});
+    }
 }
 
 // Will return the location based on a tagid

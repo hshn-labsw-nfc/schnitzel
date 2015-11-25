@@ -6,11 +6,7 @@
     function MainCtrl($scope, $http) {
         $scope.game = {running: false};
 
-        $scope.$watch('game.running', function(value){
-            if(value){
-                getState();
-            }
-        });
+        $scope.$on('fetchState', getState);
 
         if(localStorage.hasOwnProperty('gameSession')){
             $scope.game.running = true;
@@ -30,6 +26,7 @@
                 }
             });
         }
+        getState();
     }
 
 })();

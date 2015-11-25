@@ -1,10 +1,17 @@
 
+<div ng-controller="RiddleCtrl">
+    <div ng-if="game.state.riddleSolved">
+        Gehe zu dem Raum {{game.state.location.name}} <span ng-if="game.state.location.room">({{game.state.location.room}})</span>
+    </div>
 
-<div ng-if="game.state.riddleSolved">
-    Du hast das Rätsel gelöst, gehe jetzt zu dem Raum {{location.name}} <span ng-if="location.room">({{location.room}})</span>
-</div>
-
-<div ng-if="!game.state.riddleSolved">
-    <h4>{{game.state.riddle.question}}</h4>
-
+    <div ng-if="!game.state.riddleSolved">
+        <h4>{{game.state.riddle.question}}</h4>
+        <div class="form-group">
+            <label for="answer">Deine Antwort</label>
+            <input type="text" class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
+        </div>
+        <div class="text-center">
+            <a class="btn btn-default" ng-click="solve()">Überprüfen</a>
+        </div>
+    </div>
 </div>
