@@ -27,8 +27,17 @@ function filterObject(obj, keys){
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
     var playSession = new PlaySession();
+    advanceState(playSession, res, function(savedPlaySession){
+        res.send(savedPlaySession._id);
+    });
+}
+
+function advanceState(playSession, res, callback){
     playSession.lastUpdated = new Date();
     playSession.riddleSolved = true;
+    if(playSession.locationID){
+        playSession.locationsVisited.push(playSession.locationID);
+    }
     Location.find({'isActive': true}, function(err, locations){
         if(err){
             res.send(err);
@@ -49,7 +58,9 @@ function startPlaySession(req, res, next) {
                     res.send(err);
                     return;
                 }
-                res.send(savedPlaySession._id);
+                if(callback){
+                    callback(savedPlaySession);
+                }
             });
         });
     });
@@ -126,18 +137,14 @@ function solveRiddle(req, res, next) {
                 return;
             }
             if(riddle.answer == answer){
-                res.send({answerWasRight: true});
+                advanceState(session, res, function(){
+                    res.send({answerWasRight: true});
+                });
             }else{
                 res.send({answerWasRight: false});
             }
         });
     });
-    return;
-    if(req.params.sessionid == 4635978 && req.body.answer == "so"){
-        res.send({answerWasRight: true});
-    }else{
-        res.send({answerWasRight: false});
-    }
 }
 
 // Will return the location based on a tagid
