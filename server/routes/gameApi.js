@@ -28,7 +28,7 @@ function filterObject(obj, keys){
 function startPlaySession(req, res, next) {
     var playSession = new PlaySession();
     playSession.lastUpdated = new Date();
-    playSession.riddleToSolve = false;
+    playSession.riddleSolved = true;
     Location.find({'isActive': true}, function(err, locations){
         if(err){
             res.send(err);
