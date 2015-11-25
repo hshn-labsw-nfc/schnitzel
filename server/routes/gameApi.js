@@ -28,6 +28,7 @@ function filterObject(obj, keys){
 function startPlaySession(req, res, next) {
     var playSession = new PlaySession();
     advanceState(playSession, res, function(savedPlaySession){
+
         res.send(savedPlaySession._id);
     });
 }
@@ -93,7 +94,7 @@ function getState(req, res, next) {
             return;
         }
         console.log(session);
-        var result = filterObject(session, ['riddleToSolve']);
+        var result = filterObject(session, ['riddleSolved']);
 
         if(session.locationID){
             Location.findById(session.locationID, function(err, location){
