@@ -36,12 +36,21 @@ function startPlaySession(req, res, next) {
         }
         playSession.locationID = locations[getRandomInt(0,locations.length)]._id;
 
-        playSession.save(function(err, savedPlaySession){
+        Riddle.find().exec(function(err, riddles){
             if(err){
                 res.send(err);
                 return;
             }
-            res.send(savedPlaySession._id);
+
+            playSession.riddleID = riddles[getRandomInt(0, locations.length)]._id;
+
+            playSession.save(function(err, savedPlaySession){
+                if(err){
+                    res.send(err);
+                    return;
+                }
+                res.send(savedPlaySession._id);
+            });
         });
     });
 }

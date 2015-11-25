@@ -5,7 +5,9 @@
     </div>
 
     <div ng-if="!game.state.riddleSolved">
-        <h4>{{game.state.riddle.question}}</h4>
+        <h4>{{game.state.riddle.name}}</h4>
+        {{game.state.riddle.description}}
+        <br><br>
         <div class="form-group">
             <label for="answer">Deine Antwort</label>
             <input type="text" class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
