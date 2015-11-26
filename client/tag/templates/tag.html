@@ -3,11 +3,3 @@
 <div ng-if="!game.running">
     <ng-include src="'templates/location.html'"></ng-include>
 </div>
-
-<div ng-if="game.running">
-
-    <ng-include ng-if="correctLocation" src="'templates/riddle.html'"></ng-include>
-    <div class="text-center">
-        <a class="btn btn-default" href="#/">zur Übersicht</a>
-    </div>
-</div>

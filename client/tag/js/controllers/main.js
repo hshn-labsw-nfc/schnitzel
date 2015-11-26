@@ -33,6 +33,11 @@
                     $scope.game.sessionID = sessionID;
                     $scope.game.state = res.data;
                     $scope.location = res.data.location;
+
+                    if($scope.game.state.task == 'won'){
+                        console.log('winnerscreen');
+                        //location.hash = '/winner';
+                    }
                 }else{
                     // TODO: Errorhandling
                     $scope.game.running = false;

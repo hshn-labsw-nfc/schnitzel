@@ -5,6 +5,12 @@
 
 
     function StatusCtrl($scope, $http, $rootScope) {
+        $scope.caption = {
+            findLocation: 'Ort finden',
+            solveRiddle: 'Rätsel lösen',
+            won: 'DU HAST GEWONNEN'
+        }
+
         $scope.startGame = function(){
             console.log('clicked startbutton');
             $http.post('/api/game/playsession').then(function(res){

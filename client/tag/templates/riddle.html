@@ -1,7 +1,7 @@
 
 <div ng-controller="RiddleCtrl">
     <div ng-if="game.state.task == 'findLocation'">
-        Gehe zu dem Raum {{game.state.location.name}} <span ng-if="game.state.location.room">({{game.state.location.room}})</span>
+        Gehe zu folgendem Ort: <b>{{game.state.location.name}}</b> <span ng-if="game.state.location.room">({{game.state.location.room}})</span>
     </div>
 
     <div ng-if="game.state.task == 'solveRiddle'">
