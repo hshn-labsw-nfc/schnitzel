@@ -15,9 +15,9 @@
             $scope.game.running = true;
         }
 
-        function showAlert(u, message){
-            console.log(arguments);
-            $scope.alerts.push({msg: message});
+        function showAlert(u, message, type){
+            type = type || 'warning';
+            $scope.alerts.push({message: message, type: type});
             setTimeout(function(){
                 $scope.$apply(function(){
                     $scope.alerts.shift();

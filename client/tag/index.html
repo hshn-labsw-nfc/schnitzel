@@ -27,7 +27,7 @@
 </head>
 <body ng-controller="MainCtrl">
 <div class="alertoverlay">
-    <div class="alert alert-danger" ng-repeat="alert in alerts" role="alert">{{alert.msg}}</div>
+    <div class="alert alert-{{alert.type}}" ng-repeat="alert in alerts" role="alert">{{alert.message}}</div>
 </div>
 <div class="alert alert-success" role="alert" ng-if="game && game.running">
     <div class="progress">
