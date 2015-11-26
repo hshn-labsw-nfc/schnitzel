@@ -36,35 +36,53 @@ function startPlaySession(req, res, next) {
 
 function advanceState(playSession, res, callback){
     playSession.lastUpdated = new Date();
-    playSession.atLocation = false;
-    if(playSession.locationID){
-        playSession.locationsVisited.push(playSession.locationID);
-    }
-    Location.find({'isActive': true}, function(err, locations){
+    playSession.task = 'findLocation';
+
+
+    Riddle.find().exec(function(err, riddles){
         if(err){
             res.send(err);
             return;
         }
-        playSession.locationID = locations[getRandomInt(0,locations.length)]._id;
 
-        Riddle.find().exec(function(err, riddles){
-            if(err){
-                res.send(err);
-                return;
-            }
+        playSession.riddleID = riddles[getRandomInt(0, riddles.length)]._id;
 
-            playSession.riddleID = riddles[getRandomInt(0, locations.length)]._id;
-
-            playSession.save(function(err, savedPlaySession){
+        if(!playSession.locationCount){
+            Location.find({'isActive': true}, function(err, locations){
                 if(err){
                     res.send(err);
                     return;
                 }
-                if(callback){
-                    callback(savedPlaySession);
-                }
+                playSession.locationCount = locations.length;
+                playSession.locationsToVisit = locations.map(function(location){
+                    return location._id;
+                });
+                _finishAdvanceState(playSession, callback);
             });
-        });
+
+        }else{
+            _finishAdvanceState(playSession, callback);
+        }
+
+
+    });
+}
+
+function _finishAdvanceState(playSession, callback){
+    if(playSession.locationsToVisit.length == 0){
+        playSession.task = 'won';
+    }else{
+        playSession.locationID = playSession.locationsToVisit.splice(getRandomInt(0,playSession.locationsToVisit.length), 1);
+    }
+    console.log(playSession.locationID);
+    playSession.save(function(err, savedPlaySession){
+        if(err){
+            res.send(err);
+            return;
+        }
+        if(callback){
+            callback(savedPlaySession);
+        }
     });
 }
 
@@ -95,7 +113,7 @@ function getState(req, res, next) {
             return;
         }
         console.log(session);
-        var result = filterObject(session, ['atLocation']);
+        var result = filterObject(session, ['task']);
 
         if(session.locationID){
             Location.findById(session.locationID, function(err, location){
@@ -166,13 +184,13 @@ function checkLocation(req, res, next){
                 return;
             }
             if(!session || !tag){
-                res.send({'ERROR': 'WOW, SHIIIIIT'});
+                res.send({'ERROR': 'Please check your parameters :/'});
                 return;
             }
             if(session.locationID == tag.locationID){
 
                 // Correct locaction, lets update the session then
-                session.atLocation = true;
+                session.task = 'solveRiddle';
                 session.save(function(){
                     if(err){
                         res.send(err);

@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 
 var PlaySessionSchema = new mongoose.Schema({
     lastUpdated: Date,
-    locationsVisited: [String],
-    atLocation: Boolean,
+    locationsToVisit: [String],
+    locationCount: Number,
+    task: String, // won, solveRiddle, findLocation
     riddleID: String,
     locationID: String
 });
