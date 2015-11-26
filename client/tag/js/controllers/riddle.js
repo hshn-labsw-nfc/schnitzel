@@ -13,8 +13,10 @@
                 if(res.status == 200){
                     if(res.data.correctAnswer){
                         console.log('Right answer !!!');
+                        $rootScope.$broadcast('alert', 'Richtige Antwort', 'success');
                         $rootScope.$broadcast('fetchState');
                     }else{
+                        $rootScope.$broadcast('alert', 'Falsche Antwort', 'danger');
                         console.log('Wrong answer !');
                     }
                 }else {

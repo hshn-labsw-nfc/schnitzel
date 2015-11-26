@@ -13,7 +13,7 @@
                         $rootScope.$broadcast('alert', 'Raum gefunden', 'success');
                         $rootScope.$broadcast('fetchState');
                     }else{
-                        $rootScope.$broadcast('alert', 'Das ist der falsche Raum!', 'warning');
+                        $rootScope.$broadcast('alert', 'Das ist der falsche Raum!', 'danger');
                     }
                     location.hash = '/';
                 }else{

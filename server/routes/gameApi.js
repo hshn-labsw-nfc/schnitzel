@@ -113,7 +113,13 @@ function getState(req, res, next) {
             return;
         }
         console.log(session);
-        var result = filterObject(session, ['task']);
+        var result = {
+            task: session.task,
+            progress: {
+                count : session.locationCount,
+                done: session.locationCount - session.locationsToVisit.length - (session.task=='findLocation'? 1: 0)
+            }
+        };
 
         if(session.locationID){
             Location.findById(session.locationID, function(err, location){
