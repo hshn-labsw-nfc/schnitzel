@@ -40,6 +40,7 @@
             }).error(function (err) {
                 $scope.game.running = false;
                 console.log(err);
+                $scope.$broadcast('alert', err, 'danger');
             });
         }
 
