@@ -11,41 +11,38 @@
 
         $scope.$on('alert', showAlert);
 
-        if(localStorage.hasOwnProperty('gameSession')){
+        if (localStorage.hasOwnProperty('gameSession')) {
             $scope.game.running = true;
         }
 
-        function showAlert(u, message, type){
+        function showAlert(u, message, type) {
             type = type || 'warning';
             $scope.alerts.push({message: message, type: type});
-            setTimeout(function(){
-                $scope.$apply(function(){
+            setTimeout(function () {
+                $scope.$apply(function () {
                     $scope.alerts.shift();
                 });
             }, 2000);
         }
 
-        function getState(){
+        function getState() {
             var sessionID = localStorage['gameSession'];
-            $http.get('/api/game/state/' + sessionID).success(function(res){
+            $http.get('/api/game/state/' + sessionID).success(function (res) {
                 console.log(res);
-                if(res.status == 200){
-                    $scope.game.sessionID = sessionID;
-                    $scope.game.state = res.data;
-                    $scope.location = res.data.location;
+                $scope.game.sessionID = sessionID;
+                $scope.game.state = res.data;
+                $scope.location = res.data.location;
 
-                    if($scope.game.state.task == 'won'){
-                        console.log('winnerscreen');
-                        //location.hash = '/winner';
-                    }
-                }else{
-                    // TODO: Errorhandling
-                    $scope.game.running = false;
+                if ($scope.game.state.task == 'won') {
+                    console.log('winnerscreen');
+                    //location.hash = '/winner';
                 }
-            }).error(function(err){
+            }).error(function (err) {
+                $scope.game.running = false;
                 console.log(err);
             });
         }
+
         getState();
     }
 
