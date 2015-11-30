@@ -5,6 +5,7 @@ var Location = require('../models/location');
 var Riddle = require('../models/riddle');
 var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
+var ResponseHandler = require('../util/responsehandler.js');
 
 router.post('/playsession', startPlaySession);
 router.delete('/playsession/:sessionid', deletePlaySession);
@@ -40,17 +41,21 @@ function advanceState(playSession, res, callback){
 
 
     Riddle.find().exec(function(err, riddles){
+        var handler = new ResponseHandler(res);
         if(err){
-            res.send(err);
+            handler.error(err);
             return;
         }
-
+        if(riddles.length == 0){
+            handler.error(new Error('no Riddles in database'));
+            return;
+        }
         playSession.riddleID = riddles[getRandomInt(0, riddles.length)]._id;
 
         if(!playSession.locationCount){
             Location.find({'isActive': true}, function(err, locations){
                 if(err){
-                    res.send(err);
+                    handler.error(err);
                     return;
                 }
                 playSession.locationCount = locations.length;
@@ -106,10 +111,11 @@ function deletePlaySession(req, res, next){
 //    nextLocation: Location-Description (?)
 //}
 function getState(req, res, next) {
+    var handler = new ResponseHandler(res);
     var sessionID = req.params.sessionid;
     PlaySession.findById(sessionID, function(err, session){
         if(err){
-            res.send(err);
+            handler.error(err);
             return;
         }
         console.log(session);
@@ -124,14 +130,14 @@ function getState(req, res, next) {
         if(session.locationID){
             Location.findById(session.locationID, function(err, location){
                 if(err){
-                    res.send(err);
+                    handler.error(err);
                     return;
                 }
                 result.location = filterObject(location, ['room', 'name']);
                 if(session.riddleID){
                     Riddle.findById(session.riddleID, function(err, riddle){
                         if(err){
-                            res.send(err);
+                            handler.error(err);
                             return;
                         }
                         result.riddle = filterObject(riddle, ['name', 'description']);
