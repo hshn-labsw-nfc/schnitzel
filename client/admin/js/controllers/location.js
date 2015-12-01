@@ -35,7 +35,7 @@
         }
     }
 
-    function LocationListCtrl($scope, locationApi, $uibModal, ModalCtrl){
+    function LocationListCtrl($scope, locationApi, $uibModal){
         console.log(locationApi.query());
         $scope.entity = 'location';
         $scope.name = 'Ort';
