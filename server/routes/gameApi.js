@@ -17,6 +17,10 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function getAndRemoveRandomElement(arr){
+    return arr.splice(getRandomInt(0, arr.length), 1);
+}
+
 function filterObject(obj, keys) {
     var filteredObj = {};
     keys.forEach(function (key) {
@@ -76,7 +80,7 @@ function _finishAdvanceState(playSession, callback) {
     if (playSession.locationsToVisit.length == 0) {
         playSession.task = 'won';
     } else {
-        playSession.locationID = playSession.locationsToVisit.splice(getRandomInt(0, playSession.locationsToVisit.length), 1);
+        playSession.locationID = getAndRemoveRandomElement(playSession.locationsToVisit);
     }
     console.log(playSession.locationID);
     playSession.save(function (err, savedPlaySession) {
