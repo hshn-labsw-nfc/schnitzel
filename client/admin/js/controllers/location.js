@@ -4,7 +4,7 @@
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
 
-    function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
+    function LocationEntryCtrl($scope, $routeParams, locationApi) {
 
         $scope.data = {};
         if ($routeParams.id) {
