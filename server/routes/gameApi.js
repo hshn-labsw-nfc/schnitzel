@@ -218,9 +218,4 @@ function checkLocation(req, res, next){
     });
 }
 
-// Will return the location based on a tagid
-function getLocation(req, res, next){
-
-}
-
 module.exports = router;

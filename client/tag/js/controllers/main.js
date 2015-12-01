@@ -27,11 +27,11 @@
 
         function getState() {
             var sessionID = localStorage['gameSession'];
-            $http.get('/api/game/state/' + sessionID).success(function (res) {
-                console.log(res);
+            $http.get('/api/game/state/' + sessionID).success(function (data) {
+                console.log(data);
                 $scope.game.sessionID = sessionID;
-                $scope.game.state = res.data;
-                $scope.location = res.data.location;
+                $scope.game.state = data;
+                $scope.location = data.location;
 
                 if ($scope.game.state.task == 'won') {
                     console.log('winnerscreen');
