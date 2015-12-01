@@ -72,8 +72,12 @@
                         };
                         return $scope.message;
                     },
-                    functionToExecute: function() {
-                        return  $scope.delete;
+                    callback: function() {
+                        return function (success) {
+                            if(success) {
+                                $scope.delete(id);
+                            }
+                        };
                     },
                     parameter: function () {
                         return id;

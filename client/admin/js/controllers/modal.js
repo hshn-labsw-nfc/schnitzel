@@ -8,15 +8,16 @@
     app.controller('ModalCtrl', ModalCtrl);
 
 
-    function ModalCtrl($scope, $uibModalInstance, message, functionToExecute, parameter) {
+    function ModalCtrl($scope, $uibModalInstance, message, callback) {
         $scope.header = message['header'];
         $scope.body = message['text'];
         $scope.ok = function () {
-            functionToExecute(parameter);
+            callback(true);
             $uibModalInstance.dismiss('cancel');
         };
 
         $scope.cancel = function () {
+            callback(false);
             $uibModalInstance.dismiss('cancel');
         };
     }
