@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('riddle', ['ui.bootstrap','api']);
+    var app = angular.module('riddle', ['ui.bootstrap','api', 'modal']);
 
     app.controller('RiddleListCtrl', RiddleListCtrl);
     app.controller('RiddleEntryCtrl', ['$scope', '$routeParams', 'riddleApi', 'locationApi', RiddleEntryCtrl]);
@@ -36,7 +36,7 @@
         }
     }
 
-    function RiddleListCtrl($scope, riddleApi){
+    function RiddleListCtrl($scope, riddleApi, $uibModal){
         $scope.name = 'Rätsel';
         $scope.entity = 'riddle';
         $scope.tableheaders = {
@@ -54,6 +54,35 @@
             loadEntries();
         };
         loadEntries();
+
+        $scope.animationsEnabled = true;
+        $scope.open = function (id) {
+            $scope.id = id;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'templates/modal/confirm_delete_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    message: function() {
+                        $scope.message = {
+                            header: 'Delete riddle',
+                            text: 'Are you sure to delete this riddle'
+                        };
+                        return $scope.message;
+                    },
+                    functionToExecute: function() {
+                        return  $scope.delete;
+                    },
+                    parameter: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
+
     }
 
 

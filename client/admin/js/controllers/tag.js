@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('tag', ['ui.bootstrap', 'api']);
+    var app = angular.module('tag', ['ui.bootstrap', 'api', 'modal']);
 
     app.controller('TagListCtrl', TagListCtrl);
     app.controller('TagEntryCtrl', ['$scope', '$routeParams', 'tagApi','locationApi', TagEntryCtrl]);
@@ -36,7 +36,7 @@
         }
     }
 
-    function TagListCtrl($scope, tagApi){
+    function TagListCtrl($scope, tagApi, $uibModal){
         $scope.name = 'Tag';
         $scope.entity = 'tag';
 
@@ -56,6 +56,34 @@
             loadEntries();
         };
         loadEntries();
+
+        $scope.animationsEnabled = true;
+        $scope.open = function (id) {
+            $scope.id = id;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'templates/modal/confirm_delete_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    message: function() {
+                        $scope.message = {
+                            header: 'Delete Tag',
+                            text: 'Are you sure to delete this Tag'
+                        };
+                        return $scope.message;
+                    },
+                    functionToExecute: function() {
+                        return  $scope.delete;
+                    },
+                    parameter: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
     }
 
 })();
