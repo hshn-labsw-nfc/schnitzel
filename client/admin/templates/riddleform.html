@@ -33,9 +33,13 @@
 
     <div class="form-group">
         <label class="control-label">Verknüpfter Ort</label>
+        <div>
+            <smal>Falls ausgewählt, wird dieses Rätsel an dem Ausgewähltem Ort abgefragt.</smal>
+        </div>
         <select class="form-control" ng-model="data.locationID">
             <option ng-repeat="(Key, value) in locations" ng-value="value.id">{{value.name}}</option>
         </select>
+
     </div>
 
     <div class="text-right">
