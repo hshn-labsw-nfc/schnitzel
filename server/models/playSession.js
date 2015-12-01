@@ -4,6 +4,7 @@ var PlaySessionSchema = new mongoose.Schema({
     lastUpdated: Date,
     locationsToVisit: [String],
     locationCount: Number,
+    usedRiddles: [String],
     task: String, // won, solveRiddle, findLocation
     riddleID: String,
     locationID: String

@@ -18,7 +18,7 @@ function getRandomInt(min, max) {
 }
 
 function getAndRemoveRandomElement(arr){
-    return arr.splice(getRandomInt(0, arr.length), 1);
+    return arr.splice(getRandomInt(0, arr.length), 1)[0];
 }
 
 function filterObject(obj, keys) {
@@ -39,59 +39,62 @@ function startPlaySession(req, res, next) {
 }
 
 function advanceState(playSession, res, callback) {
+    var handler = new ResponseHandler(res);
     playSession.lastUpdated = new Date();
     playSession.task = 'findLocation';
 
+    if (!playSession.locationCount) {
+        Location.find({'isActive': true}, function (err, locations) {
+            if (err) {
+                handler.error(err);
+                return;
+            }
+            playSession.locationCount = locations.length;
+            playSession.locationsToVisit = locations.map(function (location) {
+                return location._id;
+            });
+            _finishAdvanceState(playSession, res, callback);
+        });
 
+    } else {
+        _finishAdvanceState(playSession, res, callback);
+    }
+
+
+}
+
+function _finishAdvanceState(playSession, res, callback) {
+    var handler = new ResponseHandler(res);
     Riddle.find().exec(function (err, riddles) {
-        var handler = new ResponseHandler(res);
         if (err) {
+
             handler.error(err);
             return;
         }
-        if (riddles.length == 0) {
+        if (!riddles || riddles.length == 0) {
             handler.error(new Error('no Riddles in database'));
             return;
         }
-        playSession.riddleID = riddles[getRandomInt(0, riddles.length)]._id;
+        var riddle = getAndRemoveRandomElement(riddles);
+        playSession.riddleID = riddle._id;
 
-        if (!playSession.locationCount) {
-            Location.find({'isActive': true}, function (err, locations) {
-                if (err) {
-                    handler.error(err);
-                    return;
-                }
-                playSession.locationCount = locations.length;
-                playSession.locationsToVisit = locations.map(function (location) {
-                    return location._id;
-                });
-                _finishAdvanceState(playSession, callback);
-            });
-
+        if (playSession.locationsToVisit.length == 0) {
+            playSession.task = 'won';
         } else {
-            _finishAdvanceState(playSession, callback);
+            playSession.locationID = getAndRemoveRandomElement(playSession.locationsToVisit);
         }
-
-
+        playSession.save(function (err, savedPlaySession) {
+            if (err) {
+                res.send(err);
+                return;
+            }
+            if (callback) {
+                callback(savedPlaySession);
+            }
+        });
     });
-}
 
-function _finishAdvanceState(playSession, callback) {
-    if (playSession.locationsToVisit.length == 0) {
-        playSession.task = 'won';
-    } else {
-        playSession.locationID = getAndRemoveRandomElement(playSession.locationsToVisit);
-    }
-    console.log(playSession.locationID);
-    playSession.save(function (err, savedPlaySession) {
-        if (err) {
-            res.send(err);
-            return;
-        }
-        if (callback) {
-            callback(savedPlaySession);
-        }
-    });
+
 }
 
 function deletePlaySession(req, res, next) {
@@ -119,6 +122,10 @@ function getState(req, res, next) {
     PlaySession.findById(sessionID, function (err, session) {
         if (err) {
             handler.error(err);
+            return;
+        }
+        if (session == null) {
+            handler.error(new Error('Session dosn\'t exist'));
             return;
         }
         console.log(session);
@@ -206,7 +213,6 @@ function checkLocation(req, res, next) {
         }
 
         Tag.findOne({'tagID': tagID}, function (err, tag) {
-            console.log(arguments);
             if (err) {
                 res.send(err);
                 return;
