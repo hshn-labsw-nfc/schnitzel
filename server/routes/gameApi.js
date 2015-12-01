@@ -132,14 +132,14 @@ function getState(req, res, next) {
                     handler.error(err);
                     return;
                 }
-                result.location = filterObject(location, ['room', 'name']);
+                result.location = filterObject(location, ['name']);
                 if(session.riddleID){
                     Riddle.findById(session.riddleID, function(err, riddle){
                         if(err){
                             handler.error(err);
                             return;
                         }
-                        result.riddle = filterObject(riddle, ['name', 'description']);
+                        result.riddle = filterObject(riddle, ['name', 'description', 'hint']);
                         res.send(result);
                     })
                 }else{
@@ -167,7 +167,7 @@ function solveRiddle(req, res, next) {
                 res.send(err);
                 return;
             }
-            if(riddle.answer == answer){
+            if(normalize(riddle.answer) == normalize(answer)){
                 advanceState(session, res, function(){
                     res.send({correctAnswer: true});
                 });
@@ -217,4 +217,7 @@ function checkLocation(req, res, next){
     });
 }
 
+function normalize(string){
+    return  string.toLowerCase().trim();
+}
 module.exports = router;

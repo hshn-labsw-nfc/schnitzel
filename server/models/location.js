@@ -1,16 +1,9 @@
 var mongoose = require('mongoose');
 
 var LocationSchema   = new mongoose.Schema({
-    room: String,
     name: String,
     description: String,
-    isActive: Boolean,
-    category: String,
-    seatingCount: Number,
-    pcCount: Number,
-    projectorCount: Number,
-    printerCount: Number
-
+    isActive: Boolean
 });
 
 module.exports = mongoose.model('Location', LocationSchema);

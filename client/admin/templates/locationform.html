@@ -1,43 +1,10 @@
 <h1 class="page-header">{{heading}}</h1>
 <form role="form">
-    <div class="form-group">
-        <label class="control-label">
-            Raumnummer
-        </label>
-        <input class="form-control" ng-model="data.room">
-    </div>
+
     <div class="form-group">
         <label class="control-label">Raumname</label>
         <input class="form-control" ng-model="data.name">
     </div>
-    <div class="form-group">
-        <label class="control-label">Categorie</label>
-        <select class="form-control" ng-model="data.category">
-            <option selected>{{location.general}}</option>
-            <option>{{location.room}}</option>
-        </select>
-    </div>
-    <div ng-if="data.category == location.room" class="panel panel-info">
-        <div style="padding-left: 20px">
-            <div class="form-group">
-                <label class="control-label">Sitzplätze</label>
-                <input class="form-control" type="number" ng-model="data.seatingCount">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Computer</label>
-                <input class="form-control" type="number" ng-model="data.pcCount">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Beamer</label>
-                <input class="form-control" type="number" ng-model="data.projectorCount">
-            </div>
-            <div class="form-group">
-                <label class="control-label">Drucker</label>
-                <input class="form-control" type="number" ng-model="data.printerCount">
-            </div>
-        </div>
-    </div>
-
     <div class="form-group">
         <label class="control-label">Beschreibung</label>
         <textarea class="form-control" rows="5" ng-model="data.description"></textarea>

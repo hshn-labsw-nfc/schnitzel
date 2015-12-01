@@ -24,5 +24,8 @@
                 }
             });
         };
+        $scope.hint = function(){
+            $scope.showhint = true;
+        };
     }
 })();

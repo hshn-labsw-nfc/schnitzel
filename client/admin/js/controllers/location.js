@@ -41,7 +41,6 @@
         $scope.name = 'Ort';
         $scope.tableheaders = {
             isActive: 'Aktiv?',
-            room: 'Raumnummer',
             name: 'Raumname',
             description: 'Beschreibung'
         };
