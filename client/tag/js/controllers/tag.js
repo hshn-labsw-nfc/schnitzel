@@ -7,7 +7,7 @@
         var tagID = $routeParams.tagID;
 
         if($scope.game.running){
-            $http.post('/api/game/location/' + $scope.game.sessionID, {tagID: tagID}).then(function(res){
+            $http.post('/api/game/sessions/' + $scope.game.sessionID + '/location', {tagID: tagID}).then(function(res){
                 if(res.status == 200){
                     if(res.data.correctLocation){
                         $rootScope.$broadcast('alert', 'Raum gefunden', 'success');

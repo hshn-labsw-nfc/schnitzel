@@ -28,7 +28,7 @@
         function getState() {
             if($scope.game.running){
                 var sessionID = localStorage['gameSession'];
-                $http.get('/api/game/state/' + sessionID).success(function (data) {
+                $http.get('/api/game/sessions/' + sessionID).success(function (data) {
                     console.log(data);
                     $scope.game.sessionID = sessionID;
                     $scope.game.state = data;

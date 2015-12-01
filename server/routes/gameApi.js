@@ -7,11 +7,11 @@ var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
 var ResponseHandler = require('../util/responsehandler.js');
 
-router.post('/playsession', startPlaySession);
-router.delete('/playsession/:sessionid', deletePlaySession);
-router.get('/state/:sessionid', getState);
-router.post('/solve/:sessionid', solveRiddle);
-router.post('/location/:sessionid', checkLocation);
+router.post('/sessions', startPlaySession);
+router.delete('/sessions/:sessionid', deletePlaySession);
+router.get('/sessions/:sessionid', getState);
+router.post('/sessions/:sessionid/riddle', solveRiddle);
+router.post('/sessions/:sessionid/location', checkLocation);
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -156,6 +156,10 @@ function getState(req, res, next) {
 function solveRiddle(req, res, next) {
     var sessionID = req.params.sessionid;
     var answer = req.body.answer;
+    if(!answer){
+        res.send(new Error('No answer provided'));
+        return;
+    }
     PlaySession.findById(sessionID, function(err, session) {
         if (err) {
             res.send(err);
