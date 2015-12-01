@@ -23,6 +23,7 @@
         }
 
         $scope.save = function (){
+
             if($routeParams.id){
                 $scope.data.$update(function () {
                     location.href = '#/listriddles';

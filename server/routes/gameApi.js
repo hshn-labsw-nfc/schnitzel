@@ -7,11 +7,11 @@ var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
 var ResponseHandler = require('../util/responsehandler.js');
 
-router.post('/playsession', startPlaySession);
-router.delete('/playsession/:sessionid', deletePlaySession);
-router.get('/state/:sessionid', getState);
-router.post('/solve/:sessionid', solveRiddle);
-router.post('/location/:sessionid', checkLocation);
+router.post('/sessions', startPlaySession);
+router.delete('/sessions/:sessionid', deletePlaySession);
+router.get('/sessions/:sessionid', getState);
+router.post('/sessions/:sessionid/riddle', solveRiddle);
+router.post('/sessions/:sessionid/location', checkLocation);
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -132,14 +132,14 @@ function getState(req, res, next) {
                     handler.error(err);
                     return;
                 }
-                result.location = filterObject(location, ['room', 'name']);
+                result.location = filterObject(location, ['name']);
                 if(session.riddleID){
                     Riddle.findById(session.riddleID, function(err, riddle){
                         if(err){
                             handler.error(err);
                             return;
                         }
-                        result.riddle = filterObject(riddle, ['name', 'description']);
+                        result.riddle = filterObject(riddle, ['name', 'description', 'hint']);
                         res.send(result);
                     })
                 }else{
@@ -156,6 +156,10 @@ function getState(req, res, next) {
 function solveRiddle(req, res, next) {
     var sessionID = req.params.sessionid;
     var answer = req.body.answer;
+    if(!answer){
+        res.send(new Error('No answer provided'));
+        return;
+    }
     PlaySession.findById(sessionID, function(err, session) {
         if (err) {
             res.send(err);
@@ -167,7 +171,7 @@ function solveRiddle(req, res, next) {
                 res.send(err);
                 return;
             }
-            if(riddle.answer == answer){
+            if(normalize(riddle.answer) == normalize(answer)){
                 advanceState(session, res, function(){
                     res.send({correctAnswer: true});
                 });
@@ -217,4 +221,7 @@ function checkLocation(req, res, next){
     });
 }
 
+function normalize(string){
+    return  string.toLowerCase().trim();
+}
 module.exports = router;

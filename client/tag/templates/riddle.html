@@ -1,19 +1,25 @@
 
 <div ng-controller="RiddleCtrl">
     <div ng-if="game.state.task == 'findLocation'">
-        Finde folgendem Ort: <b>{{game.state.location.name}}</b> <span ng-if="game.state.location.room">({{game.state.location.room}})</span>
+        Finde folgendem Ort: <b>{{game.state.location.name}}</b>
     </div>
 
     <div ng-if="game.state.task == 'solveRiddle'">
         <h4>{{game.state.riddle.name}}</h4>
         {{game.state.riddle.description}}
         <br><br>
+        <div class="alert alert-info" ng-if="showhint">
+            <b>Hinweis:</b> {{game.state.riddle.hint}}
+        </div>
         <div class="form-group">
             <label for="answer">Deine Antwort</label>
             <input type="text" class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
         </div>
         <div class="text-center">
             <a class="btn btn-primary" ng-click="solve()">Überprüfen</a>
+            <span ng-if="game.state.riddle.hint && game.state.riddle.hint.length > 0 && !showhint">
+                <a class="btn btn-primary" ng-click="hint()">Hinweis</a>
+            </span>
         </div>
     </div>
 </div>

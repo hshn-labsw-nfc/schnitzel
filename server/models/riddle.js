@@ -4,6 +4,7 @@ var RiddleSchema   = new mongoose.Schema({
     name: String,
     description: String,
     answer: String,
+    hint: String,
     locationID: String,
     heat: Number
 });
