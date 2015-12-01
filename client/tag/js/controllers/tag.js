@@ -8,7 +8,7 @@
 
         if($scope.game.running){
             $http.post('/api/game/sessions/' + $scope.game.sessionID + '/location', {tagID: tagID}).then(function(res){
-                if(res.status == 200){
+                if(res.status == 200){// {correctLocation: true}
                     if(res.data.correctLocation){
                         $rootScope.$broadcast('alert', 'Raum gefunden', 'success');
                         $rootScope.$broadcast('fetchState');

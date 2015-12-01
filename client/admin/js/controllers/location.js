@@ -4,7 +4,7 @@
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
 
-    function LocationEntryCtrl($scope, $routeParams, locationApi, tagApi) {
+    function LocationEntryCtrl($scope, $routeParams, locationApi) {
 
         $scope.data = {};
         if ($routeParams.id) {
@@ -53,6 +53,10 @@
 
         $scope.loadEntries();
 
+        $scope.delete = function(id) {
+            locationApi.delete({id:id});
+            $scope.loadEntries();
+        };
 
         $scope.animationsEnabled = true;
         $scope.open = function (id) {
@@ -62,10 +66,21 @@
                 templateUrl: 'templates/modal/confirm_delete_modal.html',
                 controller: 'ModalCtrl',
                 resolve: {
-                    loadEntries: function() {
-                       return  $scope.loadEntries;
+                    message: function() {
+                        $scope.message = {
+                            header: 'Delete location',
+                            text: 'are you sure to delete this location'
+                        };
+                        return $scope.message;
                     },
-                    id: function () {
+                    callback: function() {
+                        return function (success) {
+                            if(success) {
+                                $scope.delete(id);
+                            }
+                        };
+                    },
+                    parameter: function () {
                         return id;
                     }
                 }
