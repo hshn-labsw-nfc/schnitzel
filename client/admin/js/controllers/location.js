@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('location', ['ui.bootstrap', 'api']);
+    var app = angular.module('location', ['ui.bootstrap', 'api', 'modal']);
 
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
@@ -35,7 +35,7 @@
         }
     }
 
-    function LocationListCtrl($scope, locationApi){
+    function LocationListCtrl($scope, locationApi, $uibModal, ModalCtrl){
         console.log(locationApi.query());
         $scope.entity = 'location';
         $scope.name = 'Ort';
@@ -45,17 +45,36 @@
             name: 'Raumname',
             description: 'Beschreibung'
         };
-        function loadEntries(){
+        $scope.loadEntries = function(){
             locationApi.query((function(data){
             console.log(data);
             $scope.data = data;
-        }));}
+        }));};
 
-        $scope.delete = function(id) {
-            locationApi.delete({id:id});
-            loadEntries();
+
+        $scope.loadEntries();
+
+
+        $scope.animationsEnabled = true;
+        $scope.open = function (id) {
+            $scope.id = id;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'templates/modal/confirm_delete_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    loadEntries: function() {
+                       return  $scope.loadEntries;
+                    },
+                    id: function () {
+                        return id;
+                    }
+                }
+            });
         };
-        loadEntries();
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
     }
 
 })();
