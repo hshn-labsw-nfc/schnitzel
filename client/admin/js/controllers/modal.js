@@ -8,14 +8,16 @@
     app.controller('ModalCtrl', ModalCtrl);
 
 
-    function ModalCtrl($scope, locationApi, $uibModalInstance, id, loadEntries) {
+    function ModalCtrl($scope, $uibModalInstance, message, callback) {
+        $scope.header = message['header'];
+        $scope.body = message['text'];
         $scope.ok = function () {
-            locationApi.delete({id:id});
-            loadEntries();
+            callback(true);
             $uibModalInstance.dismiss('cancel');
         };
 
         $scope.cancel = function () {
+            callback(false);
             $uibModalInstance.dismiss('cancel');
         };
     }
