@@ -12,7 +12,6 @@ router.delete('/playsession/:sessionid', deletePlaySession);
 router.get('/state/:sessionid', getState);
 router.post('/solve/:sessionid', solveRiddle);
 router.post('/location/:sessionid', checkLocation);
-router.get('/location/:id', getLocation);
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
