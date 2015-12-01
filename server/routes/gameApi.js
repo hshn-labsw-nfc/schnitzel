@@ -65,6 +65,13 @@ function advanceState(playSession, res, callback) {
 
 function _finishAdvanceState(playSession, res, callback) {
     var handler = new ResponseHandler(res);
+
+    if (playSession.locationsToVisit.length == 0) {
+        playSession.task = 'won';
+    } else {
+        playSession.locationID = getAndRemoveRandomElement(playSession.locationsToVisit);
+    }
+
     Riddle.find().exec(function (err, riddles) {
         if (err) {
 
@@ -75,14 +82,10 @@ function _finishAdvanceState(playSession, res, callback) {
             handler.error(new Error('no Riddles in database'));
             return;
         }
-        var riddle = getAndRemoveRandomElement(riddles);
-        playSession.riddleID = riddle._id;
+        playSession.riddleID = _getRiddleID(playSession, riddles);
+        playSession.usedRiddles.push(playSession.riddleID);
 
-        if (playSession.locationsToVisit.length == 0) {
-            playSession.task = 'won';
-        } else {
-            playSession.locationID = getAndRemoveRandomElement(playSession.locationsToVisit);
-        }
+
         playSession.save(function (err, savedPlaySession) {
             if (err) {
                 res.send(err);
@@ -93,8 +96,32 @@ function _finishAdvanceState(playSession, res, callback) {
             }
         });
     });
+}
 
+function _getRiddleID(session, riddles){
+    console.log('STATE');
+    console.log(session);
 
+    var unusedRiddles = riddles.filter(function(riddle){
+        return session.usedRiddles.indexOf(riddle._id) == -1;
+    });
+
+    var nonLocationRiddles = unusedRiddles.filter(function(riddle){
+        return (riddle.locationID == undefined || riddle.locationID == null || riddle.locationID == '');
+    });
+
+    var locationRiddles = unusedRiddles.filter(function(riddle){
+        return riddle.locationID == session.locationID;
+    });
+
+    console.log('unused[', unusedRiddles.map(function(a){return a.id + ' - ' + a.locationID}).join(', '), ']');
+    console.log('location[', locationRiddles.map(function(a){return a.id + ' - ' + a.locationID}).join(', '), ']');
+    console.log('nonlocation[', nonLocationRiddles.map(function(a){return a.id + ' - ' + a.locationID}).join(', '), ']');
+
+    if(locationRiddles.length > 0){
+        return getAndRemoveRandomElement(locationRiddles)._id;
+    }
+    return getAndRemoveRandomElement(nonLocationRiddles)._id;
 }
 
 function deletePlaySession(req, res, next) {
