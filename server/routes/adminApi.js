@@ -14,7 +14,8 @@ router.post('/session', function(req, res, next){
     var user = req.body.user;
     var password = req.body.password;
     if(!user || !password) {
-        res.status(401)
+        res.status(401);
+        res.end();
     }
     if(user == 'test' && password == 'pw'){
         res.send({
