@@ -12,10 +12,16 @@
         <label class="control-label">
             Alias
         </label>
+        <div>
+            <smal>Anzeige name in der Tag-Liste zu bessern Übersicht</smal>
+        </div>
         <input ng-model="data.alias" class="form-control">
     </div>
     <div class="form-group">
         <label class="control-label">Verknüpfter Ort</label>
+        <div>
+            <smal>Ort der beim einscannen dieses Tags aufgerufen wird.</smal>
+        </div>
         <select class="form-control" ng-model="data.locationID">
             <option ng-repeat="(Key, value) in locations" ng-value="value._id">{{value.name}}</option>
         </select>
