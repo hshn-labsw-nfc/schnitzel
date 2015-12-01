@@ -44,8 +44,12 @@
             templateUrl: 'templates/tagform.html',
             controller: 'TagEntryCtrl'
         }).
+            when('/login', {
+            templateUrl: 'templates/loginform.html',
+            controller: 'LoginCtrl'
+        }).
         when('/', {
-            templateUrl: 'templates/overview.html'
+            redirectTo: '/login'
         }).
         otherwise({
             redirectTo: '/'
