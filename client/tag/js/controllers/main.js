@@ -26,22 +26,24 @@
         }
 
         function getState() {
-            var sessionID = localStorage['gameSession'];
-            $http.get('/api/game/state/' + sessionID).success(function (data) {
-                console.log(data);
-                $scope.game.sessionID = sessionID;
-                $scope.game.state = data;
-                $scope.location = data.location;
+            if($scope.game.running){
+                var sessionID = localStorage['gameSession'];
+                $http.get('/api/game/state/' + sessionID).success(function (data) {
+                    console.log(data);
+                    $scope.game.sessionID = sessionID;
+                    $scope.game.state = data;
+                    $scope.location = data.location;
 
-                if ($scope.game.state.task == 'won') {
-                    console.log('winnerscreen');
-                    //location.hash = '/winner';
-                }
-            }).error(function (err) {
-                $scope.game.running = false;
-                console.log(err);
-                $scope.$broadcast('alert', err, 'danger');
-            });
+                    if ($scope.game.state.task == 'won') {
+                        console.log('winnerscreen');
+                        //location.hash = '/winner';
+                    }
+                }).error(function (err) {
+                    $scope.game.running = false;
+                    console.log(err);
+                    $scope.$broadcast('alert', err, 'danger');
+                });
+            }
         }
 
         getState();
