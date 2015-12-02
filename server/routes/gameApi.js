@@ -153,6 +153,7 @@ function getState(req, res, next) {
 }
 
 // Will return whether the sent solution was right
+// TODO: check for gamestate
 function solveRiddle(req, res, next) {
     var sessionID = req.params.sessionid;
     var answer = req.body.answer;

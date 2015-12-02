@@ -24,5 +24,10 @@
             }
         });
     });
+
+    api.service('loginApi', function($resource) {
+        return $resource('/api/login', { username: 'user', password: 'password' }, {
+        });
+    });
 })();
 
