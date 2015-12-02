@@ -11,6 +11,7 @@ router.use('/riddles', RestFactory(Riddle));
 router.use('/tags', RestFactory(Tag));
 
 router.post('/session', function(req, res, next){
+    console.log(req.body);
     var user = req.body.user;
     var password = req.body.password;
     if(!user || !password) {

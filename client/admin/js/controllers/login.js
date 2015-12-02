@@ -3,19 +3,24 @@
 
     app.controller('LoginCtrl', LoginCtrl);
 
-    function LoginCtrl($scope, loginApi){
+    function LoginCtrl($scope, loginApi) {
 
-        $scope.login = function (){
-
-            loginApi.save($scope.username, $scope.password, function(response) {
-                if(response.success) {
+        $scope.login = function () {
+            var session = {
+                user: $scope.username,
+                password: $scope.password
+            };
+            console.log(session);
+            loginApi.save(session).$promise
+                .then(function (response) {
+                console.log(response);
                     alert('success');
-
-                } else {
+                })
+                .catch(function (response) {
+                    console.log('ERROR', response);
                     $scope.error = response.message;
                     $scope.dataLoading = false;
-                }
-            });
+                });
         }
     }
 

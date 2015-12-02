@@ -26,8 +26,7 @@
     });
 
     api.service('loginApi', function($resource) {
-        return $resource('/api/login', { username: 'user', password: 'password' }, {
-        });
+        return $resource('/api/admin/session/:id', { id: '@_id' });
     });
 })();
 
