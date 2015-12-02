@@ -1,9 +1,9 @@
 <h1 class="page-header">{{heading}}</h1>
-<form role="form">
+<form role="form" ng-submit="save()">
 
     <div class="form-group">
         <label class="control-label">Raumname</label>
-        <input class="form-control" ng-model="data.name">
+        <input type="text" class="form-control" ng-model="data.name" required autofocus>
     </div>
     <div class="form-group">
         <label class="control-label">Beschreibung</label>
@@ -18,11 +18,11 @@
     </div>
     <div class="form-group">
         <label class="control-label">Bild auswählen</label>
-        <input class="form-control" type="file">
+        <input class="form-control" type="file" file-model="myFile">
     </div>
 
     <div class="text-right">
-        <a class="btn btn-success" ng-click="save()" >Speichern</a>
+        <input class="btn btn-success" type="submit" value="Speichern">
         <a class="btn btn-default" href="#/listlocations" >Abbrechen</a>
     </div>
 </form>
