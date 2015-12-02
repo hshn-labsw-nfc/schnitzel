@@ -2,8 +2,10 @@
 <div ng-controller="RiddleCtrl">
     <div ng-if="game.state.task == 'findLocation'">
         Finde folgendem Ort: <b>{{game.state.location.name}}</b>
+        <div class="text-center">
+            <img class="img-responsive" src="media/Lageplan.jpg">
+        </div>
     </div>
-
     <div ng-if="game.state.task == 'solveRiddle'">
         <h4>{{game.state.riddle.name}}</h4>
         {{game.state.riddle.description}}
@@ -22,4 +24,4 @@
             </span>
         </div>
     </div>
-</div>"
+</div>
