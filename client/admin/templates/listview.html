@@ -1,6 +1,6 @@
     <h1 class="page-header">Liste: {{name}}</h1>
     <div class="text-right">
-        <a class="btn btn-success"  href="#/add{{entity}}"><span class="glyphicon glyphicon-plus"></span> {{name}} hinzufügen</a>
+        <a class="btn btn-success"  href="#/add{{entity}}" id="addButton"><span class="glyphicon glyphicon-plus"></span> {{name}} hinzufügen</a>
     </div>
 
     <div class="table-responsive">
@@ -8,8 +8,8 @@
             <thead>
             <tr>
                 <th ng-repeat="(id, name) in tableheaders">{{name}}</th>
-                <th>
-                    <input ng-model="query" type="text" class="form-control" placeholder="Search...">
+                <th width="22%">
+                    <input ng-model="query" type="text" class="form-control" placeholder="Suche...">
                 </th>
             </tr>
             </thead>

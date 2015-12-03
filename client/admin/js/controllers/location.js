@@ -69,8 +69,8 @@
                 resolve: {
                     message: function() {
                         $scope.message = {
-                            header: 'Delete location',
-                            text: 'are you sure to delete this location'
+                            header: 'Ort löschen',
+                            text: 'Ort wirklich löschen?'
                         };
                         return $scope.message;
                     },
