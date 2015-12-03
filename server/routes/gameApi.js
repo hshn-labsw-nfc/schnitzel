@@ -31,12 +31,10 @@ function filterObject(obj, keys) {
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
-    console.log(req.body);
     var groupName = req.body.groupName;
     var playSession = new PlaySession();
     playSession.groupName = groupName;
     advanceState(playSession, res, function (savedPlaySession) {
-
         res.send(savedPlaySession._id);
     });
 }
@@ -129,8 +127,6 @@ function _finishAdvanceState(playSession, res, callback) {
 }
 
 function _getRiddleID(session, riddles) {
-    console.log('STATE');
-    console.log(session);
 
     var unusedRiddles = riddles.filter(function (riddle) {
         return session.usedRiddles.indexOf(riddle._id) == -1;
@@ -143,16 +139,6 @@ function _getRiddleID(session, riddles) {
     var locationRiddles = unusedRiddles.filter(function (riddle) {
         return riddle.locationID == session.locationID;
     });
-
-    console.log('unused[', unusedRiddles.map(function (a) {
-        return a.id + ' - ' + a.locationID
-    }).join(', '), ']');
-    console.log('location[', locationRiddles.map(function (a) {
-        return a.id + ' - ' + a.locationID
-    }).join(', '), ']');
-    console.log('nonlocation[', nonLocationRiddles.map(function (a) {
-        return a.id + ' - ' + a.locationID
-    }).join(', '), ']');
 
     if (locationRiddles.length > 0) {
         return getAndRemoveRandomElement(locationRiddles)._id;
@@ -323,7 +309,7 @@ function checkLocation(req, res, next) {
 
                 // Correct locaction, lets update the session then
                 session.task = 'solveRiddle';
-                session.save(function () {
+                session.save(function (err) {
                     if (err) {
                         res.send(err);
                         return;
