@@ -65,8 +65,8 @@
                 resolve: {
                     message: function() {
                         $scope.message = {
-                            header: 'Delete riddle',
-                            text: 'Are you sure to delete this riddle'
+                            header: 'Rätsel löschen',
+                            text: 'Dieses Rätsel wirklich löschen?'
                         };
                         return $scope.message;
                     },

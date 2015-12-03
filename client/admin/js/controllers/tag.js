@@ -67,8 +67,8 @@
                 resolve: {
                     message: function() {
                         $scope.message = {
-                            header: 'Delete Tag',
-                            text: 'Are you sure to delete this Tag'
+                            header: 'Tag löschen',
+                            text: 'Diesen Tag wirklich löschen?'
                         };
                         return $scope.message;
                     },
