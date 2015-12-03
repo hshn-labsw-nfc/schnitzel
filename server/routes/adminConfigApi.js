@@ -20,7 +20,7 @@ function setField(field, validator, converter){
     return function(keys, res){
         if(!keys[field] || keys[field].length < 1 || !isValid(keys)){
             res.status(404);
-            res.send('No username given.');
+            res.send('No '+field+' given.');
             return;
         }
         Config.set(field, convert(keys[field]), function(err){
