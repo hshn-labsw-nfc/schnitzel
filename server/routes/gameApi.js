@@ -5,6 +5,8 @@ var Location = require('../models/location');
 var Riddle = require('../models/riddle');
 var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
+var Config = require('../models/config');
+
 var ResponseHandler = require('../util/responsehandler.js');
 
 router.post('/sessions', startPlaySession);
@@ -74,7 +76,7 @@ function _getLocationID(session, locations, callback) {
 
     var objLocationsToVisit = locations.filter(function (location) {
         return session.locationsToVisit.indexOf(location._id) != -1;
-    })
+    });
 
     var result = objLocationsToVisit.sort(function () {
         return Math.random();
@@ -177,7 +179,7 @@ function getState(req, res, next) {
             return;
         }
         if (session == null) {
-            handler.error(new Error('Session dosn\'t exist'));
+            handler.error(new Error('Session doesn\'t exist'));
             return;
         }
         console.log(session);
@@ -189,7 +191,16 @@ function getState(req, res, next) {
             }
         };
 
-        if (session.locationID) {
+        if (session.task == 'won') {
+            Config.get('winText', function(err, winText){
+                if (err) {
+                    handler.error(err);
+                    return;
+                }
+                result.winText = winText;
+                res.send(result);
+            })
+        } else {
             Location.findById(session.locationID, function (err, location) {
                 if (err) {
                     handler.error(err);
@@ -201,21 +212,16 @@ function getState(req, res, next) {
                     return;
                 }
                 result.location = filterObject(location, ['name']);
-                if (session.riddleID) {
-                    Riddle.findById(session.riddleID, function (err, riddle) {
-                        if (err) {
-                            handler.error(err);
-                            return;
-                        }
-                        result.riddle = filterObject(riddle, ['name', 'description', 'hint']);
-                        res.send(result);
-                    })
-                } else {
+
+                Riddle.findById(session.riddleID, function (err, riddle) {
+                    if (err) {
+                        handler.error(err);
+                        return;
+                    }
+                    result.riddle = filterObject(riddle, ['name', 'description', 'hint']);
                     res.send(result);
-                }
+                })
             });
-        } else {
-            res.send(result);
         }
     });
 }
