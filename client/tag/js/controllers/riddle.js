@@ -6,6 +6,7 @@
 
     function RiddleCtrl($scope, $http, $rootScope) {
         $scope.riddle = {};
+
         $scope.solve = function(){
             console.log('clicked solvebutton');
             console.log($scope.riddle.answer);
@@ -26,6 +27,18 @@
         };
         $scope.hint = function(){
             $scope.showhint = true;
+        };
+
+        $scope.showLocation = true;
+
+        $scope.togglePlan = function(){
+            $scope.showLocation = false;
+            $scope.showPlan = !$scope.showPlan;
+        };
+
+        $scope.toggleLocation = function(){
+            $scope.showPlan = false;
+            $scope.showLocation = !$scope.showLocation;
         };
     }
 })();
