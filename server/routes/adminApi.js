@@ -5,10 +5,12 @@ var RestFactory = require('./restfactory');
 var Location = require('../models/location');
 var Riddle = require('../models/riddle');
 var Tag = require('../models/tag');
+var PlaySession = require('../models/playSession');
 
 router.use('/locations', RestFactory(Location));
 router.use('/riddles', RestFactory(Riddle));
 router.use('/tags', RestFactory(Tag));
+router.use('/playsessions', RestFactory(PlaySession));
 
 router.post('/session', function(req, res, next){
     console.log(req.body);

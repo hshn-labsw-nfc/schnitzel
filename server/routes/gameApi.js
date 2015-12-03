@@ -31,7 +31,10 @@ function filterObject(obj, keys) {
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
+    console.log(req.body);
+    var groupName = req.body.groupName;
     var playSession = new PlaySession();
+    playSession.groupName = groupName;
     advanceState(playSession, res, function (savedPlaySession) {
 
         res.send(savedPlaySession._id);

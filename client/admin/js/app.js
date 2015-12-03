@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('schnitzelAdmin', [
-        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'login'
+        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'login', 'status'
     ]);
 
     app.config(['$routeProvider',routeProvider]);
@@ -44,9 +44,13 @@
             templateUrl: 'templates/tagform.html',
             controller: 'TagEntryCtrl'
         }).
-            when('/login', {
+        when('/login', {
             templateUrl: 'templates/loginform.html',
             controller: 'LoginCtrl'
+        }).
+        when('/liststatuss', {
+            templateUrl: 'templates/status.html',
+            controller: 'StatusCtrl'
         }).
         when('/', {
             redirectTo: '/login'

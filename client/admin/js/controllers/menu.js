@@ -8,6 +8,7 @@
             location:'Orte',
             riddle:'Rätsel',
             tag:'Tags',
+            status: 'Schnitzeljagd Status'
         };
     }
 })();
