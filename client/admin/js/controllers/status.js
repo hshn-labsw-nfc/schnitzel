@@ -32,13 +32,26 @@
 
         };
 
-
         $scope.loadEntries();
 
+        $scope.deleteAllSessions = function () {
+            var count;
+            var done = 0;
+            function checkProgress(){
+                console.log(done, count);
+                done++;
+                if(done == count){
+                    $scope.loadEntries();
+                }
+            }
 
-        $scope.saveEndText = function () {
-            //TODO save the endText
-            $scope.data.endText;
+            sessionApi.query(function (sessions){
+                count = sessions.length;
+                sessions.forEach(function(session){
+                    sessionApi.delete({id:session._id}, checkProgress);
+                })
+            });
+
         }
     }
 
