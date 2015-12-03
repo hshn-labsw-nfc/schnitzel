@@ -42,7 +42,8 @@
         $scope.tableheaders = {
             isActive: 'Aktiv?',
             name: 'Raumname',
-            description: 'Beschreibung'
+            description: 'Beschreibung',
+            heat: 'heat'
         };
         $scope.loadEntries = function(){
             locationApi.query((function(data){
