@@ -3,9 +3,7 @@
     <div ng-if="game.state.task == 'findLocation'">
         Finde folgenden Ort: <b>{{game.state.location.name}}</b>
         <br><br>
-        <div class="text-center">
-            <img class="img-responsive" src="media/Lageplan.jpg">
-        </div>
+        <img class="img-responsive center-block" src="media/Lageplan.jpg">
     </div>
     <div ng-if="game.state.task == 'solveRiddle'">
         <h4>{{game.state.riddle.name}}</h4>
