@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var bcrypt = require('bcryptjs');
+
 var Config = require('../models/config');
 
 var allowedKeys = {
@@ -11,16 +13,28 @@ var allowedKeys = {
 var setter = {
     username: setField('username'),
     winText: setField('winText'),
-    password: setField('password')
+    password: setField('password', function(keys){
+        if(keys.password != keys.passwordRepeat){
+            return 'Passwords are different';
+        }
+
+        return false;
+    })
 };
 
 function setField(field, validator, converter){
-    var isValid = validator || function(){ return true };
+    var isInvalid = validator || function(){ return false };
     var convert = converter || function(val){ return val };
     return function(keys, res){
-        if(!keys[field] || keys[field].length < 1 || !isValid(keys)){
+        if(!keys[field] || keys[field].length < 1){
             res.status(404);
             res.send('No '+field+' given.');
+            return;
+        }
+        var invalid = isInvalid(keys);
+        if(invalid){
+            res.status(404);
+            res.send(invalid);
             return;
         }
         Config.set(field, convert(keys[field]), function(err){

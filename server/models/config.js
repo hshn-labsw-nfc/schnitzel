@@ -21,8 +21,23 @@ function get(key, callback){
     })
 }
 
+function getLoginData(callback){
+    Model.find({_id: {$in: ['username', 'password']}}, function(err, data){
+        if(err){
+            callback(err, data);
+            return;
+        }
+        var dataObject = {};
+        data.forEach(function(field){
+            dataObject[field._id] = field.value;
+        });
+        callback(err, dataObject);
+    });
+}
+
 module.exports = {
     set: set,
-    get: get
+    get: get,
+    getLoginData: getLoginData
 };
 
