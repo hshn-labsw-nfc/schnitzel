@@ -13,21 +13,22 @@
             Alias
         </label>
         <div>
-            <smal>Anzeige name in der Tag-Liste zur bessern Übersicht</smal>
+            <smal>Anzeige name in der Tag-Liste zur bessere Übersicht</smal>
         </div>
         <input ng-model="data.alias" class="form-control" required>
     </div>
     <div class="form-group">
         <label class="control-label">Verknüpfter Ort</label>
         <div>
-            <smal>Ort der beim einscannen dieses Tags aufgerufen wird.</smal>
+            <smal>Ort, der beim Einscannen dieses Tags aufgerufen wird</smal>
         </div>
-        <select class="form-control" ng-model="data.locationID">
-            <option ng-repeat="(Key, value) in locations" ng-value="value._id">{{value.name}}</option>
+        <select class="form-control" ng-model="data.locationID"
+                ng-options="location._id as location.name for location in locations">
+            <option value=""></option>
         </select>
     </div>
     <div class="text-right">
-        <input type="submit" class="btn btn-success" value="Speichern"></input>
+        <input type="submit" class="btn btn-success" value="Speichern">
         <a class="btn btn-default" href="#/listtags" >Abbrechen</a>
     </div>
 </form>
