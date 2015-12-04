@@ -23,7 +23,6 @@
                 <label class="sr-only">Benutzername</label>
                 <input type="text" id="inputEmail" class="form-control" ng-model="user.username" placeholder="Benutzername" required autofocus>
             </div>
-
             <div class="text-right">
                 <input class="btn btn-success" type="submit" value="Speichern">
             </div>
@@ -46,6 +45,8 @@
                 <label class="sr-only">Neues Passwort wiederholen</label>
                 <input type="password" class="form-control" ng-model="password.newPasswordRepeat" placeholder="Neues Passwort wiederholen" required>
             </div>
+            <div class="alert alert-danger" ng-if="error">{{error}}</div>
+
             <div class="text-right">
                 <input class="btn btn-success" type="submit" value="Speichern">
             </div>

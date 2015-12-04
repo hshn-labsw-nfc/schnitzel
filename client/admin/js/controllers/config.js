@@ -26,11 +26,16 @@
         };
 
         $scope.changePassword = function (){
-            $http.put('/api/admin/config',{password: $scope.password}).success(function (res) {
-                console.log(res);
-            }).error(function (err) {
-                console.log("ERROR", err);
-            })
+            if($scope.password.newPassword == $scope.password.newPasswordRepeat){
+                $scope.error = "";
+                $http.put('/api/admin/config',{password: $scope.password}).success(function (res) {
+                    console.log(res);
+                }).error(function (err) {
+                    console.log("ERROR", err);
+                })
+            } else {
+                $scope.error = "Passwörter sind unterschiedlich!";
+            }
         };
 
     };
