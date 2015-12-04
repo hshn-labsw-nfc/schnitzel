@@ -5,7 +5,8 @@
 
     function StatusCtrl($scope,locationApi,sessionApi) {
 
-        $scope.entity = 'session';
+        $scope.entity = 'session'
+        $scope.heading = 'Gruppen Status';
         $scope.name = 'Ort';
 
         $scope.loadEntries = function () {
