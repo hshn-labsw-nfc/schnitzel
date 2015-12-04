@@ -8,12 +8,16 @@ var ConfigSchema   = new mongoose.Schema({
 var Model =  mongoose.model('Config', ConfigSchema);
 
 function set(key, value, callback){
-    Model.update({_id: key}, {value: value}, {upsert: true}, callback);
+    console.log('invoking setter');
+    Model.findOneAndUpdate({_id: key}, {value: value}, {upsert:true}, function(err){
+        callback(err);
+    });
 }
 
 function get(key, callback){
+    console.log('invoking getter');
     Model.findById(key, function(err, res){
-        callback(err, (res ? res.value : null));
+        callback(err, (res ? res.value : ""));
     })
 }
 

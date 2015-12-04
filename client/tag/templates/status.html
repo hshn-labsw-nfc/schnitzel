@@ -20,6 +20,7 @@
         <div class="page-header">
             <h1 class="text-center">Du hast Gewonnen</h1>
         </div>
+        <div class="text-center">{{game.state.winText}}</div>
         <img class="img-responsive center-block" src="media/winner.gif">
     </div>
     <div ng-if="game.state.task != 'won'">
@@ -33,6 +34,6 @@
     </div>
     <div class="text-center">
         <br>
-        <a class="btn btn-default" ng-click="endGame()">Schnitzeljagd Beeenden</a>
+        <a class="btn btn-primary" ng-click="endGame()">Schnitzeljagd Beeenden</a>
     </div>
 </div>

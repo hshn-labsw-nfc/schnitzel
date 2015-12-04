@@ -32,9 +32,5 @@
     api.service('sessionApi', function($resource) {
         return $resource('/api/admin/playsessions/:id', { id: '@_id' });
     });
-
-    api.service('configApi', function($resource) {
-        return $resource('/api/admin/config/:id', { id: '@_id' });
-    });
 })();
 
