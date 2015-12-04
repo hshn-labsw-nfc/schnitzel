@@ -375,7 +375,7 @@ var sessionToDeleteTime = 1000 * 60 * 60 * 24 * 3; //3 Days
 
 setInterval(heatCountdown, 1000 * 60 * 8);
 setInterval(sessionDeleter, 1000 * 60 * 60);
-sessionDeleter();
+
 
 
 module.exports = router;
