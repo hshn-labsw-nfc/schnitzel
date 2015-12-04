@@ -5,11 +5,11 @@
 
     function MenuCtrl($scope){
         $scope.items = {
+            status: 'Status',
+            config: 'Config',
             location:'Orte',
             riddle:'Rätsel',
-            tag:'Tags',
-            status: 'Schnitzeljagd Status',
-            config: 'Config'
+            tag:'Tags'
         };
     }
 })();
