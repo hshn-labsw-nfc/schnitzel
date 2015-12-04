@@ -42,7 +42,7 @@
         };
 
         $scope.changePassword = function (){
-            if($scope.password.newPassword == $scope.password.newPasswordRepeat){
+            if($scope.password.password == $scope.password.passwordRepeat){
                 $scope.error = "";
                 $http.put('/api/admin/config/password',$scope.password).success(function (res) {
                     console.log(res);
