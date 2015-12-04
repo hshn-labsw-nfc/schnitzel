@@ -29,16 +29,14 @@
             $scope.showhint = true;
         };
 
-        $scope.showLocation = true;
+        $scope.showPicture = true;
 
-        $scope.togglePlan = function(){
-            $scope.showLocation = false;
-            $scope.showPlan = !$scope.showPlan;
+        $scope.showPlan = function(){
+            $scope.showPicture = false;
         };
 
-        $scope.toggleLocation = function(){
-            $scope.showPlan = false;
-            $scope.showLocation = !$scope.showLocation;
+        $scope.showLocation = function(){
+            $scope.showPicture = true;
         };
     }
 })();

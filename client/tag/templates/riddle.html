@@ -5,27 +5,32 @@
             <h4>Finde folgenden Ort: <b>{{game.state.location.name}}</b></h4>
         </div>
         <div class="text-center">
-            <a class="btn btn-primary" ng-click="togglePlan()"><span class="glyphicon glyphicon-map-marker"></span> &nbsp Lageplan</a>
-            <a class="btn btn-primary" ng-click="toggleLocation()"><span class="glyphicon glyphicon-camera"></span>  &nbsp Bild (Ort)</a>
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-primary" ng-click="showPlan()"><span class="glyphicon glyphicon-map-marker"></span> &nbsp Lageplan</a>
+                <a class="btn btn-primary" ng-click="showLocation()"><span class="glyphicon glyphicon-camera"></span>  &nbsp Bild (Ort)</a>
+            </div>
         </div>
         <br>
-        <span ng-if="showLocation">
+        <span ng-show="showPicture">
             <img class="img-responsive center-block" src="media/computerraum.jpg">
            <!--
            <img> für game.state.location einbinden
            -->
         </span>
-        <span ng-if="showPlan">
+        <span ng-show="!showPicture">
             <img class="img-responsive center-block" src="media/lageplan.png">
         </span>
     </div>
     <div ng-if="game.state.task == 'solveRiddle'">
         <h4>{{game.state.riddle.name}}</h4>
         {{game.state.riddle.description}}
-        <br><br>
+        <br>
+        <img class="img-responsive center-block" src="media/aula.jpg">
+        <br>
         <div class="alert alert-info" ng-if="showhint">
             <b>Hinweis:</b> {{game.state.riddle.hint}}
         </div>
+
         <div class="form-group">
             <label for="answer">Deine Antwort</label>
             <input type="text" class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
