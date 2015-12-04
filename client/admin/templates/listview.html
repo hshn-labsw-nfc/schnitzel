@@ -1,11 +1,12 @@
-    <h1 class="page-header">Liste: {{name}}</h1>
+
+<h1 class="">{{name}}</h1><hr>
     <div class="text-right">
-        <a class="btn btn-success"  href="#/add{{entity}}" id="addButton"><span class="glyphicon glyphicon-plus"></span> {{name}} hinzufügen</a>
+        <p><a class="btn btn-success"  href="#/add{{entity}}" id="addButton"><span class="glyphicon glyphicon-plus"></span> {{name}} hinzufügen</a></p>
     </div>
 
     <div class="table-responsive">
         <table class="table table-striped">
-            <thead>
+            <thead class="bg-primary">
             <tr>
                 <th ng-repeat="(id, name) in tableheaders">{{name}}</th>
                 <th width="22%">
