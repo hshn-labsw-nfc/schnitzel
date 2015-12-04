@@ -9,17 +9,19 @@
             findLocation: 'Ort finden',
             solveRiddle: 'Rätsel lösen',
             won: 'DU HAST GEWONNEN'
-        }
+        };
+
+        $scope.data = {};
 
         $scope.startGame = function(){
-            console.log('clicked startbutton');
-            $http.post('/api/game/sessions').then(function(res){
+            console.log('clicked startbutton',$scope.data.groupName);
+            $http.post('/api/game/sessions',{groupName: $scope.data.groupName}).then(function(res){
                 if(res.status == 200){
                     localStorage['gameSession'] = res.data;
                     $scope.game.running = true;
                     $rootScope.$broadcast('fetchState');
                 }else {
-                    // TODO: Errorhandling
+                   console.log(res);
                 }
             });
         };

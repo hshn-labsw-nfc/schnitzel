@@ -1,0 +1,25 @@
+<h1 class="page-header">{{heading}}</h1>
+<div class="table-responsive">
+    <a ng-click="deleteAllSessions()" >Alle Aktiven Schnitzeljagd-Sessions Löschen</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Gruppenname</th>
+            <th>Ort</th>
+            <th>Fortschritt</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="entry in sessions" ng-if="sessions">
+            <td>{{entry.groupName}}</td>
+            <td>{{locations[entry.locationID]}}</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+                         style="width: {{(entry.progress.done / entry.progress.count) * 100}}%"></div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

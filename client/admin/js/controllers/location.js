@@ -14,12 +14,6 @@
             $scope.heading = 'Hinzufügen einer Location';
         }
 
-        $scope.location = {
-            category: 'general',
-            general: 'Allgemein',
-            room: 'Vorlesungsraum'
-        };
-
         $scope.save = function (){
             console.log('DATA TO SAVE');
             console.log($scope.data);
