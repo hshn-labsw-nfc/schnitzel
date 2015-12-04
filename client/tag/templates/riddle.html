@@ -22,8 +22,13 @@
         </span>
     </div>
     <div ng-if="game.state.task == 'solveRiddle'">
-        <h4>{{game.state.riddle.name}}</h4>
-        {{game.state.riddle.description}}
+        <div class="text-center">
+            <h4>{{game.state.riddle.name}}</h4>
+        </div>
+        <div class="text-left">
+            {{game.state.riddle.description}}
+        </div>
+
         <br>
         <img class="img-responsive center-block" src="media/aula.jpg">
         <br>
