@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('schnitzelAdmin', [
-        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'login', 'status'
+        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'login', 'status', 'config'
     ]);
 
     app.config(['$routeProvider',routeProvider]);
@@ -51,6 +51,10 @@
         when('/liststatuss', {
             templateUrl: 'templates/status.html',
             controller: 'StatusCtrl'
+        }).
+        when('/listconfigs', {
+            templateUrl: 'templates/configform.html',
+            controller: 'ConfigCtrl'
         }).
         when('/', {
             redirectTo: '/login'
