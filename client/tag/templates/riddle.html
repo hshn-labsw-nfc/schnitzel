@@ -2,14 +2,13 @@
 <div ng-controller="RiddleCtrl">
     <div ng-if="game.state.task == 'findLocation'">
         <div class="text-center">
-            <h3>Finde folgenden Ort: <b>{{game.state.location.name}}</b></h3>
+            <h4>Finde folgenden Ort: <b>{{game.state.location.name}}</b></h4>
         </div>
-        <br><br>
         <div class="text-center">
-            <a class="btn btn-primary" ng-click="togglePlan()" >Lageplan anzeigen</a>
-            <a class="btn btn-primary" ng-click="toggleLocation()" >Orts Bild anzeigen</a>
+            <a class="btn btn-primary" ng-click="togglePlan()"><span class="glyphicon glyphicon-map-marker"></span> &nbsp Lageplan</a>
+            <a class="btn btn-primary" ng-click="toggleLocation()"><span class="glyphicon glyphicon-camera"></span>  &nbsp Bild (Ort)</a>
         </div>
-        <br><br>
+        <br>
         <span ng-if="showLocation">
             <img class="img-responsive center-block" src="media/computerraum.jpg">
            <!--
@@ -32,9 +31,9 @@
             <input type="text" class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
         </div>
         <div class="text-center">
-            <a class="btn btn-primary" ng-click="solve()">Überprüfen</a>
+            <a class="btn btn-primary" ng-click="solve()"><span class="glyphicon glyphicon-ok"></span> &nbsp Überprüfen</a>
             <span ng-if="game.state.riddle.hint && game.state.riddle.hint.length > 0 && !showhint">
-                <a class="btn btn-primary" ng-click="hint()"><span class="glyphicon glyphicon-question-sign"></span> Hinweis</a>
+                <a class="btn btn-primary" ng-click="hint()"><span class="glyphicon glyphicon-question-sign"></span> &nbsp Hinweis</a>
             </span>
         </div>
     </div>

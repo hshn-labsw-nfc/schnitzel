@@ -55,7 +55,7 @@
         <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl">
             <ul class="nav nav-sidebar" style="font-size: 20px">
                 <li ng-repeat="(item, name) in items"><a href="#/list{{item}}s" id="{{name.name}}" ><span class="{{name.icon}}"></span>&nbsp&nbsp{{name.name}}</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-off"></span>&nbsp&nbspLogout</a></li>
+                <li><a class="text-danger" href="#"><span class="glyphicon glyphicon-off"></span>&nbsp&nbspLogout</a></li>
             </ul>
 
         </div>
