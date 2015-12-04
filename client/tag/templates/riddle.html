@@ -5,7 +5,20 @@
             <h3>Finde folgenden Ort: <b>{{game.state.location.name}}</b></h3>
         </div>
         <br><br>
-        <img class="img-responsive center-block" src="media/Lageplan.jpg">
+        <div class="text-center">
+            <a class="btn btn-primary" ng-click="togglePlan()" >Lageplan anzeigen</a>
+            <a class="btn btn-primary" ng-click="toggleLocation()" >Orts Bild anzeigen</a>
+        </div>
+        <br><br>
+        <span ng-if="showLocation">
+            <img class="img-responsive center-block" src="media/computerraum.jpg">
+           <!--
+           <img> für game.state.location einbinden
+           -->
+        </span>
+        <span ng-if="showPlan">
+            <img class="img-responsive center-block" src="media/Lageplan.jpg">
+        </span>
     </div>
     <div ng-if="game.state.task == 'solveRiddle'">
         <h4>{{game.state.riddle.name}}</h4>
