@@ -1,7 +1,9 @@
 
 <div ng-controller="RiddleCtrl">
     <div ng-if="game.state.task == 'findLocation'">
-        Finde folgenden Ort: <b>{{game.state.location.name}}</b>
+        <div class="text-center">
+            <h3>Finde folgenden Ort: <b>{{game.state.location.name}}</b></h3>
+        </div>
         <br><br>
         <img class="img-responsive center-block" src="media/Lageplan.jpg">
     </div>
