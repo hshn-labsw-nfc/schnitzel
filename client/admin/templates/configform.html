@@ -2,7 +2,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Gewonnen Info</div>
     <div class="panel-body">
-        <form role="form" ng-submit="saveEndText()">
+        <form role="form" ng-submit="changeEndText()">
 
             <div class="form-group">
                 <label class="control-label">Info Text, der am Ende der Schnitzeljagd angezeigt wird:</label>
@@ -16,24 +16,35 @@
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">Benutzer ändern</div>
+    <div class="panel-heading">Benutzername ändern</div>
     <div class="panel-body">
-        <form role="form" ng-submit="saveUserConfig()">
+        <form role="form" ng-submit="changeUserName()">
             <div class="form-group">
                 <label class="sr-only">Benutzername</label>
-                <input type="text" id="inputEmail" class="form-control" ng-model="config.username" placeholder="Benutzername" required autofocus>
+                <input type="text" id="inputEmail" class="form-control" ng-model="user.username" placeholder="Benutzername" required autofocus>
             </div>
+
+            <div class="text-right">
+                <input class="btn btn-success" type="submit" value="Speichern">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Password ändern</div>
+    <div class="panel-body">
+        <form role="form" ng-submit="changePassword()">
             <div class="form-group">
                 <label class="sr-only">Altes Passwort</label>
-                <input type="password" class="form-control" ng-model="config.oldPassword" placeholder="Altes Passwort" required>
+                <input type="password" class="form-control" ng-model="password.oldPassword" placeholder="Altes Passwort" required>
             </div>
             <div class="form-group">
                 <label class="sr-only">Neues Passwort</label>
-                <input type="password" class="form-control" ng-model="config.newPassword" placeholder="Neues Passwort" required>
+                <input type="password" class="form-control" ng-model="password.newPassword" placeholder="Neues Passwort" required>
             </div>
             <div class="form-group">
                 <label class="sr-only">Neues Passwort wiederholen</label>
-                <input type="password" class="form-control" ng-model="config.newPasswordRepeat" placeholder="Neues Passwort wiederholen" required>
+                <input type="password" class="form-control" ng-model="password.newPasswordRepeat" placeholder="Neues Passwort wiederholen" required>
             </div>
             <div class="text-right">
                 <input class="btn btn-success" type="submit" value="Speichern">

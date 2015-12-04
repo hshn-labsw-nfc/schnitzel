@@ -3,20 +3,38 @@
 
     app.controller('ConfigCtrl', ConfigCtrl);
 
+
+
     function ConfigCtrl($scope,$http) {
 
-        $scope.saveEndText = function () {
+        $scope.changeEndText = function () {
+
+            if($scope.user.newPassword )
             $http.put('/api/admin/config',{config: $scope.config}).success(function (res) {
+                console.log(res);
+            }).error(function (err) {
+                console.log("ERROR", err);
+        })
+        };
+
+        $scope.changeUserName = function (){
+            $http.put('/api/admin/config',{user: $scope.user}).success(function (res) {
                 console.log(res);
             }).error(function (err) {
                 console.log("ERROR", err);
             })
         };
 
-        $scope.saveUserConfig = function (){
-
+        $scope.changePassword = function (){
+            $http.put('/api/admin/config',{password: $scope.password}).success(function (res) {
+                console.log(res);
+            }).error(function (err) {
+                console.log("ERROR", err);
+            })
         };
-        
+
     };
+
+
 
 })();
