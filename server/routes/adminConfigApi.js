@@ -13,17 +13,22 @@ var allowedKeys = {
 var setter = {
     username: setField('username'),
     winText: setField('winText'),
-    password: setField('password', function(keys){
-        if(keys.password != keys.passwordRepeat){
-            return 'Passwords are different';
+    password: setField(
+        'password',
+        function(keys){
+            if(keys.password != keys.passwordRepeat){
+                return 'Passwords are different';
+            }
+            return true;
+        },
+        function(input){
+            return  bcrypt.hashSync(input);
         }
-
-        return false;
-    })
+    )
 };
 
 function setField(field, validator, converter){
-    var isInvalid = validator || function(){ return false };
+    var isValid = validator || function(){ return true };
     var convert = converter || function(val){ return val };
     return function(keys, res){
         if(!keys[field] || keys[field].length < 1){
@@ -31,8 +36,8 @@ function setField(field, validator, converter){
             res.send('No '+field+' given.');
             return;
         }
-        var invalid = isInvalid(keys);
-        if(invalid){
+        var valid = isValid(keys);
+        if(valid !== true){
             res.status(404);
             res.send(invalid);
             return;
@@ -46,14 +51,6 @@ function setField(field, validator, converter){
             res.send('SUCCESS');
         });
     }
-}
-
-function setWinText(keys, res){
-
-}
-
-function setPassword(keys, res){
-
 }
 
 router.put('/:key', function(req, res, next){
