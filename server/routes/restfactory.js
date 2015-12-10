@@ -1,6 +1,7 @@
 // TODO: Improve errormessages: hide the real messages, write a errorhandler, ...
 
 var express = require('express');
+var authentificator = require('./authMiddleware');
 
 function getEntries(Model){
     return function(req, res, next){
@@ -87,7 +88,7 @@ function deleteEntry(Model) {
 
 function buildRouter(Model){
     var router = express.Router();
-
+    router.use(authentificator);
     router.route('/')
         .get(getEntries(Model))
         .post(createEntry(Model));
