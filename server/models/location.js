@@ -4,6 +4,7 @@ var LocationSchema   = new mongoose.Schema({
     name: String,
     description: String,
     isActive: Boolean,
+    image: String,
     heat: {type: Number,default: 0}
 });
 

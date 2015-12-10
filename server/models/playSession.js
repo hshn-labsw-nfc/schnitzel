@@ -8,7 +8,8 @@ var PlaySessionSchema = new mongoose.Schema({
     usedRiddles: [String],
     task: String, // won, solveRiddle, findLocation
     riddleID: String,
-    locationID: String
+    locationID: String,
+    image: String
 });
 
 module.exports = mongoose.model('PlaySession', PlaySessionSchema);
