@@ -1,9 +1,11 @@
 (function () {
     var app = angular.module('schnitzelAdmin', [
-        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'login', 'status', 'config'
+        'ngRoute', 'menu', 'location', 'riddle', 'tag', 'login', 'status', 'config', 'auth'
     ]);
 
     app.config(['$routeProvider',routeProvider]);
+
+    app.config(['$httpProvider', Interceptor]);
 
     function routeProvider($routeProvider){
         $routeProvider.
@@ -62,6 +64,10 @@
         otherwise({
             redirectTo: '/'
         });
+    }
+
+    function Interceptor($httpProvider) {
+        $httpProvider.interceptors.push('AuthInterceptor');
     }
 
 })();
