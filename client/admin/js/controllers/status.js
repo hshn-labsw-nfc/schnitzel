@@ -1,9 +1,9 @@
 (function () {
-    var app = angular.module('status', ['ui.bootstrap', 'api']);
+    var app = angular.module('status', ['ui.bootstrap', 'api', 'modal']);
 
     app.controller('StatusCtrl', StatusCtrl);
 
-    function StatusCtrl($scope,locationApi,sessionApi) {
+    function StatusCtrl($scope,locationApi,sessionApi,$uibModal) {
 
         $scope.entity = 'session'
         $scope.heading = 'Gruppen Status';
@@ -34,6 +34,42 @@
         };
 
         $scope.loadEntries();
+
+        $scope.animationsEnabled = true;
+        $scope.ok = function (id) {
+            $scope.id = id;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    message: function() {
+                        $scope.message = {
+
+                            header: 'Schnitzeljagd-Sessions löschen',
+                            text: 'Wirklich alle Aktiven Schnitzeljagd-Sessions löschen?',
+                            confirmButtonText: 'Löschen',
+                            cancelButtonText: 'Abbrechen'
+                        };
+                        return $scope.message;
+                    },
+                    callback: function() {
+                        return function (success) {
+                            if(success) {
+                                $scope.deleteAllSessions();
+                            }
+                        };
+                    },
+                    parameter: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
 
         $scope.deleteAllSessions = function () {
             var count;

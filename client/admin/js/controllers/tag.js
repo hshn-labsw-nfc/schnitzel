@@ -58,17 +58,19 @@
         loadEntries();
 
         $scope.animationsEnabled = true;
-        $scope.open = function (id) {
+        $scope.ok = function (id) {
             $scope.id = id;
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'templates/modal/confirm_delete_modal.html',
+                templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
                 controller: 'ModalCtrl',
                 resolve: {
                     message: function() {
                         $scope.message = {
                             header: 'Tag löschen',
-                            text: 'Diesen Tag wirklich löschen?'
+                            text: 'Diesen Tag wirklich löschen?',
+                            confirmButtonText: 'Löschen',
+                            cancelButtonText: 'Abbrechen'
                         };
                         return $scope.message;
                     },

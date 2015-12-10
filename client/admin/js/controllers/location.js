@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('location', ['ui.bootstrap', 'api', 'modal','naif.base64']);
+    var app = angular.module('location', ['ui.bootstrap', 'api', 'modal']);
 
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
@@ -36,8 +36,7 @@
         $scope.tableheaders = {
             isActive: 'Aktiv?',
             name: 'Raumname',
-            description: 'Beschreibung',
-            heat: 'heat'
+            description: 'Beschreibung'
         };
         $scope.loadEntries = function(){
             locationApi.query((function(data){
@@ -54,17 +53,20 @@
         };
 
         $scope.animationsEnabled = true;
-        $scope.open = function (id) {
+
+        $scope.ok = function (id) {
             $scope.id = id;
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'templates/modal/confirm_delete_modal.html',
+                templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
                 controller: 'ModalCtrl',
                 resolve: {
                     message: function() {
                         $scope.message = {
                             header: 'Ort löschen',
-                            text: 'Ort wirklich löschen?'
+                            text: 'Ort wirklich löschen?',
+                            confirmButtonText: 'Löschen',
+                            cancelButtonText: 'Abbrechen'
                         };
                         return $scope.message;
                     },

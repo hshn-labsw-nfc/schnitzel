@@ -3,7 +3,7 @@
  */
 
 (function () {
-    var app = angular.module('modal', ['ui.bootstrap', 'api']);
+    var app = angular.module('modal', ['ui.bootstrap']);
 
     app.controller('ModalCtrl', ModalCtrl);
 
@@ -11,6 +11,8 @@
     function ModalCtrl($scope, $uibModalInstance, message, callback) {
         $scope.header = message['header'];
         $scope.body = message['text'];
+        $scope.confirmButtonText = message['confirmButtonText'];
+        $scope.cancelButtonText = message['cancelButtonText'];
         $scope.ok = function () {
             callback(true);
             $uibModalInstance.dismiss('cancel');

@@ -4,7 +4,7 @@
     app.controller('StatusCtrl', StatusCtrl);
 
 
-    function StatusCtrl($scope, $http, $rootScope) {
+    function StatusCtrl($scope, $http, $rootScope, $uibModal) {
         $scope.caption = {
             findLocation: 'Ort finden',
             solveRiddle: 'Rätsel lösen',
@@ -25,6 +25,39 @@
                 }
             });
         };
+
+        $scope.animationsEnabled = true;
+        $scope.ok = function (id) {
+            $scope.id = id;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    message: function() {
+                        $scope.message = {
+
+                            header: 'Schnitzeljagd Beenden',
+                            text: 'Wirklich Schnitzeljagd beenden?',
+                            confirmButtonText: 'Beenden',
+                            cancelButtonText: 'Abbrechen'
+                        };
+                        return $scope.message;
+                    },
+                    callback: function() {
+                        return function (success) {
+                            if(success) {
+                                $scope.endGame();
+                            }
+                        };
+                    },
+                    parameter: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+
         $scope.endGame = function(){
             $http.delete('/api/game/sessions/' + localStorage['gameSession']).then(function(res){
                 localStorage.removeItem('gameSession');
