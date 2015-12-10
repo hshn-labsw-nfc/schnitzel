@@ -51,7 +51,7 @@ function startPlaySession(req, res, next) {
             console.log(locationCount);
             console.log(riddles.length);
             //TODO way more complicated then this
-            if(riddles.length >= locationCount){
+            if (riddles.length >= locationCount) {
                 var groupName = req.body.groupName;
                 var playSession = new PlaySession();
                 playSession.groupName = groupName;
@@ -172,7 +172,7 @@ function _getRiddleID(session, riddles) {
         return riddle.location.equals(session.location);
     });
 
-    console.log("locationRiddles",locationRiddles);
+    console.log("locationRiddles", locationRiddles);
 
     if (locationRiddles.length > 0) {
         return getAndRemoveRandomElement(locationRiddles)._id;
@@ -205,57 +205,53 @@ function destroySession(sessionID, res) {
 function getState(req, res, next) {
     var handler = new ResponseHandler(res);
     var sessionID = req.params.sessionid;
-    PlaySession.findById(sessionID, function (err, session) {
-        if (err) {
-            handler.error(err);
-            return;
-        }
-        if (session == null) {
-            handler.error(new Error('Session doesn\'t exist'));
-            return;
-        }
-        console.log(session);
-        var result = {
-            task: session.task,
-            progress: {
-                count: session.locationCount,
-                done: session.locationCount - session.locationsToVisit.length - (session.task == 'findLocation' ? 1 : 0)
+
+    PlaySession.findById(sessionID)
+        .populate('location')
+        .populate('riddle')
+        .exec(function (err, session) {
+            if (err) {
+                handler.error(err);
+                return;
             }
-        };
+            if (session == null) {
+                handler.error(new Error('Session doesn\'t exist'));
+                return;
+            }
 
-        if (session.task == 'won') {
-            Config.get('winText', function(err, winText){
-                if (err) {
-                    handler.error(err);
-                    return;
+            console.log(session);
+            var result = {
+                task: session.task,
+                progress: {
+                    count: session.locationCount,
+                    done: session.locationCount - session.locationsToVisit.length - (session.task == 'findLocation' ? 1 : 0)
                 }
-                result.winText = winText;
-                res.send(result);
-            })
-        } else {
-            Location.findById(session.location, function (err, location) {
-                if (err) {
-                    handler.error(err);
-                    return;
-                }
-                if (!location) {
-                    destroySession(session._id, res);
-                    handler.error(new Error("location not found, session is invalid"));
-                    return;
-                }
-                result.location = filterObject(location, ['name', 'image']);
+            };
 
-                Riddle.findById(session.riddle, function (err, riddle) {
+            if (session.task == 'won') {
+                Config.get('winText', function (err, winText) {
                     if (err) {
                         handler.error(err);
                         return;
                     }
-                    result.riddle = filterObject(riddle, ['name', 'description', 'hint', 'image']);
+                    result.winText = winText;
                     res.send(result);
                 })
-            });
-        }
-    });
+            } else {
+
+                if (!session.location) {
+                    destroySession(session.session._id, res);
+                    handler.error(new Error("location not found, session is invalid"));
+                    return;
+                }
+                result.location = filterObject(session.location, ['name', 'image']);
+
+
+                result.riddle = filterObject(session.riddle, ['name', 'description', 'hint', 'image']);
+                res.send(result);
+
+            }
+        });
 }
 
 // Will return whether the sent solution was right
@@ -407,7 +403,6 @@ var sessionToDeleteTime = 1000 * 60 * 60 * 24 * 3; //3 Days
 
 setInterval(heatCountdown, 1000 * 60 * 8);
 setInterval(sessionDeleter, 1000 * 60 * 60);
-
 
 
 module.exports = router;
