@@ -15,14 +15,14 @@
 
         $scope.startGame = function(){
             console.log('clicked startbutton',$scope.data.groupName);
-            $http.post('/api/game/sessions',{groupName: $scope.data.groupName}).then(function(res){
-                if(res.status == 200){
-                    localStorage['gameSession'] = res.data;
+            $http.post('/api/game/sessions',{groupName: $scope.data.groupName}).success(function(res){
+                     localStorage['gameSession'] = res.data;
                     $scope.game.running = true;
                     $rootScope.$broadcast('fetchState');
-                }else {
-                   console.log(res);
-                }
+
+            }).error(function (data) {
+                console.log(data);
+                alert('nicht genügend Rätsel');
             });
         };
 

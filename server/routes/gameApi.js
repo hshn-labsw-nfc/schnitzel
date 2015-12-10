@@ -33,12 +33,37 @@ function filterObject(obj, keys) {
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
-    var groupName = req.body.groupName;
-    var playSession = new PlaySession();
-    playSession.groupName = groupName;
-    advanceState(playSession, res, function (savedPlaySession) {
-        res.send(savedPlaySession._id);
+    var locationCount = 0;
+
+    Location.find({'isActive': true}, function (err, locations) {
+        if (err) {
+            handler.error(err);
+            return;
+        }
+        locationCount = locations.length;
+        Riddle.find().exec(function (err, riddles) {
+            if (err) {
+
+                handler.error(err);
+                return;
+            }
+            console.log(locationCount);
+            console.log(riddles.length)
+            if(riddles.length > locationCount){
+                var groupName = req.body.groupName;
+                var playSession = new PlaySession();
+                playSession.groupName = groupName;
+                advanceState(playSession, res, function (savedPlaySession) {
+                    res.send(savedPlaySession._id);
+                });
+            } else {
+                res.status(403);
+                res.end();
+            }
+        });
     });
+
+
 }
 
 function advanceState(playSession, res, callback) {
