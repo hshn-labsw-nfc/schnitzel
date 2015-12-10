@@ -9,7 +9,7 @@ var PlaySessionSchema = new mongoose.Schema({
     task: String, // won, solveRiddle, findLocation
     riddleID: String,
     locationID: String,
-    image: String
+    image: Object
 });
 
 module.exports = mongoose.model('PlaySession', PlaySessionSchema);

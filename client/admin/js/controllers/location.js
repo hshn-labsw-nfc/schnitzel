@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('location', ['ui.bootstrap', 'api', 'modal']);
+    var app = angular.module('location', ['ui.bootstrap', 'api', 'modal','naif.base64']);
 
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);

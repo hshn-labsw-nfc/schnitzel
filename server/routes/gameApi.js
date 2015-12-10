@@ -211,14 +211,14 @@ function getState(req, res, next) {
                     handler.error(new Error("location not found, session is invalid"));
                     return;
                 }
-                result.location = filterObject(location, ['name']);
+                result.location = filterObject(location, ['name', 'image']);
 
                 Riddle.findById(session.riddleID, function (err, riddle) {
                     if (err) {
                         handler.error(err);
                         return;
                     }
-                    result.riddle = filterObject(riddle, ['name', 'description', 'hint']);
+                    result.riddle = filterObject(riddle, ['name', 'description', 'hint', 'image']);
                     res.send(result);
                 })
             });

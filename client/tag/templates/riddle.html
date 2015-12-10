@@ -12,10 +12,7 @@
         </div>
         <br>
         <span ng-show="showPicture">
-            <img class="img-responsive center-block" src="media/computerraum.jpg">
-           <!--
-           <img> für game.state.location einbinden
-           -->
+            <img class="img-responsive center-block" ng-src="data:{{game.state.location.image.filetype}};base64,{{game.state.location.image.base64}}">
         </span>
         <span ng-show="!showPicture">
             <img class="img-responsive center-block" src="media/lageplan.png">
@@ -30,7 +27,7 @@
         </div>
 
         <br>
-        <img class="img-responsive center-block" src="media/aula.jpg">
+        <img class="img-responsive center-block" ng-src="data:{{game.state.riddle.image.filetype}};base64,{{game.state.riddle.image.base64}}">
         <br>
         <div class="alert alert-info" ng-if="showhint">
             <b>Hinweis:</b> {{game.state.riddle.hint}}

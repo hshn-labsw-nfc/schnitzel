@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var RiddleSchema   = new mongoose.Schema({
     name: String,
-    image: String,
+    image: Object,
     description: String,
     answer: String,
     hint: String,
