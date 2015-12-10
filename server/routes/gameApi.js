@@ -20,6 +20,7 @@ function getRandomInt(min, max) {
 }
 
 function getAndRemoveRandomElement(arr) {
+    console.log(arr);
     return arr.splice(getRandomInt(0, arr.length), 1)[0];
 }
 
@@ -48,8 +49,9 @@ function startPlaySession(req, res, next) {
                 return;
             }
             console.log(locationCount);
-            console.log(riddles.length)
-            if(riddles.length > locationCount){
+            console.log(riddles.length);
+            //TODO way more complicated then this
+            if(riddles.length >= locationCount){
                 var groupName = req.body.groupName;
                 var playSession = new PlaySession();
                 playSession.groupName = groupName;
@@ -90,7 +92,7 @@ function advanceState(playSession, res, callback) {
             _finishAdvanceState(playSession, res, callback);
         } else {
             _getLocationID(playSession, locations, function (res) {
-                playSession.locationID = res;
+                playSession.location = res;
                 _finishAdvanceState(playSession, res, callback);
             });
         }
@@ -141,8 +143,8 @@ function _finishAdvanceState(playSession, res, callback) {
                 handler.error(new Error('no Riddles in database'));
                 return;
             }
-            playSession.riddleID = _getRiddleID(playSession, riddles);
-            playSession.usedRiddles.push(playSession.riddleID);
+            playSession.riddle = _getRiddleID(playSession, riddles);
+            playSession.usedRiddles.push(playSession.riddle);
 
 
             _saveState(playSession, res, callback);
@@ -155,17 +157,22 @@ function _finishAdvanceState(playSession, res, callback) {
 
 function _getRiddleID(session, riddles) {
 
+    console.log(riddles);
+
     var unusedRiddles = riddles.filter(function (riddle) {
         return session.usedRiddles.indexOf(riddle._id) == -1;
     });
 
     var nonLocationRiddles = unusedRiddles.filter(function (riddle) {
-        return (riddle.locationID == undefined || riddle.locationID == null || riddle.locationID == '');
+        return (riddle.location == undefined || riddle.location == null);
     });
 
     var locationRiddles = unusedRiddles.filter(function (riddle) {
-        return riddle.locationID == session.locationID;
+        console.log(session.location, riddle.location, riddle.location.equals(session.location));
+        return riddle.location.equals(session.location);
     });
+
+    console.log("locationRiddles",locationRiddles);
 
     if (locationRiddles.length > 0) {
         return getAndRemoveRandomElement(locationRiddles)._id;
@@ -226,7 +233,7 @@ function getState(req, res, next) {
                 res.send(result);
             })
         } else {
-            Location.findById(session.locationID, function (err, location) {
+            Location.findById(session.location, function (err, location) {
                 if (err) {
                     handler.error(err);
                     return;
@@ -238,7 +245,7 @@ function getState(req, res, next) {
                 }
                 result.location = filterObject(location, ['name', 'image']);
 
-                Riddle.findById(session.riddleID, function (err, riddle) {
+                Riddle.findById(session.riddle, function (err, riddle) {
                     if (err) {
                         handler.error(err);
                         return;
@@ -275,7 +282,7 @@ function solveRiddle(req, res, next) {
             return;
         }
 
-        Riddle.findById(session.riddleID, function (err, riddle) {
+        Riddle.findById(session.riddle, function (err, riddle) {
             if (err) {
                 res.send(err);
                 return;
@@ -336,7 +343,7 @@ function checkLocation(req, res, next) {
                 res.send({'ERROR': 'Please check your parameters :/'});
                 return;
             }
-            if (session.locationID == tag.locationID) {
+            if (session.location.equals(tag.location)) {
 
                 // Correct locaction, lets update the session then
                 session.task = 'solveRiddle';

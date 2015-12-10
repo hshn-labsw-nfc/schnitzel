@@ -237,7 +237,7 @@ describe('tag test', function() {
   		})
   		//The following model is a dropdown-menu!
   		it ("spezifisches Testbeispiel3", function(){
-  			//element(by.model('data.locationID')).$('[value="string:565f0837c83795cc2134dd92"]').click();
+  			//element(by.model('data.location')).$('[value="string:565f0837c83795cc2134dd92"]').click();
         element(by.cssContainingText('option', linked_location)).click();
   		})
   		//id="Subbed" changed in 'templates'->'modal'->'tagform.html
@@ -262,7 +262,7 @@ describe('tag test', function() {
     })
     //The following model is a dropdown-menu!
     it ("spezifisches Testbeispiel3", function(){
-      //element(by.model('data.locationID')).$('[value="string:565f0837c83795cc2134dd92"]').click();
+      //element(by.model('data.location')).$('[value="string:565f0837c83795cc2134dd92"]').click();
       element(by.cssContainingText('option', linked_edit_location)).click();
     })
     //id="Subbed" changed in 'templates'->'modal'->'tagform.html

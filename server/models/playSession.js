@@ -1,14 +1,15 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+    , Schema = mongoose.Schema;
 
-var PlaySessionSchema = new mongoose.Schema({
+var PlaySessionSchema = new Schema({
     lastUpdated: Date,
     groupName: String,
     locationsToVisit: [String],
     locationCount: Number,
-    usedRiddles: [String],
+    usedRiddles: [Schema.Types.ObjectId],
     task: String, // won, solveRiddle, findLocation
-    riddleID: String,
-    locationID: String,
+    riddle: {type: Schema.Types.ObjectId, ref: 'Riddle'},
+    location: {type: Schema.Types.ObjectId, ref: 'Location'},
     image: Object
 });
 

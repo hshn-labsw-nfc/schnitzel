@@ -16,7 +16,8 @@
         $scope.startGame = function(){
             console.log('clicked startbutton',$scope.data.groupName);
             $http.post('/api/game/sessions',{groupName: $scope.data.groupName}).success(function(res){
-                     localStorage['gameSession'] = res.data;
+                console.log(res);
+                    localStorage['gameSession'] = res;
                     $scope.game.running = true;
                     $rootScope.$broadcast('fetchState');
 

@@ -1,12 +1,13 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+    , Schema = mongoose.Schema;
 
-var RiddleSchema   = new mongoose.Schema({
+var RiddleSchema   = new Schema({
     name: String,
     image: Object,
     description: String,
     answer: String,
     hint: String,
-    locationID: String,
+    location: {type: Schema.Types.ObjectId, ref: 'Location'},
     heat: Number
 });
 
