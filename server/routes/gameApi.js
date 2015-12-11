@@ -47,7 +47,6 @@ function startPlaySession(req, res, next) {
             var activeTags = tags.filter(function (tag) {
                 return (tag.location != undefined && tag.location.isActive == true);
             });
-            console.log("locations Active and bind on a Tag", activeTags);
 
             locationCount = activeTags.length;
 
@@ -91,30 +90,38 @@ function advanceState(playSession, res, callback) {
     playSession.lastUpdated = new Date();
     playSession.task = 'findLocation';
 
+    Tag.find()
+        .populate('location')
+        .exec(function (err, tags) {
+            if (err) {
+                handler.error(err);
+                return;
+            }
 
-    Location.find({'isActive': true}, function (err, locations) {
-        if (err) {
-            handler.error(err);
-            return;
-        }
-
-        if (!playSession.locationCount) {
-            playSession.locationCount = locations.length;
-            playSession.locationsToVisit = locations.map(function (location) {
-                return location._id;
+            var activeTags = tags.filter(function (tag) {
+                return (tag.location != undefined && tag.location.isActive == true);
             });
-        }
 
-        if (playSession.locationsToVisit.length == 0) {
-            playSession.task = 'won';
-            _finishAdvanceState(playSession, res, callback);
-        } else {
-            _getLocationID(playSession, locations, function (res) {
-                playSession.location = res;
+            if (!playSession.locationCount) {
+                playSession.locationCount = activeTags.length;;
+                playSession.locationsToVisit = activeTags.map(function (tag) {
+                    return tag.location._id;
+                });
+            }
+
+            if (playSession.locationsToVisit.length == 0) {
+                playSession.task = 'won';
                 _finishAdvanceState(playSession, res, callback);
-            });
-        }
-    });
+            } else {
+                var locations = activeTags.map(function (tag) {
+                    return tag.location;
+                });
+                _getLocationID(playSession, locations, function (res) {
+                    playSession.location = res;
+                    _finishAdvanceState(playSession, res, callback);
+                });
+            }
+        });
 }
 
 function _getLocationID(session, locations, callback) {
@@ -175,9 +182,7 @@ function _finishAdvanceState(playSession, res, callback) {
 
 function _getRiddleID(session, riddles) {
 
-    console.log(riddles);
-
-    var unusedRiddles = riddles.filter(function (riddle) {
+     var unusedRiddles = riddles.filter(function (riddle) {
         return session.usedRiddles.indexOf(riddle._id) == -1;
     });
 
@@ -186,11 +191,8 @@ function _getRiddleID(session, riddles) {
     });
 
     var locationRiddles = unusedRiddles.filter(function (riddle) {
-        console.log(session.location, riddle.location, riddle.location.equals(session.location));
         return riddle.location.equals(session.location);
     });
-
-    console.log("locationRiddles", locationRiddles);
 
     if (locationRiddles.length > 0) {
         return getAndRemoveRandomElement(locationRiddles)._id;
@@ -214,12 +216,7 @@ function destroySession(sessionID, res) {
         res.send({deleted: true});
     });
 }
-// Will return the current state
-//State: {
-//    riddleToSolve: Does the nextRiddle to be solved before progress can be made?,
-//    nextRiddle: {riddle: Question to solve, (... more stuff later: different riddletypes, etc.)},
-//    nextLocation: Location-Description (?)
-//}
+
 function getState(req, res, next) {
     var handler = new ResponseHandler(res);
     var sessionID = req.params.sessionid;
@@ -237,7 +234,6 @@ function getState(req, res, next) {
                 return;
             }
 
-            console.log(session);
             var result = {
                 task: session.task,
                 progress: {
