@@ -4,7 +4,7 @@
     app.controller('LocationListCtrl', LocationListCtrl);
     app.controller('LocationEntryCtrl', LocationEntryCtrl);
 
-    function LocationEntryCtrl($scope, $routeParams, locationApi) {
+    function LocationEntryCtrl($scope, $routeParams, locationApi, $uibModal) {
 
         $scope.data = {};
         if ($routeParams.id) {
@@ -15,19 +15,61 @@
         }
 
         $scope.save = function (){
-            console.log("isActive", $scope.data.isActive);
-            console.log('DATA TO SAVE');
-            console.log($scope.data);
             if($routeParams.id){
-                $scope.data.$update(function () {
-                    location.href = '#/listlocations';
+                $scope.data.$update(function (resp, headers) {
+
+                    if(resp.errmsg){
+                        openModal();
+                        $scope.data = locationApi.get({id: $routeParams.id});
+                        console.log("error",resp.errmsg);
+                    }else{
+                        location.href = '#/listlocations';
+                    }
+
                 });
             } else {
-                locationApi.save($scope.data, function () {
-                    location.href = '#/listlocations';
+                locationApi.save($scope.data, function (resp, headers) {
+
+                    if(resp.errmsg){
+                        openModal();
+                        console.log("error",resp.errmsg);
+                    }else{
+                        location.href = '#/listlocations';
+                    }
                 });
             }
         }
+
+        $scope.animationsEnabled = true;
+
+        function openModal (id) {
+            $scope.id = id;
+
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '../shared/templates/modal/confirm_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    message: function() {
+                        $scope.message = {
+                            header: 'Failur',
+                            text: 'Doppelter Raumname',
+                        };
+                        return $scope.message;
+                    },
+                    callback: function() {
+                        return function (success) {
+                        };
+                    },
+                    parameter: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
     }
 
     function LocationListCtrl($scope, locationApi, $uibModal){
@@ -55,30 +97,30 @@
 
         $scope.animationsEnabled = true;
 
-        $scope.ok = function (id) {
-            $scope.id = id;
-            var modalInstance = $uibModal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
-                controller: 'ModalCtrl',
-                resolve: {
-                    message: function() {
-                        $scope.message = {
-                            header: 'Ort löschen',
-                            text: 'Ort wirklich löschen?',
-                            confirmButtonText: 'Löschen',
-                            cancelButtonText: 'Abbrechen'
-                        };
-                        return $scope.message;
-                    },
-                    callback: function() {
-                        return function (success) {
-                            if(success) {
-                                $scope.delete(id);
-                            }
-                        };
-                    },
-                    parameter: function () {
+            $scope.ok = function (id) {
+                $scope.id = id;
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
+                    controller: 'ModalCtrl',
+                    resolve: {
+                        message: function() {
+                            $scope.message = {
+                                header: 'Ort löschen',
+                                text: 'Ort wirklich löschen?',
+                                confirmButtonText: 'Löschen',
+                                cancelButtonText: 'Abbrechen'
+                            };
+                            return $scope.message;
+                        },
+                        callback: function() {
+                            return function (success) {
+                                if(success) {
+                                    $scope.delete(id);
+                                }
+                            };
+                        },
+                        parameter: function () {
                         return id;
                     }
                 }

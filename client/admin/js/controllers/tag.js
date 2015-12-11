@@ -4,7 +4,7 @@
     app.controller('TagListCtrl', TagListCtrl);
     app.controller('TagEntryCtrl', TagEntryCtrl);
 
-    function TagEntryCtrl($scope, $routeParams, tagApi, locationApi) {
+    function TagEntryCtrl($scope, $routeParams, tagApi, locationApi, $uibModal) {
         $scope.data = {};
         if($routeParams.id){
             $scope.heading = 'Editieren eines Tags';
@@ -24,16 +24,63 @@
         $scope.save = function () {
             console.log($scope.data);
             if($routeParams.id){
-                $scope.data.$update(function () {
-                    location.href = '#/listtags';
+                $scope.data.$update(function (resp, headers) {
+
+                    if(resp.errmsg){
+                        openModal();
+                        tagApi.get({id:$routeParams.id},function(data){
+                            $scope.data = data;
+                        });
+                        console.log("error",resp.errmsg);
+                    }else{
+                        location.href = '#/listtags';
+                    }
+
                 });
             } else {
-                tagApi.save($scope.data, function () {
-                    location.href = '#/listtags';
+                tagApi.save($scope.data, function (resp, headers) {
+
+                    if(resp.errmsg){
+                        openModal();
+                        console.log("error",resp.errmsg);
+                    }else{
+                        location.href = '#/listtags';
+                    }
                 });
             }
 
         }
+
+        $scope.animationsEnabled = true;
+
+        function openModal (id) {
+            $scope.id = id;
+
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '../shared/templates/modal/confirm_modal.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    message: function() {
+                        $scope.message = {
+                            header: 'Failur',
+                            text: 'Doppelte TagID',
+                        };
+                        return $scope.message;
+                    },
+                    callback: function() {
+                        return function (success) {
+                        };
+                    },
+                    parameter: function () {
+                        return id;
+                    }
+                }
+            });
+        };
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
     }
 
     function TagListCtrl($scope, tagApi, locationApi, $uibModal){
