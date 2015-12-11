@@ -52,8 +52,8 @@
                 resolve: {
                     message: function() {
                         $scope.message = {
-                            header: 'Failur',
-                            text: 'Doppelter Raumname',
+                            header: 'Fehler',
+                            text: 'Doppelte Raumnamen sind nicht möglich.',
                         };
                         return $scope.message;
                     },

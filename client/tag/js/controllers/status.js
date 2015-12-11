@@ -29,34 +29,38 @@
 
         $scope.animationsEnabled = true;
         $scope.ok = function (id) {
-            $scope.id = id;
-            var modalInstance = $uibModal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
-                controller: 'ModalCtrl',
-                resolve: {
-                    message: function() {
-                        $scope.message = {
+            if ($scope.game.state.task == 'won') {
+                $scope.endGame();
+            } else {
+                $scope.id = id;
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: '../shared/templates/modal/confirm_delete_modal.html',
+                    controller: 'ModalCtrl',
+                    resolve: {
+                        message: function () {
+                            $scope.message = {
 
-                            header: 'Schnitzeljagd Beenden',
-                            text: 'Wirklich Schnitzeljagd beenden?',
-                            confirmButtonText: 'Beenden',
-                            cancelButtonText: 'Abbrechen'
-                        };
-                        return $scope.message;
-                    },
-                    callback: function() {
-                        return function (success) {
-                            if(success) {
-                                $scope.endGame();
-                            }
-                        };
-                    },
-                    parameter: function () {
-                        return id;
+                                header: 'Schnitzeljagd Beenden',
+                                text: 'Wirklich Schnitzeljagd beenden?',
+                                confirmButtonText: 'Beenden',
+                                cancelButtonText: 'Abbrechen'
+                            };
+                            return $scope.message;
+                        },
+                        callback: function () {
+                            return function (success) {
+                                if (success) {
+                                    $scope.endGame();
+                                }
+                            };
+                        },
+                        parameter: function () {
+                            return id;
+                        }
                     }
-                }
-            });
+                });
+            }
         };
 
         $scope.endGame = function(){

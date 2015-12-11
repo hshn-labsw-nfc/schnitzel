@@ -63,8 +63,8 @@
                 resolve: {
                     message: function() {
                         $scope.message = {
-                            header: 'Failur',
-                            text: 'Doppelte TagID',
+                            header: 'Fehler',
+                            text: 'Doppelte TagId´s sind nicht möglich.',
                         };
                         return $scope.message;
                     },
