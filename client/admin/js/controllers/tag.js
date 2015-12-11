@@ -91,7 +91,8 @@
         $scope.tableheaders = {
             tagID: 'TagID',
             alias: 'Alias',
-            locationName: 'Ort'
+            locationName: 'Ort',
+            tagUrl: 'Tag Url'
         };
 
         function loadEntries(){
@@ -106,6 +107,9 @@
                     $scope.data.map(function (tag) {
                         tag.locationName = locationNames[tag.location];
                     });
+                });
+                $scope.data.map(function (tag) {
+                    tag.tagUrl = window.location.hostname+'/tag/#/'+tag.tagID;
                 });
             });
         }
