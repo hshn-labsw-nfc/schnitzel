@@ -17,6 +17,7 @@ function set(key, value, callback){
 function get(key, callback){
     console.log('invoking getter');
     Model.findById(key, function(err, res){
+        console.log(key, err, res);
         callback(err, (res ? res.value : ""));
     })
 }

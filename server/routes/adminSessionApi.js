@@ -35,7 +35,7 @@ function createSession(req, res, next) {
                     res.send(err);
                     return;
                 }
-                Config.set('password','passwort1337', function (err) {
+                Config.set('password',bcrypt.hashSync('passwort1337'), function (err) {
                     if (err) {
                         res.status(500);
                         res.send(err);
