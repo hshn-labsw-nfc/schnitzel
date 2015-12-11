@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use('/api', api);
 
 // connect to db
-mongoose.connect('mongodb://localhost/schnitzel');
+mongoose.connect('mongodb://127.0.0.1/schnitzel');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

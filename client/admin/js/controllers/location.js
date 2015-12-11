@@ -15,6 +15,7 @@
         }
 
         $scope.save = function (){
+            console.log("isActive", $scope.data.isActive);
             console.log('DATA TO SAVE');
             console.log($scope.data);
             if($routeParams.id){

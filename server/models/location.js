@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var LocationSchema   = new mongoose.Schema({
     name: String,
     description: String,
-    isActive: Boolean,
+    isActive: {type: Boolean, default: false},
     image: Object,
     heat: {type: Number,default: 0}
 });

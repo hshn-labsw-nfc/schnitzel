@@ -36,35 +36,53 @@ function filterObject(obj, keys) {
 function startPlaySession(req, res, next) {
     var locationCount = 0;
 
-    Location.find({'isActive': true}, function (err, locations) {
-        if (err) {
-            handler.error(err);
-            return;
-        }
-        locationCount = locations.length;
-        Riddle.find().exec(function (err, riddles) {
+    Tag.find()
+        .populate('location')
+        .exec(function (err, tags) {
             if (err) {
-
                 handler.error(err);
                 return;
             }
-            console.log(locationCount);
-            console.log(riddles.length);
-            //TODO way more complicated then this
-            if (riddles.length >= locationCount) {
-                var groupName = req.body.groupName;
-                var playSession = new PlaySession();
-                playSession.groupName = groupName;
-                advanceState(playSession, res, function (savedPlaySession) {
-                    res.send(savedPlaySession._id);
-                });
-            } else {
-                res.status(403);
-                res.end();
-            }
-        });
-    });
 
+            var activeTags = tags.filter(function (tag) {
+                return (tag.location != undefined && tag.location.isActive == true);
+            });
+            console.log("locations Active and bind on a Tag", activeTags);
+
+            locationCount = activeTags.length;
+
+            Riddle.find()
+                .populate('location')
+                .exec(function (err, riddles) {
+                    if (err) {
+
+                        handler.error(err);
+                        return;
+                    }
+
+                    var nonLocationRiddles = riddles.filter(function (riddle) {
+                        return (riddle.location == undefined || riddle.location == null);
+                    });
+
+                    var locationRiddles = riddles.filter(function (riddle) {
+                        return (riddle.location != undefined && riddle.location.isActive == true);
+                    });
+
+                    var riddlecount = nonLocationRiddles.length + locationRiddles.length;
+                    //TODO way more complicated then this
+                    if (locationCount > 0 && riddlecount >= locationCount) {
+                        var groupName = req.body.groupName;
+                        var playSession = new PlaySession();
+                        playSession.groupName = groupName;
+                        advanceState(playSession, res, function (savedPlaySession) {
+                            res.send(savedPlaySession._id);
+                        });
+                    } else {
+                        res.status(503);
+                        res.end();
+                    }
+                });
+        });
 
 }
 
