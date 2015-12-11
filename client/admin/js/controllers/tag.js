@@ -2,7 +2,7 @@
     var app = angular.module('tag', ['ui.bootstrap', 'api', 'modal']);
 
     app.controller('TagListCtrl', TagListCtrl);
-    app.controller('TagEntryCtrl', ['$scope', '$routeParams', 'tagApi','locationApi', TagEntryCtrl]);
+    app.controller('TagEntryCtrl', TagEntryCtrl);
 
     function TagEntryCtrl($scope, $routeParams, tagApi, locationApi) {
         $scope.data = {};
@@ -36,21 +36,32 @@
         }
     }
 
-    function TagListCtrl($scope, tagApi, $uibModal){
+    function TagListCtrl($scope, tagApi, locationApi, $uibModal){
         $scope.name = 'Tag';
         $scope.entity = 'tag';
 
         //TODO warum benutzen wir nich einfach die tag._id als TagID?
         $scope.tableheaders = {
             tagID: 'TagID',
-            alias: 'Alias'
+            alias: 'Alias',
+            locationName: 'Ort'
         };
 
         function loadEntries(){
-            tagApi.query((function(data){
+            tagApi.query(function(data){
                 console.log(data);
                 $scope.data = data;
-            }));}
+                locationApi.query(function(locations){
+                var locationNames = {};
+                    locations.forEach(function(location){
+                        locationNames[location._id] = location.name;
+                    });
+                    $scope.data.map(function (tag) {
+                        tag.locationName = locationNames[tag.location];
+                    });
+                });
+            });
+        }
 
         $scope.delete = function(id) {
             tagApi.delete({id:id});

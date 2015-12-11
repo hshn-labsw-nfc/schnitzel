@@ -32,6 +32,17 @@ function filterObject(obj, keys) {
     return filteredObj;
 }
 
+function uniqueFilter(property){
+    var foundElements = {};
+    return function(el){
+        if(foundElements.hasOwnProperty(el[property])){
+            return false;
+        }
+        foundElements[el[property]] = true;
+        return true;
+    }
+}
+
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
     var locationCount = 0;
@@ -46,7 +57,9 @@ function startPlaySession(req, res, next) {
 
             var activeTags = tags.filter(function (tag) {
                 return (tag.location != undefined && tag.location.isActive == true);
-            });
+            }).filter(uniqueFilter('location'));
+
+            console.log("activeTags",activeTags);
 
             locationCount = activeTags.length;
 
@@ -66,6 +79,9 @@ function startPlaySession(req, res, next) {
                     var locationRiddles = riddles.filter(function (riddle) {
                         return (riddle.location != undefined && riddle.location.isActive == true);
                     });
+
+                    console.log("nonLocationRiddles", nonLocationRiddles);
+                    console.log("locationRiddles", locationRiddles);
 
                     var riddlecount = nonLocationRiddles.length + locationRiddles.length;
                     //TODO way more complicated then this
@@ -100,7 +116,7 @@ function advanceState(playSession, res, callback) {
 
             var activeTags = tags.filter(function (tag) {
                 return (tag.location != undefined && tag.location.isActive == true);
-            });
+            }).filter(uniqueFilter('location'));
 
             if (!playSession.locationCount) {
                 playSession.locationCount = activeTags.length;;
@@ -191,7 +207,7 @@ function _getRiddleID(session, riddles) {
     });
 
     var locationRiddles = unusedRiddles.filter(function (riddle) {
-        return riddle.location.equals(session.location);
+        return (riddle.location != undefined && riddle.location.equals(session.location));
     });
 
     if (locationRiddles.length > 0) {
@@ -259,7 +275,6 @@ function getState(req, res, next) {
                     return;
                 }
                 result.location = filterObject(session.location, ['name', 'image']);
-
 
                 result.riddle = filterObject(session.riddle, ['name', 'description', 'hint', 'image']);
                 res.send(result);
