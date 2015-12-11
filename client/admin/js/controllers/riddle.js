@@ -36,18 +36,30 @@
         }
     }
 
-    function RiddleListCtrl($scope, riddleApi, $uibModal){
+    function RiddleListCtrl($scope, riddleApi, locationApi, $uibModal){
         $scope.name = 'Rätsel';
         $scope.entity = 'riddle';
         $scope.tableheaders = {
             name: 'Rätselname',
-            description: 'Beschreibung'
+            description: 'Beschreibung',
+            locationName: 'Ort'
         };
         function loadEntries(){
-            riddleApi.query((function(data){
+            riddleApi.query(function(data){
                 console.log(data);
                 $scope.data = data;
-            }));}
+                locationApi.query(function(locations){
+                    var locationNames = {};
+                    locations.forEach(function(location){
+                        locationNames[location._id] = location.name;
+                    });
+                    $scope.data.map(function (tag) {
+                        tag.locationName = locationNames[tag.location];
+                    });
+                });
+            });
+
+        }
 
         $scope.delete = function(id) {
             riddleApi.delete({id:id});
