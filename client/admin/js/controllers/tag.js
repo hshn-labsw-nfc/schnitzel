@@ -40,6 +40,7 @@
         $scope.name = 'Tag';
         $scope.entity = 'tag';
 
+        //TODO warum benutzen wir nich einfach die tag._id als TagID?
         $scope.tableheaders = {
             tagID: 'TagID',
             alias: 'Alias'
