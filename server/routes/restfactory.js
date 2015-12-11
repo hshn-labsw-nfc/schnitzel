@@ -49,6 +49,7 @@ function createEntry(Model) {
 
 function updateEntry(Model) {
     return function (req, res, next) {
+        console.log("req",req.body);
         var id = req.params.id;
         Model.findById(id, function (err, entry) {
             if (err) {
@@ -56,7 +57,7 @@ function updateEntry(Model) {
                 return;
             }
             Model.schema.eachPath(function(path) {
-                if(req.body[path]){
+                if(req.body.hasOwnProperty(path)){
                     entry[path] = req.body[path];
                 }
             });
