@@ -54,7 +54,7 @@ function createSession(req, res, next) {
                         res.send(err);
                         return;
                     }
-                    res.send(token);
+                    res.send({token: token});
                 });
             }else{
                 res.status(401);
@@ -87,7 +87,7 @@ function deleteSession(req, res, next) {
                 res.send('SUCCESS');
             });
         }else{
-            res.status(401);
+            res.status(403);
             res.send('wrong token');
             return;
         }
