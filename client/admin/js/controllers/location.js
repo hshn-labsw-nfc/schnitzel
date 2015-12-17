@@ -9,7 +9,11 @@
         $scope.data = {};
         if ($routeParams.id) {
             $scope.heading = 'Location Bearbeiten';
-            $scope.data = locationApi.get({id: $routeParams.id});
+            locationApi.get({id: $routeParams.id}, function (resp, headers) {
+                console.log(resp);
+                $scope.data = resp;
+            });
+
         } else {
             $scope.heading = 'Hinzufügen einer Location';
         }

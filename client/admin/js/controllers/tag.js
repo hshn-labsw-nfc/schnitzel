@@ -109,7 +109,7 @@
                     });
                 });
                 $scope.data.map(function (tag) {
-                    tag.tagUrl = window.location.hostname+'/tag/#/'+tag.tagID;
+                    tag.tagUrl = window.location.origin+'/tag/#/'+tag.tagID;
                 });
             });
         }
