@@ -2,3 +2,4 @@
 /server/node_modules
 /server/configuration.json
 /.idea
+/test/server-unit/node_modules
