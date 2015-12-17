@@ -30,6 +30,7 @@ var setter = {
 function setField(field, validator, converter){
     var isValid = validator || function(){ return true };
     var convert = converter || function(val){ return val };
+
     return function(keys, res){
         if(!keys[field] || keys[field].length < 1){
             res.status(404);
@@ -39,7 +40,7 @@ function setField(field, validator, converter){
         var valid = isValid(keys);
         if(valid !== true){
             res.status(404);
-            res.send(invalid);
+            res.send(valid);
             return;
         }
         Config.set(field, convert(keys[field]), function(err){

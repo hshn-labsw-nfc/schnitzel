@@ -32,6 +32,8 @@
 
     <script src="js/auth.js"></script>
 
+    <script src="js/controllers/menu.js"></script>
+
     <script src="js/controllers/location.js"></script>
     <script src="js/controllers/riddle.js"></script>
     <script src="js/controllers/tag.js"></script>
@@ -40,7 +42,7 @@
     <script src="js/controllers/status.js"></script>
     <script src="js/controllers/config.js"></script>
 
-    <script src="js/controllers/menu.js"></script>
+
 </head>
 
 <body>
@@ -55,10 +57,10 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl">
+        <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl" ng-show="showmenu">
             <ul class="nav nav-sidebar">
                 <li class="h4" ng-repeat="(item, name) in items"><a href="#/list{{item}}s" id="{{name.name}}" ><span class="{{name.icon}}"></span>&nbsp&nbsp{{name.name}}</a></li>
-                <li><a class="text-danger h4" href="#"><span class="glyphicon glyphicon-off"></span>&nbsp&nbspLogout</a></li>
+                <li><a class="text-danger h4" ng-click="logout()"><span class="glyphicon glyphicon-off"></span>&nbsp&nbspLogout</a></li>
             </ul>
 
         </div>

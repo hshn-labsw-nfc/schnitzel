@@ -35,7 +35,7 @@ function createSession(req, res, next) {
                     res.send(err);
                     return;
                 }
-                Config.set('password','passwort1337', function (err) {
+                Config.set('password',bcrypt.hashSync('passwort1337'), function (err) {
                     if (err) {
                         res.status(500);
                         res.send(err);
@@ -54,7 +54,7 @@ function createSession(req, res, next) {
                         res.send(err);
                         return;
                     }
-                    res.send(token);
+                    res.send({token: token});
                 });
             }else{
                 res.status(401);
@@ -87,7 +87,7 @@ function deleteSession(req, res, next) {
                 res.send('SUCCESS');
             });
         }else{
-            res.status(401);
+            res.status(403);
             res.send('wrong token');
             return;
         }
