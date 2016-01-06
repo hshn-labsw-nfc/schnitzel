@@ -60,7 +60,7 @@
         <div class="col-sm-3 col-md-2 sidebar" ng-controller="MenuCtrl" ng-show="showmenu">
             <ul class="nav nav-sidebar">
                 <li class="h4" ng-repeat="(item, name) in items"><a href="#/list{{item}}s" id="{{name.name}}" ><span class="{{name.icon}}"></span>&nbsp&nbsp{{name.name}}</a></li>
-                <li><a class="text-danger h4" ng-click="logout()"><span class="glyphicon glyphicon-off"></span>&nbsp&nbspLogout</a></li>
+                <li><a id="logout" class="text-danger h4" ng-click="logout()"><span class="glyphicon glyphicon-off"></span>&nbsp&nbspLogout</a></li>
             </ul>
 
         </div>
