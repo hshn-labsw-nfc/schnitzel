@@ -5,6 +5,14 @@
     left: 0;
     right: 0;
 }
+
+.pre {
+     display: block;
+     font-family: monospace;
+     white-space: pre;
+     margin: 1em 0;
+}
+
 .mainheader{
     margin-top: 20px;
 }

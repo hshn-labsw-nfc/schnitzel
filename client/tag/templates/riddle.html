@@ -1,4 +1,3 @@
-
 <div ng-controller="RiddleCtrl">
     <div ng-if="game.state.task == 'findLocation'">
         <div class="text-center">
@@ -22,9 +21,7 @@
         <div class="text-center">
             <h4>{{game.state.riddle.name}}</h4>
         </div>
-        <div class="text-left">
-            {{game.state.riddle.description}}
-        </div>
+        <pre>{{game.state.riddle.description}}</pre>
 
         <br>
         <img class="img-responsive center-block" ng-src="data:{{game.state.riddle.image.filetype}};base64,{{game.state.riddle.image.base64}}">

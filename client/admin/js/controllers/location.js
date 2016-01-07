@@ -22,6 +22,9 @@
             if($routeParams.id){
                 $scope.data.$update(function (resp, headers) {
 
+                    console.log("resp",resp);
+                    console.log("headers",headers);
+
                     if(resp.errmsg){
                         openModal();
                         $scope.data = locationApi.get({id: $routeParams.id});
@@ -30,6 +33,8 @@
                         location.href = '#/listlocations';
                     }
 
+                }, function (err) {
+                    console.log(err);
                 });
             } else {
                 locationApi.save($scope.data, function (resp, headers) {
