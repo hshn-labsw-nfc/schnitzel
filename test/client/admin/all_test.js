@@ -2,6 +2,8 @@
  This is a Test to add, edit and delete a Location
  **/
 var port = 4444;
+
+
 describe('', function () {
 
     describe('Login Test', function () {
@@ -19,6 +21,11 @@ describe('', function () {
             element(by.className('btn-primary')).click();
             console.log("End Login Test");
         });
+        it('', function () {
+            var EC = protractor.ExpectedConditions;
+            var e = element(by.id('Status'));
+            browser.wait(EC.presenceOf(e), 10000);
+        });
     });
 
 
@@ -32,7 +39,6 @@ describe('', function () {
             it('Go to Locations', function () {
                 console.log('Start Add Test');
                 browser.get('http://localhost:' + port + '/admin');
-                browser.pause();
             });
             it('Go to Locations', function () {
                 element(by.id('Orte')).click();
@@ -245,7 +251,9 @@ describe('', function () {
         describe("Tag hinzufügen Oberflächen-Test", function () {
             it("Text in Tag", function () {
                 console.log('Start Add Test');
-                browser.get("http://localhost:" + port + "/admin");
+                browser.get('http://localhost:' + port + '/admin');
+            });
+            it('', function () {
                 element(by.id("Tags")).click();
             });
             it("Hinzufügen geklickt", function () {
@@ -295,7 +303,7 @@ describe('', function () {
         describe('Tag delete Test', function () {
             it('go to Tag List', function () {
                 console.log('Start Delete Test');
-                browser.get('http://localhost:"+port+"/admin/');
+                browser.get('http://localhost:'+port+'/admin/');
             });
             it('Click Riddle Button', function () {
                 element(by.id('Tags')).click();
@@ -332,6 +340,9 @@ describe('', function () {
             element(by.id('logout')).click();
             console.log('End Logout Test');
         });
+        it('', function () {
+            browser.pause();
+        })
     });
 
 });
