@@ -2,8 +2,6 @@
  This is a Test to add, edit and delete a Location
  **/
 var port = 4444;
-
-
 describe('', function () {
 
     describe('Login Test', function () {
@@ -20,11 +18,6 @@ describe('', function () {
         it('press login button', function () {
             element(by.className('btn-primary')).click();
             console.log("End Login Test");
-        });
-        it('', function () {
-            var EC = protractor.ExpectedConditions;
-            var e = element(by.id('Status'));
-            browser.wait(EC.presenceOf(e), 10000);
         });
     });
 
@@ -251,9 +244,7 @@ describe('', function () {
         describe("Tag hinzufügen Oberflächen-Test", function () {
             it("Text in Tag", function () {
                 console.log('Start Add Test');
-                browser.get('http://localhost:' + port + '/admin');
-            });
-            it('', function () {
+                browser.get("http://localhost:" + port + "/admin");
                 element(by.id("Tags")).click();
             });
             it("Hinzufügen geklickt", function () {
@@ -280,21 +271,21 @@ describe('', function () {
                 console.log('Start Add Test');
                 browser.get("http://localhost:" + port + "/admin");
                 element(by.id("Tags")).click();
-            })
+            });
             it("Edit click on last row element", function () {
                 elements = element.all(by.repeater('entry in data | filter:query'));
                 elements.count().then(function (cRows) {
                     element(by.repeater('entry in data | filter:query').row(cRows - 1)).element(by.className('btn-primary')).click();
                 });
-            })
+            });
             it("edit alias", function () {
                 element(by.model("data.alias")).sendKeys(tag_edit_text);
-            })
+            });
             //The following model is a dropdown-menu!
             it("spezifisches Testbeispiel3", function () {
                 //element(by.model('data.locationID')).$('[value="string:565f0837c83795cc2134dd92"]').click();
                 element(by.cssContainingText('option', linked_edit_location)).click();
-            })
+            });
             //id="Subbed" changed in 'templates'->'modal'->'tagform.html
             it("spezifisches Testbeispiel1", function () {
                 element(by.className("btn-success")).click();
@@ -303,7 +294,7 @@ describe('', function () {
         describe('Tag delete Test', function () {
             it('go to Tag List', function () {
                 console.log('Start Delete Test');
-                browser.get('http://localhost:'+port+'/admin/');
+                browser.get('http://localhost:"+port+"/admin/');
             });
             it('Click Riddle Button', function () {
                 element(by.id('Tags')).click();
@@ -340,9 +331,6 @@ describe('', function () {
             element(by.id('logout')).click();
             console.log('End Logout Test');
         });
-        it('', function () {
-            browser.pause();
-        })
     });
 
 });
