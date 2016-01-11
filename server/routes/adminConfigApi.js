@@ -3,6 +3,8 @@ var router = express.Router();
 
 var bcrypt = require('bcryptjs');
 
+var authentificator = require('./authMiddleware');
+
 var Config = require('../models/config');
 
 var allowedKeys = {
@@ -53,6 +55,8 @@ function setField(field, validator, converter){
         });
     }
 }
+
+router.use(authentificator);
 
 router.put('/:key', function(req, res, next){
     var key = req.params.key;
