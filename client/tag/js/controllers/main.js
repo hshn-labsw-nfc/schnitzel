@@ -34,10 +34,7 @@
                     $scope.game.state = data;
                     $scope.location = data.location;
 
-                    if ($scope.game.state.task == 'won') {
-                        console.log('winnerscreen');
-                        //location.hash = '/winner';
-                    }
+                    location.hash = '/';
                 }).error(function (err) {
                     $scope.game.running = false;
                     console.log(err);

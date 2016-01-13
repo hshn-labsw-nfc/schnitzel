@@ -21,10 +21,11 @@
                         console.log('Wrong answer !');
                     }
                 }else {
-                    // TODO: Errorhandling
+                    $rootScope.$broadcast('alert', 'The server didn\'t respond, please try again', 'danger');
                 }
             });
         };
+
         $scope.hint = function(){
             $scope.showhint = true;
         };
