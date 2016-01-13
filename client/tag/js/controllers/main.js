@@ -7,13 +7,14 @@
         $scope.game = {running: false};
         $scope.alerts = [];
 
+        if (localStorage.hasOwnProperty('gameSession')) {
+            $scope.game.running = true;
+            $scope.game.sessionID = localStorage['gameSession'];
+        }
+
         $scope.$on('fetchState', getState);
 
         $scope.$on('alert', showAlert);
-
-        if (localStorage.hasOwnProperty('gameSession')) {
-            $scope.game.running = true;
-        }
 
         function showAlert(u, message, type) {
             type = type || 'warning';
@@ -34,7 +35,7 @@
                     $scope.game.state = data;
                     $scope.location = data.location;
 
-                    location.hash = '/';
+                    location.hash = '#/';
                 }).error(function (err) {
                     $scope.game.running = false;
                     localStorage.removeItem('gameSession');
@@ -43,8 +44,6 @@
                 });
             }
         }
-
-        getState();
     }
 
 })();

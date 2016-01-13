@@ -5,6 +5,8 @@
 
 
     function StatusCtrl($scope, $http, $rootScope, $uibModal) {
+        $rootScope.$broadcast('fetchState');
+
         $scope.caption = {
             findLocation: 'Ort finden',
             solveRiddle: 'Rätsel lösen',

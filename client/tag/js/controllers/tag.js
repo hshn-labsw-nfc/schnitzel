@@ -7,6 +7,7 @@
         var tagID = $routeParams.tagID;
 
         if($scope.game.running){
+            console.log($scope.game);
             $http.post('/api/game/sessions/' + $scope.game.sessionID + '/location', {tagID: tagID}).then(function(res){
                 if(res.status == 200){// {correctLocation: true}
                     if(res.data.correctLocation){
@@ -20,6 +21,7 @@
                 }
             });
         }else{
+            $rootScope.$broadcast('alert', 'Session doesn\'t exist', 'danger');
             location.hash = '/';
         }
     }
