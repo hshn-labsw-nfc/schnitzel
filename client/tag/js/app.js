@@ -7,10 +7,6 @@
 
     function routeProvider($routeProvider){
         $routeProvider.
-        when('/winner', {
-            templateUrl: 'templates/winner.html',
-            controller: 'WinnerCtrl'
-        }).
         when('/:tagID', {
             templateUrl: 'templates/tag.html',
             controller: 'TagCtrl'
@@ -23,5 +19,4 @@
             redirectTo: '/'
         });
     }
-
 })();

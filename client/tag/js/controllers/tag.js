@@ -11,17 +11,17 @@
                 if(res.status == 200){// {correctLocation: true}
                     if(res.data.correctLocation){
                         $rootScope.$broadcast('alert', 'Raum gefunden', 'success');
-                        $rootScope.$broadcast('fetchState');
                     }else{
                         $rootScope.$broadcast('alert', 'Das ist der falsche Raum!', 'danger');
                     }
+                    $rootScope.$broadcast('fetchState');
                     location.hash = '/';
                 }else{
-
+                    $rootScope.$broadcast('alert', 'The server didn\'t respond, Please reload the page to try again', 'danger');
                 }
             });
         }else{
-            // Show the normal stuff
+            location.hash = '/';
         }
 
     }
