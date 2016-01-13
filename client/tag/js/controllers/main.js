@@ -37,8 +37,9 @@
                     location.hash = '/';
                 }).error(function (err) {
                     $scope.game.running = false;
+                    localStorage.removeItem('gameSession');
                     console.log(err);
-                    $scope.$broadcast('alert', err, 'danger');
+                    $scope.$broadcast('alert', 'Session doesn\'t exist', 'danger');
                 });
             }
         }
