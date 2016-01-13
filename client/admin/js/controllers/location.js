@@ -8,14 +8,14 @@
 
         $scope.data = {};
         if ($routeParams.id) {
-            $scope.heading = 'Location Bearbeiten';
+            $scope.heading = 'Editieren eines Ortes';
             locationApi.get({id: $routeParams.id}, function (resp, headers) {
                 console.log(resp);
                 $scope.data = resp;
             });
 
         } else {
-            $scope.heading = 'Hinzufügen einer Location';
+            $scope.heading = 'Hinzufügen eines Ortes';
         }
 
         $scope.save = function (){
