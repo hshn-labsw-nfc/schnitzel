@@ -5,8 +5,8 @@
 
     function StatusCtrl($scope,locationApi,sessionApi,$uibModal) {
 
-        $scope.entity = 'session'
-        $scope.heading = 'Gruppen Status';
+        $scope.entity = 'session';
+        $scope.heading = 'Gruppenstatus';
         $scope.name = 'Ort';
 
         $scope.loadEntries = function () {
@@ -17,7 +17,7 @@
                         count: session.locationCount,
                             done: session.locationCount - session.locationsToVisit.length - (session.task == 'findLocation' ? 1 : 0)
                     };
-                })
+                });
 
                 $scope.sessions = data;
             });
