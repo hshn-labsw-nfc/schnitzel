@@ -1,12 +1,12 @@
 # schnitzel
 
 ## HowTo install
-####install node.js
-####install bower
+#### install node.js
+#### install bower
 - open a console
 - `npm install -g bower`
 
-####checkout the project
+#### checkout the project
 #### install server dependencies
 - go to /server
 - open  console
