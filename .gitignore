@@ -1,5 +1,12 @@
+# Bower specific files
 /client/bower_components
+
+# Node specific files
 /server/node_modules
 /server/configuration.json
-/.idea
 /test/server-unit/node_modules
+
+# IntelliJ specific files
+/.idea/
+*.iml
+/out/
