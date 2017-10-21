@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: ' <a routerLink="/admin"></a> <router-outlet></router-outlet>'
 })
-export class AppComponent {
-  title = 'app';
-}
+export class AppComponent {}

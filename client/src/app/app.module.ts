@@ -6,6 +6,15 @@ import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
+import { FooterComponent } from './user/footer/footer.component';
+import { ProgressComponent } from './user/progress/progress.component';
+import { LoginComponent } from './user/login/login.component';
+import { ScoreboardComponent } from './user/scoreboard/scoreboard.component';
+import { TaskComponent } from './user/task/task.component';
+import { MapComponent } from './user/task/map/map.component';
+import { QuizComponent } from './user/task/quiz/quiz.component';
+import { LocationComponent } from './user/task/location/location.component';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -81,11 +90,21 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    TaskComponent,
+    FooterComponent,
+    ProgressComponent,
+    LoginComponent,
+    ScoreboardComponent,
+    TaskComponent,
+    MapComponent,
+    QuizComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
