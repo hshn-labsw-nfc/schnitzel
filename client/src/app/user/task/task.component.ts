@@ -9,18 +9,21 @@ import {Location} from '../location';
 })
 export class TaskComponent implements OnInit {
 
-  public mapOpen = false;
+  public mapOpen:boolean;
 
   @Input() question: Question;
   @Input() location: Location;
+  @Input() sessionID: string;
+  @Input() currentTask: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.mapOpen = false;
   }
 
   isUnsolvedQuiz(): boolean {
-    return false;
+    return (this.currentTask !== 'findLocation');
   }
 
   toggleMap() {

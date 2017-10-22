@@ -1,3 +1,24 @@
-<p>
-  quiz works!
-</p>
+<div>
+  <div class="text-center">
+    <h4>{{question.getName()}}</h4>
+  </div>
+  <div class="text-left dbwrap">{{question.getQuestion()}}</div>
+
+  <br>
+  <img class="img-responsive center-block" src="data:{{question.getImage().filetype}};base64,{{question.getImage().base64}}">
+  <br>
+  <div class="alert alert-info" *ngIf="showHint" (click)="toggleHint()">
+    <b>Hinweis: {{question.getHint()}}</b>
+  </div>
+
+  <div class="form-group">
+    <label for="answer">Deine Antwort</label>
+    <input type="text" #answer class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
+  </div>
+  <div class="text-center">
+    <a class="btn btn-primary" (click)="solveQuestion(answer.value)"><span class="glyphicon glyphicon-ok"></span>Überprüfen</a>
+    <span *ngIf="showHint==false && question.isHintAvailable()">
+      <a class="btn btn-primary" (click)="toggleHint()"><span class="glyphicon glyphicon-question-sign"></span>Hinweis</a>
+    </span>
+  </div>
+</div>

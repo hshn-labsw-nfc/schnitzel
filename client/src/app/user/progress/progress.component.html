@@ -1,3 +1,6 @@
-<p>
-  progress works!
-</p>
+<div class="alert alert-success" role="alert">
+  <div class="progress">
+    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{(progressDone / progressCount) * 100}}%"></div>
+  </div>
+  <h4 align="center">{{progressDone}} von {{progressCount}} Orten gefunden</h4>
+</div>

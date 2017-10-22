@@ -24,6 +24,10 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use('/api', api);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
 // connect to db
 mongoose.connect('mongodb://127.0.0.1/schnitzel');
 
@@ -57,6 +61,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

@@ -3,7 +3,7 @@ export class Location {
               private coordinateX: number,
               private coordinateY: number,
               private layer: number,
-              private image: string) {}
+              private image: any) {}
 
   public getName(): string {
     return this.name;
@@ -17,7 +17,7 @@ export class Location {
   public getLayer(): number {
     return this.layer;
   }
-  public getImage(): string {
+  public getImage(): any {
     return this.image;
   }
 }

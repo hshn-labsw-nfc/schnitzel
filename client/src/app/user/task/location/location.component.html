@@ -1,3 +1,9 @@
-<p>
-  location works!
-</p>
+<div>
+  <div class="text-center">
+    <h4>Finde folgenden Ort: <b>{{location.getName()}}</b></h4>
+  </div>
+  <br>
+  <span>
+    <img class="img-responsive center-block" src="data:{{location.getImage().filetype}};base64,{{location.getImage().base64}}">
+  </span>
+</div>

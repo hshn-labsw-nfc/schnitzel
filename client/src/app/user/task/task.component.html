@@ -6,6 +6,6 @@
     <app-user-map [location]="location">Loading map...</app-user-map>
   </div>
   <div *ngIf="mapOpen == false">
-    <app-user-quiz [question]="question"></app-user-quiz>
+    <app-user-quiz [question]="question" [sessionID]="sessionID"></app-user-quiz>
   </div>
 </div>

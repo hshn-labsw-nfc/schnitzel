@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Location} from '../../location';
 
 @Component({
   selector: 'app-user-location',

@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   @Output()
-  quizOutput: EventEmitter<string> = new EventEmitter();
+  loginOutput: EventEmitter<string> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.http.post('/api/game/sessions',teamname).subscribe(
       (data) => {
         console.log('loginPost data', data);
-        this.quizOutput.emit('' + data);
+        this.loginOutput.emit('' + data);
       },
       (err) => {
         console.log('loginPost error', err);
