@@ -1,7 +1,7 @@
 <div *ngIf="gameRunning == true">
   <app-user-progress [progressCount]="progressCount" [progressDone]="progressDone">Progress Bar Loading..</app-user-progress>
   <div *ngIf="isGameFinished() == false">
-    <app-user-task [question]="currentQuestion" [location]="currentLocation" [sessionID]="sessionID" [currentTask]="currentTask">Quiz Loading..</app-user-task>
+    <app-user-task *ngIf="(currentQuestion!= undefined) && (currentLocation != undefined)" [question]="currentQuestion" [location]="currentLocation" [sessionID]="sessionID" [currentTask]="currentTask" (taskOutput)="getStateFromServer()">Quiz Loading..</app-user-task>
     <app-user-footer>Footer Loading..</app-user-footer>
   </div>
   <div *ngIf="isGameFinished() == true">

@@ -7,7 +7,6 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   @Output()
   loginOutput: EventEmitter<string> = new EventEmitter();
 
@@ -18,15 +17,16 @@ export class LoginComponent implements OnInit {
 
   submitLogin(teamname: string) {
     console.log('clicked login button',teamname);
-    this.http.post('/api/game/sessions',teamname).subscribe(
-      (data) => {
-        console.log('loginPost data', data);
-        this.loginOutput.emit('' + data);
-      },
-      (err) => {
-        console.log('loginPost error', err);
-      }
-    );
+    if (teamname.length > 3) {
+      this.http.post('/api/game/sessions', {groupName: teamname}).subscribe(
+        (data) => {
+          console.log('loginPost data', data);
+          this.loginOutput.emit('' + data);
+        },
+        (err) => {
+          console.log('loginPost error', err);
+        }
+      );
+    }
   }
-
 }

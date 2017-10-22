@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Question} from '../../question';
 import {HttpClient} from "@angular/common/http";
 
@@ -7,18 +7,26 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit, OnChanges {
 
   showHint: boolean;
 
   @Input() question: Question;
   @Input() sessionID: string;
 
+  @Output()
+  quizOutput: EventEmitter<any> = new EventEmitter();
+
   constructor(private http: HttpClient) {
     this.showHint = false;
   }
 
   ngOnInit() {
+    console.log('QuizComponent got initialized with',this.question);
+  }
+
+  ngOnChanges() {
+
   }
 
   toggleHint() {
@@ -26,18 +34,14 @@ export class QuizComponent implements OnInit {
   }
   solveQuestion(answer: string) {
     console.log('clicked solvebutton',answer);
-    // this.http.post('/api/game/sessions/'+this.sessionID+'/riddle',answer).subscribe(
-    //  (data) => {
-    //    console.log('solveQuestion data', data);
-    //  },
-    //  (err) => {
-    //    console.log('solveQuestion error', err);
-    //  }
-    // );
-    this.http.post('/api/game/sessions/'+this.sessionID+'/riddle',answer).subscribe(
+    this.http.post('/api/game/sessions/'+this.sessionID+'/riddle',{answer: answer}).subscribe(
       (data) =>{
         console.log('submit answer data', data);
-        console.log('submit answer body data', data['body']);
+        if(data['correctAnswer']===true){
+          this.quizOutput.emit();
+        } else {
+          console.log('wrong answer');
+        }
       },
       (err) => {
         console.log('submit answer error',err);

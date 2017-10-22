@@ -19,12 +19,16 @@ export class Question {
     }
   }
 
-  public isHintAvailable(): boolean {
-    if(isUndefined(this.hint)){
-      return false;
-    } else {
+  public isHintAvailable(): boolean {//
+    // if(isUndefined(this.hint)){
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+    if(this.hint !== null && !isUndefined(this.hint)){
       return true;
     }
+    return false;
   }
 
   public getName(): string {

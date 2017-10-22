@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Question} from '../question';
 import {Location} from '../location';
 
@@ -16,10 +16,14 @@ export class TaskComponent implements OnInit {
   @Input() sessionID: string;
   @Input() currentTask: string;
 
+  @Output()
+  taskOutput: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
     this.mapOpen = false;
+    console.log('TaskComponent got initialized with',this.question,this.location);
   }
 
   isUnsolvedQuiz(): boolean {
@@ -28,6 +32,10 @@ export class TaskComponent implements OnInit {
 
   toggleMap() {
     this.mapOpen = !this.mapOpen;
+  }
+
+  solvedQuiz() {
+    this.taskOutput.emit();
   }
 
 }

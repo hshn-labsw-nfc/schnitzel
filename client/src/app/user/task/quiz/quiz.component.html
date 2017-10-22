@@ -17,7 +17,7 @@
   </div>
   <div class="text-center">
     <a class="btn btn-primary" (click)="solveQuestion(answer.value)"><span class="glyphicon glyphicon-ok"></span>Überprüfen</a>
-    <span *ngIf="showHint==false && question.isHintAvailable()">
+    <span *ngIf="(showHint==false && question?.isHintAvailable()==true)">
       <a class="btn btn-primary" (click)="toggleHint()"><span class="glyphicon glyphicon-question-sign"></span>Hinweis</a>
     </span>
   </div>

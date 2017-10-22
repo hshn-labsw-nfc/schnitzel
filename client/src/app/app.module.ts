@@ -71,18 +71,17 @@ const routes: Routes = [
   },
   {path: 'user', component: UserComponent, children: [
     {
-      path: ':tagID',
-      component: UserComponent
-    },
-    {
       path: '',
       component: UserComponent
     },
-    {
-      path: '**',
+    {path: '**',
       redirectTo: '/user'
     }
   ]},
+  {
+    path: 'tag',
+    component: UserComponent
+  },
   {path: '**', redirectTo: 'user'}
 ]
 
