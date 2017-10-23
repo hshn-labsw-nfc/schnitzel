@@ -19,7 +19,7 @@
     <form role="form" (ngSubmit)="changeUserName(email.value)">
       <div class="form-group">
         <label class="sr-only">Benutzername</label>
-        <input type="text" #email id="inputEmail" class="form-control" placeholder="Benutzername" required autofocus>
+        <input type="text" [(value)]="currentUserName" #email id="inputEmail" class="form-control" placeholder="Benutzername" required autofocus>
       </div>
       <div class="text-right">
         <input class="btn btn-success" type="submit" value="Speichern">

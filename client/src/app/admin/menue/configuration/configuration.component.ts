@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, Input, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-admin-configuration',
@@ -8,31 +10,89 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AdminConfigurationComponent implements OnInit {
 
+  @Input() adminToken: string;
+
   error: string;
   currentWinText: string;
+  currentUserName: string;
 
   constructor(private http: HttpClient) {
     this.error = '';
-    this.currentWinText = '123';
+    this.currentWinText = 'There seems to be a problem with the internet connection';
+    this.currentUserName = 'There seems to be a problem with the internet connection';
   }
 
   ngOnInit() {
+    this.loadCurrentWinText();
+    this.loadCurrentUserName();
   }
 
   changeEndText(text: string) {
     console.log('changeEndText', text);
+    this.http.put('/api/admin/config/winText',{winText: text},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+      (data) => {
+        console.log('changed end text', data);
+      },
+      (err) => {
+        console.log('changed end text', err);
+      }
+    );
   }
 
   changeUserName(name: string) {
     console.log('changeUserName', name);
+    this.http.put('/api/admin/config/username',{username: name},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+      (data) => {
+        console.log('changed end text', data);
+      },
+      (err) => {
+        console.log('changed end text', err);
+      }
+    );
   }
 
   changePassword(oldpassword: string, newpassword: string, newpassword2: string) {
     console.log('changePassword', oldpassword);
     if(newpassword === newpassword2) {
-
+      this.http.put('/api/admin/config/password',{oldPassword: oldpassword, password: newpassword, passwordRepeat: newpassword2},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+        (data) => {
+          console.log('changed end text', data);
+        },
+        (err) => {
+          console.log('changed end text', err);
+        }
+      );
     } else {
       this.error = 'Passwörter stimmen nicht überein';
     }
+  }
+
+  loadCurrentWinText() {
+    console.log('loading current win text');
+    this.http.get('/api/admin/config/winText',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+      (data) => {
+        console.log('current win text', data);
+        this.currentWinText = data['text'];
+      },
+      (err) => {
+        console.log('current win text error', err);
+        this.currentWinText = err['error']['text'];
+      }
+    );
+  }
+
+  loadCurrentUserName() {
+    console.log('loading current win text');
+    this.http.get('/api/admin/config/username',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+      (data) => {
+        console.log('current win text', data);
+        this.currentUserName = data['text'];
+      },
+      (err) => {
+        console.log('current win text error', err);
+        this.currentUserName = err['error']['text'];
+      }
+    );
+
   }
 }

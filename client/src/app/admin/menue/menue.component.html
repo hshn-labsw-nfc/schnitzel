@@ -22,7 +22,7 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <app-admin-status *ngIf="currentSelection=='Status'"></app-admin-status>
-      <app-admin-configuration *ngIf="currentSelection=='Konfiguration'"></app-admin-configuration>
+      <app-admin-configuration *ngIf="currentSelection=='Konfiguration'" [adminToken]="adminToken"></app-admin-configuration>
       <app-admin-locations *ngIf="currentSelection=='Orte'"></app-admin-locations>
       <app-admin-quizzes *ngIf="currentSelection=='Rätsel'"></app-admin-quizzes>
       <app-admin-tags *ngIf="currentSelection=='Tags'"></app-admin-tags>

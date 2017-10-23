@@ -2,5 +2,5 @@
   <app-admin-login (loginOutput)="loggedIn($event)">Login Loading</app-admin-login>
 </div>
 <div *ngIf="authenticated == true">
-  <app-admin-menue (menueLogout)="logout()">Menue Loading</app-admin-menue>
+  <app-admin-menue (menueLogout)="logout()" [adminToken]="adminToken">Menue Loading</app-admin-menue>
 </div>

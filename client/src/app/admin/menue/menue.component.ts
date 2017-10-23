@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-admin-menue',
@@ -9,6 +9,8 @@ export class AdminMenueComponent implements OnInit {
 
   public menueItems = new Array<string>();
   currentSelection = '';
+
+  @Input() adminToken: string;
 
   @Output()
   menueLogout: EventEmitter<any> = new EventEmitter();
