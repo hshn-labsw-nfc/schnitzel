@@ -22,6 +22,7 @@ import { AdminConfigurationComponent } from './admin/menue/configuration/configu
 import { AdminLocationsComponent } from './admin/menue/locations/locations.component';
 import { AdminQuizzesComponent } from './admin/menue/quizzes/quizzes.component';
 import { AdminTagsComponent } from './admin/menue/tags/tags.component';
+import {FormsModule} from '@angular/forms';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -118,7 +119,8 @@ const routes: Routes = [
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

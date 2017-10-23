@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="form-signin" (submit)="submitLogin(name.value,password.value)">
+  <form class="form-signin" (ngSubmit)="submitLogin(name.value,password.value)">
     <h3 class="form-signin-heading" align="center">Bitte melden Sie sich an</h3>
     <label for="inputEmail" class="sr-only">Benutzername</label>
     <input type="text" #name id="inputEmail" class="form-control" ng-model="username" placeholder="Benutzername" required autofocus>
@@ -11,7 +11,5 @@
       </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
-    <button type="button" (click)="submitLogin(name.value,password.value)">TEST</button>
   </form>
-
 </div>

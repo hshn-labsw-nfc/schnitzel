@@ -7,12 +7,30 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class AdminMenueComponent implements OnInit {
 
+  public menueItems = new Array<string>();
+  currentSelection = '';
+
   @Output()
   menueLogout: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+    this.menueItems.push('Status');
+    this.menueItems.push('Konfiguration');
+    this.menueItems.push('Orte');
+    this.menueItems.push('Rätsel');
+    this.menueItems.push('Tags');
+    this.currentSelection = 'Status';
+  }
 
   ngOnInit() {
   }
 
+  logout(): void{
+    this.menueLogout.emit();
+  }
+
+  select(name: string): void{
+    console.log(name);
+    this.currentSelection = name;
+  }
 }

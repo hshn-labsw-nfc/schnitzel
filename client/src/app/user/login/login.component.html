@@ -2,12 +2,11 @@
   <h1 class="text-center">Willkommen bei der Schnitzeljagd</h1>
 </div>
 <div class="text-center">
-  <form role="form">
+  <form role="form" (ngSubmit)="submitLogin(teamname.value)">
     <div class="form-group">
       <label class="control-label">Gruppenname</label>
       <input #teamname type="text" class="form-control" required autofocus>
     </div>
-    <input id="Submit" class="btn btn-primary" type="submit" value="Schnitzeljagd beginnen" (click)="submitLogin(teamname.value)">
-    <button type="button" (click)="submitLogin(teamname.value)">TEST</button>
+    <input id="Submit" class="btn btn-primary" type="submit" value="Schnitzeljagd beginnen">
   </form>
 </div>
