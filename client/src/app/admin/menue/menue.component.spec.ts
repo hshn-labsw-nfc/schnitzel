@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserScoreboardComponent } from './scoreboard.component';
+import { AdminMenueComponent } from './menue.component';
 
-describe('ScoreboardComponent', () => {
-  let component: UserScoreboardComponent;
-  let fixture: ComponentFixture<UserScoreboardComponent>;
+describe('MenueComponent', () => {
+  let component: AdminMenueComponent;
+  let fixture: ComponentFixture<AdminMenueComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserScoreboardComponent ]
+      declarations: [ AdminMenueComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserScoreboardComponent);
+    fixture = TestBed.createComponent(AdminMenueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserScoreboardComponent } from './scoreboard.component';
+import { AdminTagsComponent } from './tags.component';
 
-describe('ScoreboardComponent', () => {
-  let component: UserScoreboardComponent;
-  let fixture: ComponentFixture<UserScoreboardComponent>;
+describe('TagsComponent', () => {
+  let component: AdminTagsComponent;
+  let fixture: ComponentFixture<AdminTagsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserScoreboardComponent ]
+      declarations: [ AdminTagsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserScoreboardComponent);
+    fixture = TestBed.createComponent(AdminTagsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,14 +7,21 @@ import { UserComponent } from './user/user.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
-import { FooterComponent } from './user/footer/footer.component';
-import { ProgressComponent } from './user/progress/progress.component';
-import { LoginComponent } from './user/login/login.component';
-import { ScoreboardComponent } from './user/scoreboard/scoreboard.component';
-import { TaskComponent } from './user/task/task.component';
-import { MapComponent } from './user/task/map/map.component';
-import { QuizComponent } from './user/task/quiz/quiz.component';
-import { LocationComponent } from './user/task/location/location.component';
+import { UserFooterComponent } from './user/footer/footer.component';
+import { UserProgressComponent } from './user/progress/progress.component';
+import { UserLoginComponent } from './user/login/login.component';
+import { UserScoreboardComponent } from './user/scoreboard/scoreboard.component';
+import { UserTaskComponent } from './user/task/task.component';
+import { UserMapComponent } from './user/task/map/map.component';
+import { UserQuizComponent } from './user/task/quiz/quiz.component';
+import { UserLocationComponent } from './user/task/location/location.component';
+import { AdminLoginComponent} from './admin/login/login.component';
+import { AdminMenueComponent } from './admin/menue/menue.component';
+import { AdminStatusComponent } from './admin/menue/status/status.component';
+import { AdminConfigurationComponent } from './admin/menue/configuration/configuration.component';
+import { AdminLocationsComponent } from './admin/menue/locations/locations.component';
+import { AdminQuizzesComponent } from './admin/menue/quizzes/quizzes.component';
+import { AdminTagsComponent } from './admin/menue/tags/tags.component';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -90,15 +97,22 @@ const routes: Routes = [
     AppComponent,
     AdminComponent,
     UserComponent,
-    TaskComponent,
-    FooterComponent,
-    ProgressComponent,
-    LoginComponent,
-    ScoreboardComponent,
-    TaskComponent,
-    MapComponent,
-    QuizComponent,
-    LocationComponent
+    UserTaskComponent,
+    UserFooterComponent,
+    UserProgressComponent,
+    UserLoginComponent,
+    UserScoreboardComponent,
+    UserTaskComponent,
+    UserMapComponent,
+    UserQuizComponent,
+    UserLocationComponent,
+    AdminLoginComponent,
+    AdminMenueComponent,
+    AdminStatusComponent,
+    AdminConfigurationComponent,
+    AdminLocationsComponent,
+    AdminQuizzesComponent,
+    AdminTagsComponent
   ],
   imports: [
     BrowserModule,

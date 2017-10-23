@@ -7,7 +7,7 @@ import {Location} from '../location';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit {
+export class UserTaskComponent implements OnInit {
 
   public mapOpen:boolean;
 

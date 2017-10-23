@@ -6,7 +6,7 @@ import {Location} from '../../location';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class UserMapComponent implements OnInit {
   @Input() location: Location;
 
 

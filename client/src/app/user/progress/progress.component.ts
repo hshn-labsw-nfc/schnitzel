@@ -5,7 +5,7 @@ import {Component, Input, OnInit} from '@angular/core';
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.css']
 })
-export class ProgressComponent implements OnInit {
+export class UserProgressComponent implements OnInit {
 
   @Input() progressCount: number;
   @Input() progressDone: number;

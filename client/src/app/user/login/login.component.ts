@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class UserLoginComponent implements OnInit {
   @Output()
   loginOutput: EventEmitter<string> = new EventEmitter();
 

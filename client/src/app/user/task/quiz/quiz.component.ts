@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
-export class QuizComponent implements OnInit, OnChanges {
+export class UserQuizComponent implements OnInit, OnChanges {
 
   showHint: boolean;
 
