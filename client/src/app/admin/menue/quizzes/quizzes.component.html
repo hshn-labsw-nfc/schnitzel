@@ -1,3 +1,28 @@
-<p>
-  quizzes works!
-</p>
+<h1 class="page-header">Orte</h1>
+<div class="text-right">
+  <p><a class="btn btn-success"  (click)="addQuiz()"><span class="glyphicon glyphicon-plus"></span> Rätsel hinzufügen</a></p>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="bg-primary">
+    <tr>
+      <th *ngFor="let entry of tableHeaders">{{entry}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let entry of quizzes" id="tableRow">
+      <td>{{entry.name}}</td>
+      <td>{{entry.description}}</td>
+      <td>{{entry._id}}</td>
+      <td class="text-right">
+        <div class="btn-group" role="group">
+          <a class="btn btn-primary" (click)="editQuiz(entry._id)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span class="hidden-xs"> editieren</span></a>
+          <a class="btn btn-danger" (click)="deleteQuiz(entry._id)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span><span class="hidden-xs"> entfernen</span></a>
+        </div>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>

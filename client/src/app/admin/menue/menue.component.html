@@ -29,7 +29,7 @@
       <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>
       <app-admin-configuration *ngIf="currentSelection=='Konfiguration'" [adminToken]="adminToken"></app-admin-configuration>
       <app-admin-locations *ngIf="currentSelection=='Orte'" [adminToken]="adminToken"></app-admin-locations>
-      <app-admin-quizzes *ngIf="currentSelection=='Rätsel'"></app-admin-quizzes>
+      <app-admin-quizzes *ngIf="currentSelection=='Rätsel'" [adminToken]="adminToken"></app-admin-quizzes>
       <app-admin-tags *ngIf="currentSelection=='Tags'"></app-admin-tags>
     </div>
   </div>
