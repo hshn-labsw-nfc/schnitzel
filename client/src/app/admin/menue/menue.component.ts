@@ -33,6 +33,7 @@ export class AdminMenueComponent implements OnInit {
 
   select(name: string): void{
     console.log(name);
+    this.currentSelection = '';
     this.currentSelection = name;
   }
 }

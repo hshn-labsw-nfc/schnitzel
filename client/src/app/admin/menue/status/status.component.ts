@@ -55,6 +55,7 @@ export class AdminStatusComponent implements OnInit {
     this.http.get('/api/admin/playsessions',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
         for(let d in data){
+          this.activePlaySessions = new Array<PlaySession>();
           this.activePlaySessions.push(
             new PlaySession(data[d]['groupName'],
               data[d]['lastUpdated'],
