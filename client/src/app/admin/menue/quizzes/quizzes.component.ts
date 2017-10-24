@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http'//;
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-quizzes',
@@ -59,7 +59,7 @@ export class AdminQuizzesComponent implements OnInit {
         this.loadQuizzesFromServer();
       },
       (err) => {
-        console.log('error deleting location', err);
+        console.log('error deleting quiz', err);
       }
     );
   }
