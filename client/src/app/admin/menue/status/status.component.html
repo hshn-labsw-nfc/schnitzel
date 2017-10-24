@@ -1,3 +1,34 @@
-<p>
-  status works!
-</p>
+<h1 class="page-header">Gruppenstatus</h1>
+<div class="table-responsive">
+  <div class="text-right">
+    <p><a class="btn btn-danger" (click)="deleteActiveSessions()" ><span class="glyphicon glyphicon-exclamation-sign"></span>Alle Aktiven Schnitzeljagd-Sessions Löschen</a></p>
+  </div>
+  <table class="table table-striped">
+    <thead class="bg-primary">
+    <tr>
+      <th>Gruppenname</th>
+      <th>Ort</th>
+      <th>Fortschritt</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let entry of activePlaySessions">
+      <ng-container *ngIf="currentMaximized != entry.session_id">
+      <td (click)="maximize(entry.session_id)">{{entry.sessionGroupName}}</td>
+      <td (click)="maximize(entry.session_id)">{{entry.sessionLocation}}</td>
+      <td (click)="maximize(entry.session_id)">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+               style="width: {{(5/2) * 100}}%"></div>
+        </div>
+      </td>
+      </ng-container>
+      <ng-container *ngIf="currentMaximized == entry.session_id">
+        <app-admin-status-detail [session]="entry" (detailDelete)="deleteSession($event)" (detailMinimize)="detailMinimize()"></app-admin-status-detail>
+        <td></td>
+        <td></td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+</div>

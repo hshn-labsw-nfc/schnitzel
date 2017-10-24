@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
 
   logout(): void{
     console.log('logout');
-    this.http.delete('/api/admin/session/' + this.adminToken).subscribe(
+    this.http.delete('/api/admin/session/' + this.adminToken,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
         console.log('logout successfull', data);
         this.adminToken = '';
@@ -42,6 +42,9 @@ export class AdminComponent implements OnInit {
       },
       (err) => {
         console.log('logout error', err);
+        this.adminToken = '';
+        localStorage.removeItem('admintoken');
+        this.authenticated = false;
       }
     );
   }

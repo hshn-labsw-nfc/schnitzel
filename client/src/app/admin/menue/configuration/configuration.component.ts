@@ -81,6 +81,7 @@ export class AdminConfigurationComponent implements OnInit {
     );
   }
 
+
   loadCurrentUserName() {
     console.log('loading current win text');
     this.http.get('/api/admin/config/username',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Schnitzeljagd - Admin Dashboard</a>
+      <a class="navbar-brand" (click)="select('')">Schnitzeljagd - Admin Dashboard</a>
     </div>
   </div>
 </nav>
@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="h4" *ngFor="let entry of menueItems">
+      <!--  <li class="h4" *ngFor="let entry of menueItems">
           <div (click)="select(entry)">
             <span>
               {{entry}}
@@ -18,10 +18,15 @@
         </li>
         <li><a id="logout" class="text-danger h4" (click)="logout()"><span class="glyphicon glyphicon-off"></span>Logout</a>
         </li>
+        -->
+        <li class="h4" *ngFor="let entry of menueItems" (click)="select(entry)">
+            {{entry}}
+        </li>
+        <li><a id="logout" class="text-danger h4" (click)="logout()"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      <app-admin-status *ngIf="currentSelection=='Status'"></app-admin-status>
+      <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>
       <app-admin-configuration *ngIf="currentSelection=='Konfiguration'" [adminToken]="adminToken"></app-admin-configuration>
       <app-admin-locations *ngIf="currentSelection=='Orte'"></app-admin-locations>
       <app-admin-quizzes *ngIf="currentSelection=='Rätsel'"></app-admin-quizzes>
