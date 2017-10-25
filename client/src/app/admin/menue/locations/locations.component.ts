@@ -8,6 +8,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AdminLocationsComponent implements OnInit {
 
+  public detailOpen = false;
+  public detailLocation: AdminLocation;
+
   @Input() adminToken: string;
 
   constructor(private http: HttpClient) {
@@ -21,6 +24,8 @@ export class AdminLocationsComponent implements OnInit {
 
   ngOnInit() {
     this.loadLocationsFromServer();
+    this.detailLocation = null;
+    this.detailOpen = false;
   }
 
   loadLocationsFromServer() {
@@ -46,17 +51,28 @@ export class AdminLocationsComponent implements OnInit {
   }
 
   addLocation() {
-
+    console.log('add location');
+    this.detailLocation = null;
+    this.detailOpen = true;
   }
 
-  editLocation(id: string) {
-    console.log('edit location',id);
+  editLocation(location: AdminLocation) {
+    console.log('edit location',location._id);
+    this.detailLocation = location;
+    this.detailOpen = true;
   }
-  deleteLocation(id: string) {
-    console.log('delete location',id);
-    this.http.delete('/api/admin/locations/'+id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+
+  locationDetailFromSubmitted(){
+    this.detailOpen = false;
+    this.detailLocation = null;
+    this.loadLocationsFromServer();
+  }
+
+  deleteLocation(location: AdminLocation) {
+    console.log('delete location',location._id);
+    this.http.delete('/api/admin/locations/'+location._id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        console.log('successfully deleted location', id);
+        console.log('successfully deleted location', location._id);
         this.loadLocationsFromServer();
       },
       (err) => {

@@ -1,3 +1,4 @@
+<ng-container *ngIf="detailOpen == false">
 <h1 class="page-header">Orte</h1>
 <div class="text-right">
   <p><a class="btn btn-success"  (click)="addLocation()"><span class="glyphicon glyphicon-plus"></span> Ort hinzufügen</a></p>
@@ -17,8 +18,8 @@
       <td>{{entry.description}}</td>
       <td class="text-right">
         <div class="btn-group" role="group">
-          <a class="btn btn-primary" (click)="editLocation(entry._id)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span class="hidden-xs"> editieren</span></a>
-          <a class="btn btn-danger" (click)="deleteLocation(entry._id)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span><span class="hidden-xs"> entfernen</span></a>
+          <a class="btn btn-primary" (click)="editLocation(entry)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span class="hidden-xs"> editieren</span></a>
+          <a class="btn btn-danger" (click)="deleteLocation(entry)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span><span class="hidden-xs"> entfernen</span></a>
         </div>
       </td>
     </tr>
@@ -26,3 +27,7 @@
     </tbody>
   </table>
 </div>
+</ng-container>
+<ng-container *ngIf="detailOpen == true">
+  <app-admin-location-detail [currentLocation]="detailLocation" [adminToken]="adminToken" (detailOutput)="locationDetailFromSubmitted()"></app-admin-location-detail>
+</ng-container>
