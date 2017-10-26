@@ -14,6 +14,7 @@ export class AdminLocationDetailComponent implements OnInit {
   detailOutput: EventEmitter<any> = new EventEmitter();
 
   pageHeader: string;
+  createNewEntry: boolean;
 
   constructor(private http: HttpClient) { }
 
@@ -21,10 +22,12 @@ export class AdminLocationDetailComponent implements OnInit {
     if(this.currentLocation != null){
       console.log('location detail initialized with location');
       this.pageHeader = 'Vorhandenen Ort Bearbeiten';
+      this.createNewEntry = false;
     } else {
       console.log('location detail initialized without location');
       this.loadDefaults();
       this.pageHeader = 'Neuen Ort Hinzufügen';
+      this.createNewEntry = true;
     }
   }
 
@@ -37,20 +40,36 @@ export class AdminLocationDetailComponent implements OnInit {
   }
 
   submit() {
-    this.http.put('/api/admin/locations/'+this.currentLocation._id,{
-      description: this.currentLocation.description,
-      image: this.currentLocation.image,
-      isActive: this.currentLocation.isActive,
-      name: this.currentLocation.name,
-      _id: this.currentLocation._id,
-    },{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
-      (data) => {
-        console.log('successfully edited location');
-      },
-      (err) => {
-        console.log('error editing location', err);
-      }
-    );
+    if(this.createNewEntry === false) {
+      this.http.put('/api/admin/locations/' + this.currentLocation._id, {
+        description: this.currentLocation.description,
+        image: this.currentLocation.image,
+        isActive: this.currentLocation.isActive,
+        name: this.currentLocation.name,
+        _id: this.currentLocation._id,
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+        (data) => {
+          console.log('successfully edited location');
+        },
+        (err) => {
+          console.log('error editing location', err);
+        }
+      );
+    } else {
+      this.http.post('/api/admin/locations', {
+        description: this.currentLocation.description,
+        image: this.currentLocation.image,
+        isActive: this.currentLocation.isActive,
+        name: this.currentLocation.name
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+        (data) => {
+          console.log('successfully edited location');
+        },
+        (err) => {
+          console.log('error editing location', err);
+        }
+      );
+    }
     console.log('saving location detail',this.currentLocation);
     this.detailOutput.emit();
   }
