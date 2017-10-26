@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AdminTag} from '../tags.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AdminLocation} from '../../locations/locations.component';
 
 @Component({
   selector: 'app-admin-tag-detail',
@@ -15,6 +16,7 @@ export class AdminTagDetailComponent implements OnInit {
 
   pageHeader: string;
   createNewEntry: boolean;
+  locations: Array<AdminLocation>;
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +31,7 @@ export class AdminTagDetailComponent implements OnInit {
       this.pageHeader = 'Neuen Tag Hinzufügen';
       this.createNewEntry = true;
     }
+    this.loadLocations();
   }
 
   loadDefaults() {
@@ -36,6 +39,28 @@ export class AdminTagDetailComponent implements OnInit {
       'sample location',
       'sample ID',
       'sample name');
+  }
+
+  loadLocations() {
+    console.log('loading current locations from server');
+    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+      (data) => {
+        this.locations = new Array<AdminLocation>()
+        console.log('loaded current locations',data);
+        for(let d in data){
+          this.locations.push(
+            new AdminLocation(data[d]['description'],
+              data[d]['image'],
+              data[d]['isActive'],
+              data[d]['name'],
+              data[d]['_id']));
+        }
+        console.log('initialized array',this.locations);
+      },
+      (err) => {
+        console.log('loaded current locations error', err);
+      }
+    );
   }
 
   submit() {
@@ -70,6 +95,7 @@ export class AdminTagDetailComponent implements OnInit {
     console.log('saving quiz detail',this.currentTag);
     this.detailOutput.emit();
   }
+
   cancel() {
     this.detailOutput.emit();
   }
