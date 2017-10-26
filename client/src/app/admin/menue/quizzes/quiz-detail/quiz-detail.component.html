@@ -38,8 +38,8 @@
     <div>
       <p>Falls ausgewählt, wird dieses Rätsel an dem ausgewähltem Ort abgefragt</p>
     </div>
-    <select class="form-control">
-      <option value=""></option>
+    <select class="form-control" [(ngModel)]="currentQuiz.location" name="locationSelect">
+      <option *ngFor="let entry of locations" [value]="entry._id" >{{entry._id}}</option>
     </select>
   </div>
 

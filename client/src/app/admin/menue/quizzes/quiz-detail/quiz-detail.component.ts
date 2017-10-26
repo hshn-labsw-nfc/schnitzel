@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminQuiz} from '../quizzes.component';
+import {AdminLocation} from "../../locations/locations.component";
 
 @Component({
   selector: 'app-admin-quiz-detail',
@@ -15,6 +16,7 @@ export class AdminQuizDetailComponent implements OnInit {
 
   pageHeader: string;
   createNewEntry: boolean;
+  locations: Array<AdminLocation>;
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +31,7 @@ export class AdminQuizDetailComponent implements OnInit {
       this.pageHeader = 'Neues Quiz Hinzufügen';
       this.createNewEntry = true;
     }
+    this.loadLocations();
   }
 
   loadDefaults() {
@@ -39,7 +42,29 @@ export class AdminQuizDetailComponent implements OnInit {
       filesize: '',
       filetype: '',
       base64: ''},
-      'sample name', 'sample id');
+      'sample name', 'sample id',null);
+  }
+
+  loadLocations() {
+    console.log('loading current locations from server');
+    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+      (data) => {
+        this.locations = new Array<AdminLocation>()
+        console.log('loaded current locations',data);
+        for(let d in data){
+          this.locations.push(
+            new AdminLocation(data[d]['description'],
+              data[d]['image'],
+              data[d]['isActive'],
+              data[d]['name'],
+              data[d]['_id']));
+        }
+        console.log('initialized array',this.locations);
+      },
+      (err) => {
+        console.log('loaded current locations error', err);
+      }
+    );
   }
 
   submit() {
@@ -50,7 +75,8 @@ export class AdminQuizDetailComponent implements OnInit {
         hint: this.currentQuiz.hint,
         image: this.currentQuiz.image,
         name: this.currentQuiz.name,
-        _id: this.currentQuiz._id
+        _id: this.currentQuiz._id,
+        location: this.currentQuiz.location
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
@@ -65,7 +91,8 @@ export class AdminQuizDetailComponent implements OnInit {
         description: this.currentQuiz.description,
         hint: this.currentQuiz.hint,
         image: this.currentQuiz.image,
-        name: this.currentQuiz.name
+        name: this.currentQuiz.name,
+        location: this.currentQuiz.location
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');

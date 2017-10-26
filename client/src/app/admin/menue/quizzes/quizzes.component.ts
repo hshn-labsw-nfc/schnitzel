@@ -41,7 +41,8 @@ export class AdminQuizzesComponent implements OnInit {
               data[d]['hint'],
               data[d]['image'],
               data[d]['name'],
-              data[d]['_id']));
+              data[d]['_id'],
+              data[d]['location']));
         }
         console.log('initialized array',this.quizzes);
       },
@@ -87,6 +88,7 @@ export class AdminQuiz {
               public hint: string,
               public image: any,
               public name: string,
-              public _id: string) {
+              public _id: string,
+              public location: string) {
   }
 }
