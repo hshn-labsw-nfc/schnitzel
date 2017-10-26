@@ -8,6 +8,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AdminQuizzesComponent implements OnInit {
 
+  public detailOpen = false;
+  public detailQuiz: AdminQuiz;
+
   @Input() adminToken: string;
 
   constructor(private http: HttpClient) {
@@ -21,6 +24,8 @@ export class AdminQuizzesComponent implements OnInit {
 
   ngOnInit() {
     this.loadQuizzesFromServer();
+    this.detailQuiz = null;
+    this.detailOpen = false;
   }
 
   loadQuizzesFromServer() {
@@ -46,16 +51,27 @@ export class AdminQuizzesComponent implements OnInit {
     );
   }
   addQuiz() {
-
+    console.log('add quiz');
+    this.detailQuiz = null;
+    this.detailOpen = true;
   }
-  editQuiz(id: string) {
-
+  editQuiz(quiz: AdminQuiz) {
+    console.log('edit quiz',quiz._id);
+    this.detailQuiz = quiz;
+    this.detailOpen = true;
   }
-  deleteQuiz(id: string) {
-    console.log('delete quiz',id);
-    this.http.delete('/api/admin/riddles/'+id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+
+  quizDetailFromSubmitted(){
+    this.detailOpen = false;
+    this.detailQuiz = null;
+    this.loadQuizzesFromServer();
+  }
+
+  deleteQuiz(quiz: AdminQuiz) {
+    console.log('delete quiz',quiz._id);
+    this.http.delete('/api/admin/riddles/'+quiz._id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        console.log('successfully deleted quiz', id);
+        console.log('successfully deleted quiz', quiz._id);
         this.loadQuizzesFromServer();
       },
       (err) => {

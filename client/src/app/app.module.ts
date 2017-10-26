@@ -25,6 +25,8 @@ import { AdminTagsComponent } from './admin/menue/tags/tags.component';
 import {FormsModule} from '@angular/forms';
 import { AdminStatusDetailComponent } from './admin/menue/status/status-detail/status-detail.component';
 import { AdminLocationDetailComponent } from './admin/menue/locations/location-detail/location-detail.component';
+import { AdminQuizDetailComponent } from './admin/menue/quizzes/quiz-detail/quiz-detail.component';
+import { AdminTagDetailComponent } from './admin/menue/tags/tag-detail/tag-detail.component';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -117,7 +119,9 @@ const routes: Routes = [
     AdminQuizzesComponent,
     AdminTagsComponent,
     AdminStatusDetailComponent,
-    AdminLocationDetailComponent
+    AdminLocationDetailComponent,
+    AdminQuizDetailComponent,
+    AdminTagDetailComponent
   ],
   imports: [
     BrowserModule,

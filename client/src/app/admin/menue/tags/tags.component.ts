@@ -8,6 +8,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AdminTagsComponent implements OnInit {
 
+  public detailOpen = false;
+  public detailTag: AdminTag;
+
   @Input() adminToken: string;
 
   constructor(private http: HttpClient) {
@@ -28,7 +31,7 @@ export class AdminTagsComponent implements OnInit {
     console.log('loading current tags from server');
     this.http.get('/api/admin/tags',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        this.tags = new Array<AdminTag>()
+        this.tags = new Array<AdminTag>();
         console.log('loaded current tags',data);
         for(let d in data){
           this.tags.push(
@@ -44,23 +47,32 @@ export class AdminTagsComponent implements OnInit {
       }
     );
   }
-  addQuiz() {
-
+  addTag() {
+    console.log('add location');
+    this.detailTag = null;
+    this.detailOpen = true;
   }
-  editQuiz(id: string) {
-
+  editTag(tag: AdminTag) {
+    console.log('edit tag',tag._id);
+    this.detailTag = tag;
+    this.detailOpen = true;
   }
-  deleteQuiz(id: string) {
-    console.log('delete quiz',id);
-    this.http.delete('/api/admin/tags/'+id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+  deleteTag(tag: AdminTag) {
+    console.log('delete quiz',tag._id);
+    this.http.delete('/api/admin/tags/'+tag._id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        console.log('successfully deleted Tag', id);
+        console.log('successfully deleted Tag', tag._id);
         this.loadTagsFromServer();
       },
       (err) => {
         console.log('error deleting Tag//', err);
       }
     );
+  }
+  tagDetailFromSubmitted(){
+    this.detailOpen = false;
+    this.detailTag = null;
+    this.loadTagsFromServer();
   }
 }
 
