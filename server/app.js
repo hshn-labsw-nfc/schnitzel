@@ -29,7 +29,10 @@ app.get('*', (req, res) => {
 });
 
 // connect to db
-mongoose.connect('mongodb://127.0.0.1/schnitzel');
+mongoose.Promise = Promise;
+mongoose.connect('mongodb://127.0.0.1/schnitzel', {
+  useMongoClient: true,
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
