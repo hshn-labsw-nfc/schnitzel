@@ -28,6 +28,12 @@ import { AdminLocationDetailComponent } from './admin/menue/locations/location-d
 import { AdminQuizDetailComponent } from './admin/menue/quizzes/quiz-detail/quiz-detail.component';
 import { AdminTagDetailComponent } from './admin/menue/tags/tag-detail/tag-detail.component';
 
+// Material
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material';
+import {MatInputModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material';
+
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
     children: [
@@ -128,7 +134,11 @@ const routes: Routes = [
     HttpModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

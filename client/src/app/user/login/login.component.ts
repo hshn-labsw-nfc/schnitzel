@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-user-login',
@@ -10,7 +11,7 @@ export class UserLoginComponent implements OnInit {
   @Output()
   loginOutput: EventEmitter<string> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -27,6 +28,11 @@ export class UserLoginComponent implements OnInit {
           console.log('loginPost error', err);
         }
       );
+    } else {
+     this.snackBar.open('Gruppenname muss aus mindestens 4 Zeichen bestehen',null, {
+        duration: 2000,
+        horizontalPosition: 'center'
+      });
     }
   }
 }

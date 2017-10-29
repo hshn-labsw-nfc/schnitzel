@@ -1,12 +1,14 @@
+<h5 class="text-center">LOGO</h5>
 <div class="page-header">
-  <h1 class="text-center">Willkommen bei der Schnitzeljagd</h1>
+  <h1 class="text-center">Schnitzeljagd</h1>
 </div>
 <div class="text-center">
   <form role="form" (ngSubmit)="submitLogin(teamname.value)">
     <div class="form-group">
-      <label class="control-label">Gruppenname</label>
-      <input #teamname type="text" class="form-control" required autofocus>
+    <mat-form-field class="example-full-width">
+      <input #teamname matInput placeholder="Gruppenname">
+    </mat-form-field>
     </div>
-    <input id="Submit" class="btn btn-primary" type="submit" value="Schnitzeljagd beginnen">
+    <button mat-raised-button color="primary" type="submit">Start</button>
   </form>
 </div>
