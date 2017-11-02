@@ -4,6 +4,25 @@
   </div>
   <br>
   <span>
-    <img class="img-responsive center-block" src="data:{{location?.getImage().filetype}};base64,{{location?.getImage().base64}}">
+    <img class="img-responsive" src="data:{{location?.getImage().filetype}};base64,{{location?.getImage().base64}}">
   </span>
 </div>
+
+
+<div id="bottom">
+  <mat-toolbar>
+    <div class="container">
+      <div class="lageplan">
+        <input type="image"
+               src="http://www.images.pajezy.com/notes/location.svg"
+               width="25" height="25"/>
+      </div>
+      <div class="qr-code">
+        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/c/c6/WM2007_QRCode.svg"
+               width="25" height="25"/>
+      </div>
+    </div>
+  </mat-toolbar>
+</div>
+
+
