@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-admin-status',
@@ -13,16 +15,27 @@ export class AdminStatusComponent implements OnInit {
   public activePlaySessions = new Array<PlaySession>();
   public currentMaximized = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadSessions();
   }
 
   deleteActiveSessions(){
-    for(let i = 0; i< this.activePlaySessions.length; i++){
-      this.deleteSession(this.activePlaySessions[i].session_id);
-    }
+    const d = this.dialog.open(SharedSimpleDialogComponent, {data: {
+      title: 'ALLE SESSIONS LÖSCHEN',
+      message: 'Möchtest du wirklich alle aktiven Schnitzeljagd Sessions löschen?',
+      button1: 'Löschen',
+      button2: 'Abbrechen'
+    }});
+    d.afterClosed().subscribe(result => {
+      if(result === 'b1') {
+        console.log('deleting all active sessions');
+        for(let i = 0; i< this.activePlaySessions.length; i++){
+          this.deleteSession(this.activePlaySessions[i].session_id);
+        }
+      }
+    });
   }
 
   detailMinimize() {

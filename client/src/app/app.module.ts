@@ -22,7 +22,7 @@ import { AdminConfigurationComponent } from './admin/menue/configuration/configu
 import { AdminLocationsComponent } from './admin/menue/locations/locations.component';
 import { AdminQuizzesComponent } from './admin/menue/quizzes/quizzes.component';
 import { AdminTagsComponent } from './admin/menue/tags/tags.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AdminStatusDetailComponent } from './admin/menue/status/status-detail/status-detail.component';
 import { AdminLocationDetailComponent } from './admin/menue/locations/location-detail/location-detail.component';
 import { AdminQuizDetailComponent } from './admin/menue/quizzes/quiz-detail/quiz-detail.component';
@@ -33,6 +33,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material';
 import {MatSnackBarModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material';
+import {SharedSimpleDialogComponent} from './shared/simple-dialog/simple-dialog.component';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -127,7 +129,8 @@ const routes: Routes = [
     AdminStatusDetailComponent,
     AdminLocationDetailComponent,
     AdminQuizDetailComponent,
-    AdminTagDetailComponent
+    AdminTagDetailComponent,
+    SharedSimpleDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -135,10 +138,15 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    SharedSimpleDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

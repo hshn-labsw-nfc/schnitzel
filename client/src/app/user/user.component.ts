@@ -3,6 +3,8 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Location} from './location';
 import {Question} from './question';
 import {Router} from '@angular/router';
+import {MatDialog, MatDialogRef} from '@angular/material';
+import {SharedSimpleDialogComponent} from '../shared/simple-dialog/simple-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -20,7 +22,7 @@ export class UserComponent implements OnInit{
   currentTask: string;
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.gameRunning = false;
@@ -97,12 +99,27 @@ export class UserComponent implements OnInit{
         console.log('the new question/location',this.currentQuestion,this.currentLocation);
       },
       (err: HttpErrorResponse) => {
-        console.log('error in State',err);
+        console.log('session expired',err);
         if(err['status']=== 403){
-          localStorage.clear();
-          this.gameRunning = false;
+          const removeOldSession = this.dialog.open(SharedSimpleDialogComponent, {data: {
+            title: 'Session abgelaufen',
+            message: 'Deine Schnitzeljagd Session ist leider abgelaufen',
+            button1: 'Neue Schnitzeljagd starten',
+            button2: 'Abbrechen'
+          }});
+          removeOldSession.afterClosed().subscribe(result => {
+            if(result === 'b1') {
+              console.log('user deleted expired session');
+              this.clearLocalSession();
+            }
+          });
         }
       }
     );
+  }
+
+  clearLocalSession(): void {
+    localStorage.clear();
+    this.gameRunning = false;
   }
 }
