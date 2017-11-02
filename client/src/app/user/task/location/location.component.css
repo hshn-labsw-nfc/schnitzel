@@ -1,0 +1,25 @@
+#bottom {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color:#F5F5F5;
+}
+
+h4{
+  text-align: center;
+  margin-top: 50px;
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
