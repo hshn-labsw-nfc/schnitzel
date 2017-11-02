@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,7 +12,7 @@ export class AdminLoginComponent implements OnInit {
   @Output()
   loginOutput: EventEmitter<string> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -24,6 +25,10 @@ export class AdminLoginComponent implements OnInit {
         this.loginOutput.emit(data['token']);
       },
       (err) => {
+        this.snackBar.open('Wrong Username or Password',null, {
+          duration: 2000,
+          horizontalPosition: 'center'
+        });
         console.log('loginPost error', err);
       }
     );
