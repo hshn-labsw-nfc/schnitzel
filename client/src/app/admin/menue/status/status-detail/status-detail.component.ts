@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PlaySession} from '../status.component';
+import {SharedSimpleDialogComponent} from '../../../../shared/simple-dialog/simple-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-admin-status-detail',
@@ -17,7 +19,7 @@ export class AdminStatusDetailComponent implements OnInit {
   @Output()
   detailMinimize: EventEmitter<string> = new EventEmitter();
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.maximized = false;
   }
 
@@ -25,7 +27,18 @@ export class AdminStatusDetailComponent implements OnInit {
   }
 
   deleteSession() {
-    this.detailDelete.emit(this.session.session_id);
+    const d = this.dialog.open(SharedSimpleDialogComponent, {data: {
+      title: 'Session löschen',
+      message: 'Möchtest du wirklich die Session ' + this.session.sessionGroupName  +' löschen?',
+      button1: 'Löschen',
+      button2: 'Abbrechen'
+    }});
+    d.afterClosed().subscribe(result => {
+      if(result === 'b1') {
+        console.log('deleting the detailed session');
+        this.detailDelete.emit(this.session.session_id);
+      }
+    });
   }
   minimize(){
     this.detailMinimize.emit();
