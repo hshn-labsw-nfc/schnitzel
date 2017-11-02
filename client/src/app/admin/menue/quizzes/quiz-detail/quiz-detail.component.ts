@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminQuiz} from '../quizzes.component';
 import {AdminLocation} from "../../locations/locations.component";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-admin-quiz-detail',
@@ -9,20 +10,15 @@ import {AdminLocation} from "../../locations/locations.component";
   styleUrls: ['./quiz-detail.component.css']
 })
 export class AdminQuizDetailComponent implements OnInit {
-  @Input() currentQuiz: AdminQuiz;
-  @Input() adminToken: string;
-  @Output()
-  detailOutput: EventEmitter<any> = new EventEmitter();
-
   pageHeader: string;
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
 
-  constructor(private http: HttpClient) { }
+  constructor(public dialogRef: MatDialogRef<AdminQuizDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {}
 
   ngOnInit() {
-    if(this.currentQuiz != null){
-      console.log('location detail initialized with location', this.currentQuiz);
+    if(this.data.currentQuiz != null){
+      console.log('location detail initialized with location', this.data.currentQuiz);
       this.pageHeader = 'Vorhandenes Quiz Bearbeiten';
       this.createNewEntry = false;
     } else {
@@ -35,7 +31,7 @@ export class AdminQuizDetailComponent implements OnInit {
   }
 
   loadDefaults() {
-    this.currentQuiz = new AdminQuiz('sample answer',
+    this.data.currentQuiz = new AdminQuiz('sample answer',
       'sample description',
       'sample hint',{
       filename: '',
@@ -47,7 +43,7 @@ export class AdminQuizDetailComponent implements OnInit {
 
   loadLocations() {
     console.log('loading current locations from server');
-    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
         this.locations = new Array<AdminLocation>()
         console.log('loaded current locations',data);
@@ -69,15 +65,15 @@ export class AdminQuizDetailComponent implements OnInit {
 
   submit() {
     if(this.createNewEntry === false) {
-      this.http.put('/api/admin/riddles/'+ this.currentQuiz._id, {
-       answer: this.currentQuiz.answer,
-        description: this.currentQuiz.description,
-        hint: this.currentQuiz.hint,
-        image: this.currentQuiz.image,
-        name: this.currentQuiz.name,
-        _id: this.currentQuiz._id,
-        location: this.currentQuiz.location
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+      this.http.put('/api/admin/riddles/'+ this.data.currentQuiz._id, {
+       answer: this.data.currentQuiz.answer,
+        description: this.data.currentQuiz.description,
+        hint: this.data.currentQuiz.hint,
+        image: this.data.currentQuiz.image,
+        name: this.data.currentQuiz.name,
+        _id: this.data.currentQuiz._id,
+        location: this.data.currentQuiz.location
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
         },
@@ -87,13 +83,13 @@ export class AdminQuizDetailComponent implements OnInit {
       );
     } else {
       this.http.post('/api/admin/riddles', {
-        answer: this.currentQuiz.answer,
-        description: this.currentQuiz.description,
-        hint: this.currentQuiz.hint,
-        image: this.currentQuiz.image,
-        name: this.currentQuiz.name,
-        location: this.currentQuiz.location
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+        answer: this.data.currentQuiz.answer,
+        description: this.data.currentQuiz.description,
+        hint: this.data.currentQuiz.hint,
+        image: this.data.currentQuiz.image,
+        name: this.data.currentQuiz.name,
+        location: this.data.currentQuiz.location
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
         },
@@ -102,11 +98,11 @@ export class AdminQuizDetailComponent implements OnInit {
         }
       );
     }
-    console.log('saving quiz detail',this.currentQuiz);
-    this.detailOutput.emit();
+    console.log('saving quiz detail',this.data.currentQuiz);
+    this.dialogRef.close();
   }
   cancel() {
-    this.detailOutput.emit();
+    this.dialogRef.close();
   }
 
   handleFileSelect(evt) {
@@ -117,9 +113,9 @@ export class AdminQuizDetailComponent implements OnInit {
     console.log('filesize',file.size);
     console.log('filetype',file.type);
 
-    this.currentQuiz.image.filename = file.name;
-    this.currentQuiz.image.filesize = file.size;
-    this.currentQuiz.image.filetype = file.type;
+    this.data.currentQuiz.image.filename = file.name;
+    this.data.currentQuiz.image.filesize = file.size;
+    this.data.currentQuiz.image.filetype = file.type;
 
     if (files && file) {
       const reader = new FileReader();
@@ -130,6 +126,6 @@ export class AdminQuizDetailComponent implements OnInit {
 
   _handleReaderLoaded(readerEvt) {
     const binaryString = readerEvt.target.result;
-    this.currentQuiz.image.base64 = btoa(binaryString);
+    this.data.currentQuiz.image.base64 = btoa(binaryString);
   }
 }

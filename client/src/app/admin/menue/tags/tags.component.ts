@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AdminTagDetailComponent} from './tag-detail/tag-detail.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-admin-tags',
@@ -7,13 +9,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./tags.component.css']
 })
 export class AdminTagsComponent implements OnInit {
-
-  public detailOpen = false;
-  public detailTag: AdminTag;
-
   @Input() adminToken: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.tableHeaders.push('TagID');
     this.tableHeaders.push('Alias');
     this.tableHeaders.push('Ort');
@@ -49,13 +47,23 @@ export class AdminTagsComponent implements OnInit {
   }
   addTag() {
     console.log('add location');
-    this.detailTag = null;
-    this.detailOpen = true;
+    const edit = this.dialog.open(AdminTagDetailComponent, {data: {
+      currentTag: null,
+      adminToken: this.adminToken
+    }});
+    edit.afterClosed().subscribe(result => {
+      this.loadTagsFromServer();
+    });
   }
   editTag(tag: AdminTag) {
     console.log('edit tag',tag._id);
-    this.detailTag = tag;
-    this.detailOpen = true;
+    const edit = this.dialog.open(AdminTagDetailComponent, {data: {
+      currentTag: tag,
+      adminToken: this.adminToken
+    }});
+    edit.afterClosed().subscribe(result => {
+      this.loadTagsFromServer();
+    });
   }
   deleteTag(tag: AdminTag) {
     console.log('delete quiz',tag._id);
@@ -68,11 +76,6 @@ export class AdminTagsComponent implements OnInit {
         console.log('error deleting Tag//', err);
       }
     );
-  }
-  tagDetailFromSubmitted(){
-    this.detailOpen = false;
-    this.detailTag = null;
-    this.loadTagsFromServer();
   }
 }
 

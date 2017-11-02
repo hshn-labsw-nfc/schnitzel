@@ -1,3 +1,4 @@
+<!--
 <h1 class="page-header">{{pageHeader}}</h1>
 <form role="form" (ngSubmit)="submit()">
   <div class="form-group">
@@ -48,3 +49,54 @@
     <a class="btn btn-default" (click)="cancel()">Abbrechen</a>
   </div>
 </form>
+-->
+
+<h1 mat-dialog-title>{{pageHeader}}</h1>
+<div mat-dialog-content>
+  <div class="form-group">
+    <label class="control-label">
+      Rätselname
+    </label>
+    <input [(ngModel)]="data.currentQuiz.name" name="name" class="form-control" required autofocus>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">
+      Beschreibung
+    </label>
+    <textarea [(ngModel)]="data.currentQuiz.description" name="description" class="form-control" rows="10" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">
+      Antwort
+    </label>
+    <input [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label class="control-label">
+      Hinweis
+    </label>
+    <input [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
+  </div>
+  <div class="form-group">
+    <label class="control-label">Bild Datei</label>
+    <input class="form-control" accept="image/*" type="file" (change)="handleFileSelect($event)">
+    <br/>
+    <img class="img-responsive center-block" src="data:{{data.currentQuiz.image.filetype}};base64,{{data.currentQuiz.image.base64}}">
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Verknüpfter Ort</label>
+    <div>
+      <p>Falls ausgewählt, wird dieses Rätsel an dem ausgewähltem Ort abgefragt</p>
+    </div>
+    <select class="form-control" [(ngModel)]="data.currentQuiz.location" name="locationSelect">
+      <option *ngFor="let entry of locations" [value]="entry._id" >{{entry._id}}</option>
+    </select>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" tabindex="2" (click)="submit()">Speichern</button>
+  <button mat-raised-button tabindex="-1" (click)="cancel()">Abbrechen</button>
+</div>

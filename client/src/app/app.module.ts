@@ -155,7 +155,9 @@ const routes: Routes = [
   ],
   entryComponents: [
     SharedSimpleDialogComponent,
-    AdminLocationDetailComponent
+    AdminLocationDetailComponent,
+    AdminQuizDetailComponent,
+    AdminTagDetailComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-<ng-container *ngIf="detailOpen == false">
+<ng-container>
 <h1 class="page-header">Quizzes</h1>
 <div class="text-right">
   <p><a class="btn btn-success"  (click)="addQuiz()"><span class="glyphicon glyphicon-plus"></span> Rätsel hinzufügen</a></p>
@@ -28,6 +28,3 @@
   </table>
 </div>
 </ng-container>
-  <ng-container *ngIf="detailOpen == true">
-    <app-admin-quiz-detail [currentQuiz]="detailQuiz" [adminToken]="adminToken" (detailOutput)="quizDetailFromSubmitted()"></app-admin-quiz-detail>
-  </ng-container>

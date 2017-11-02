@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AdminTag} from '../tags.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminLocation} from '../../locations/locations.component';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-admin-tag-detail',
@@ -9,20 +10,15 @@ import {AdminLocation} from '../../locations/locations.component';
   styleUrls: ['./tag-detail.component.css']
 })
 export class AdminTagDetailComponent implements OnInit {
-  @Input() currentTag: AdminTag;
-  @Input() adminToken: string;
-  @Output()
-  detailOutput: EventEmitter<any> = new EventEmitter();
-
   pageHeader: string;
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
 
-  constructor(private http: HttpClient) { }
+  constructor(public dialogRef: MatDialogRef<AdminTagDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {}
 
   ngOnInit() {
-    if(this.currentTag != null){
-      console.log('tag detail initialized with location', this.currentTag);
+    if(this.data.currentTag != null){
+      console.log('tag detail initialized with location', this.data.currentTag);
       this.pageHeader = 'Vorhandenen Tag Bearbeiten';
       this.createNewEntry = false;
     } else {
@@ -35,7 +31,7 @@ export class AdminTagDetailComponent implements OnInit {
   }
 
   loadDefaults() {
-    this.currentTag = new AdminTag('sample alias',
+    this.data.currentTag = new AdminTag('sample alias',
       'sample location',
       'sample ID',
       'sample name');
@@ -43,7 +39,7 @@ export class AdminTagDetailComponent implements OnInit {
 
   loadLocations() {
     console.log('loading current locations from server');
-    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
         this.locations = new Array<AdminLocation>()
         console.log('loaded current locations',data);
@@ -65,12 +61,12 @@ export class AdminTagDetailComponent implements OnInit {
 
   submit() {
     if(this.createNewEntry === false) {
-      this.http.put('/api/admin/tags/' + this.currentTag._id, {
-        alias: this.currentTag.alias,
-        location: this.currentTag.location,
-        tagID: this.currentTag.tagID,
-        _id: this.currentTag._id
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+      this.http.put('/api/admin/tags/' + this.data.currentTag._id, {
+        alias: this.data.currentTag.alias,
+        location: this.data.currentTag.location,
+        tagID: this.data.currentTag.tagID,
+        _id: this.data.currentTag._id
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
         },
@@ -80,10 +76,10 @@ export class AdminTagDetailComponent implements OnInit {
       );
     } else {
       this.http.post('/api/admin/tags', {
-        alias: this.currentTag.alias,
-        location: this.currentTag.location,
-        tagID: this.currentTag.tagID
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+        alias: this.data.currentTag.alias,
+        location: this.data.currentTag.location,
+        tagID: this.data.currentTag.tagID
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
         },
@@ -92,11 +88,11 @@ export class AdminTagDetailComponent implements OnInit {
         }
       );
     }
-    console.log('saving quiz detail',this.currentTag);
-    this.detailOutput.emit();
+    console.log('saving quiz detail',this.data.currentTag);
+    this.dialogRef.close();
   }
 
   cancel() {
-    this.detailOutput.emit();
+    this.dialogRef.close();
   }
 }

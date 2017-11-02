@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {MatDialog} from '@angular/material';
+import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
 
 @Component({
   selector: 'app-admin-quizzes',
@@ -7,13 +9,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./quizzes.component.css']
 })
 export class AdminQuizzesComponent implements OnInit {
-
-  public detailOpen = false;
-  public detailQuiz: AdminQuiz;
-
   @Input() adminToken: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.tableHeaders.push('Rätselname');
     this.tableHeaders.push('Beschreibung');
     this.tableHeaders.push('ID');
@@ -24,8 +22,6 @@ export class AdminQuizzesComponent implements OnInit {
 
   ngOnInit() {
     this.loadQuizzesFromServer();
-    this.detailQuiz = null;
-    this.detailOpen = false;
   }
 
   loadQuizzesFromServer() {
@@ -53,19 +49,23 @@ export class AdminQuizzesComponent implements OnInit {
   }
   addQuiz() {
     console.log('add quiz');
-    this.detailQuiz = null;
-    this.detailOpen = true;
+    const edit = this.dialog.open(AdminQuizDetailComponent, {data: {
+      currentQuiz: null,
+      adminToken: this.adminToken
+    }});
+    edit.afterClosed().subscribe(result => {
+      this.loadQuizzesFromServer();
+    });
   }
   editQuiz(quiz: AdminQuiz) {
     console.log('edit quiz',quiz._id);
-    this.detailQuiz = quiz;
-    this.detailOpen = true;
-  }
-
-  quizDetailFromSubmitted(){
-    this.detailOpen = false;
-    this.detailQuiz = null;
-    this.loadQuizzesFromServer();
+    const edit = this.dialog.open(AdminQuizDetailComponent, {data: {
+      currentQuiz: quiz,
+      adminToken: this.adminToken
+    }});
+    edit.afterClosed().subscribe(result => {
+      this.loadQuizzesFromServer();
+    });
   }
 
   deleteQuiz(quiz: AdminQuiz) {
