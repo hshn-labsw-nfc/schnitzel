@@ -10,9 +10,9 @@ export class UserProgressComponent implements OnInit {
   @Input() progressCount: number;
   @Input() progressDone: number;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 }

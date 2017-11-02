@@ -35,6 +35,7 @@ import {MatInputModule} from '@angular/material';
 import {MatSnackBarModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material';
 import {SharedSimpleDialogComponent} from './shared/simple-dialog/simple-dialog.component';
+import {MatProgressBarModule} from '@angular/material';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -143,7 +144,8 @@ const routes: Routes = [
     MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     SharedSimpleDialogComponent
