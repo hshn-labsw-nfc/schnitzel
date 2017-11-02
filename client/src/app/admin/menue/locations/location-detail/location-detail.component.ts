@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {AdminLocation} from '../locations.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-admin-location-detail',
@@ -8,18 +9,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   styleUrls: ['./location-detail.component.css']
 })
 export class AdminLocationDetailComponent implements OnInit {
-  @Input() currentLocation: AdminLocation;
-  @Input() adminToken: string;
-  @Output()
-  detailOutput: EventEmitter<any> = new EventEmitter();
-
   pageHeader: string;
   createNewEntry: boolean;
 
-  constructor(private http: HttpClient) { }
+  constructor(public dialogRef: MatDialogRef<AdminLocationDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {}
 
   ngOnInit() {
-    if(this.currentLocation != null){
+    if(this.data.currentLocation != null){
       console.log('location detail initialized with location');
       this.pageHeader = 'Vorhandenen Ort Bearbeiten';
       this.createNewEntry = false;
@@ -32,7 +28,7 @@ export class AdminLocationDetailComponent implements OnInit {
   }
 
   loadDefaults() {
-    this.currentLocation = new AdminLocation('sample description', {
+    this.data.currentLocation = new AdminLocation('sample description', {
       filename: '',
       filesize: '',
       filetype: '',
@@ -41,13 +37,13 @@ export class AdminLocationDetailComponent implements OnInit {
 
   submit() {
     if(this.createNewEntry === false) {
-      this.http.put('/api/admin/locations/' + this.currentLocation._id, {
-        description: this.currentLocation.description,
-        image: this.currentLocation.image,
-        isActive: this.currentLocation.isActive,
-        name: this.currentLocation.name,
-        _id: this.currentLocation._id,
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+      this.http.put('/api/admin/locations/' + this.data.currentLocation._id, {
+        description: this.data.currentLocation.description,
+        image: this.data.currentLocation.image,
+        isActive: this.data.currentLocation.isActive,
+        name: this.data.currentLocation.name,
+        _id: this.data.currentLocation._id,
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited location');
         },
@@ -57,11 +53,11 @@ export class AdminLocationDetailComponent implements OnInit {
       );
     } else {
       this.http.post('/api/admin/locations', {
-        description: this.currentLocation.description,
-        image: this.currentLocation.image,
-        isActive: this.currentLocation.isActive,
-        name: this.currentLocation.name
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+        description: this.data.currentLocation.description,
+        image: this.data.currentLocation.image,
+        isActive: this.data.currentLocation.isActive,
+        name: this.data.currentLocation.name
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited location');
         },
@@ -70,11 +66,11 @@ export class AdminLocationDetailComponent implements OnInit {
         }
       );
     }
-    console.log('saving location detail',this.currentLocation);
-    this.detailOutput.emit();
+    console.log('saving location detail',this.data.currentLocation);
+    this.dialogRef.close();
   }
   cancel() {
-    this.detailOutput.emit();
+    this.dialogRef.close();
   }
 
   handleFileSelect(evt) {
@@ -85,9 +81,9 @@ export class AdminLocationDetailComponent implements OnInit {
     console.log('filesize',file.size);
     console.log('filetype',file.type);
 
-    this.currentLocation.image.filename = file.name;
-    this.currentLocation.image.filesize = file.size;
-    this.currentLocation.image.filetype = file.type;
+    this.data.currentLocation.image.filename = file.name;
+    this.data.currentLocation.image.filesize = file.size;
+    this.data.currentLocation.image.filetype = file.type;
 
     if (files && file) {
       const reader = new FileReader();
@@ -98,7 +94,7 @@ export class AdminLocationDetailComponent implements OnInit {
 
   _handleReaderLoaded(readerEvt) {
     const binaryString = readerEvt.target.result;
-    this.currentLocation.image.base64 = btoa(binaryString);
+    this.data.currentLocation.image.base64 = btoa(binaryString);
   }
 
 

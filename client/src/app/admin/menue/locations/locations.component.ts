@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AdminLocationDetailComponent} from './location-detail/location-detail.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-admin-locations',
@@ -8,12 +10,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class AdminLocationsComponent implements OnInit {
 
-  public detailOpen = false;
-  public detailLocation: AdminLocation;
-
   @Input() adminToken: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dialog: MatDialog) {
     this.tableHeaders.push('Aktiv?');
     this.tableHeaders.push('Raumname');
     this.tableHeaders.push('Beschreibung');
@@ -24,8 +23,6 @@ export class AdminLocationsComponent implements OnInit {
 
   ngOnInit() {
     this.loadLocationsFromServer();
-    this.detailLocation = null;
-    this.detailOpen = false;
   }
 
   loadLocationsFromServer() {
@@ -52,20 +49,24 @@ export class AdminLocationsComponent implements OnInit {
 
   addLocation() {
     console.log('add location');
-    this.detailLocation = null;
-    this.detailOpen = true;
+    const edit = this.dialog.open(AdminLocationDetailComponent, {data: {
+      currentLocation: null,
+      adminToken: this.adminToken
+    }});
+    edit.afterClosed().subscribe(result => {
+      this.loadLocationsFromServer();
+    });
   }
 
   editLocation(location: AdminLocation) {
     console.log('edit location',location._id);
-    this.detailLocation = location;
-    this.detailOpen = true;
-  }
-
-  locationDetailFromSubmitted(){
-    this.detailOpen = false;
-    this.detailLocation = null;
-    this.loadLocationsFromServer();
+    const edit = this.dialog.open(AdminLocationDetailComponent, {data: {
+      currentLocation: location,
+      adminToken: this.adminToken
+    }});
+    edit.afterClosed().subscribe(result => {
+      this.loadLocationsFromServer();
+    });
   }
 
   deleteLocation(location: AdminLocation) {

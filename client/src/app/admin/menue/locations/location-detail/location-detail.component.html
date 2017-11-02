@@ -1,30 +1,27 @@
-<h1 class="page-header">{{pageHeader}}</h1>
-<form role="form" (ngSubmit)="submit()">
-
+<h1 mat-dialog-title>{{pageHeader}}</h1>
+<div mat-dialog-content>
   <div class="form-group">
     <label class="control-label">Raumname</label>
-    <input type="text" class="form-control" name="roomname" [(ngModel)]="currentLocation.name" required autofocus>
+    <input type="text" class="form-control" name="roomname" [(ngModel)]="data.currentLocation.name" required autofocus>
   </div>
   <div class="form-group">
     <label class="control-label">Beschreibung</label>
-    <textarea class="form-control" rows="5" name="description" [(ngModel)]="currentLocation.description"></textarea>
+    <textarea class="form-control" rows="5" name="description" [(ngModel)]="data.currentLocation.description"></textarea>
   </div>
   <div class="form-group">
-    <label class="control-label">Schnitzeljagd?</label>
     <div>
-      <input type="checkbox" name="includelocation" [(ngModel)]="currentLocation.isActive">
-      <p>Hier auswählen, ob der Ort mit in die Schnitzeljagd aufgenommen wird</p>
+      <!--<input type="checkbox" name="includelocation" [(ngModel)]="data.currentLocation.isActive">-->
+      <mat-checkbox [(ngModel)]="data.currentLocation.isActive">Aktiv?</mat-checkbox>
     </div>
   </div>
   <div class="form-group">
     <label class="control-label">Bild auswählen</label>
     <input class="form-control" accept="image/*" type="file" (change)="handleFileSelect($event)">
     <br/>
-    <img class="img-responsive center-block" src="data:{{currentLocation.image.filetype}};base64,{{currentLocation.image.base64}}">
+    <img class="img-responsive center-block" src="data:{{data.currentLocation.image.filetype}};base64,{{data.currentLocation.image.base64}}">
   </div>
-
-  <div class="text-right">
-    <input id="Submit" class="btn btn-success" type="submit" value="Speichern">
-    <a class="btn btn-default" (click)="cancel()">Abbrechen</a>
-  </div>
-</form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" tabindex="2" (click)="submit()">Speichern</button>
+  <button mat-raised-button tabindex="-1" (click)="cancel()">Abbrechen</button>
+</div>

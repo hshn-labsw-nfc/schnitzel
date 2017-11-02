@@ -1,4 +1,4 @@
-<ng-container *ngIf="detailOpen == false">
+<ng-container>
 <h1 class="page-header">Orte</h1>
 <div class="text-right">
   <p><a class="btn btn-success"  (click)="addLocation()"><span class="glyphicon glyphicon-plus"></span> Ort hinzufügen</a></p>
@@ -27,7 +27,4 @@
     </tbody>
   </table>
 </div>
-</ng-container>
-<ng-container *ngIf="detailOpen == true">
-  <app-admin-location-detail [currentLocation]="detailLocation" [adminToken]="adminToken" (detailOutput)="locationDetailFromSubmitted()"></app-admin-location-detail>
 </ng-container>

@@ -36,6 +36,8 @@ import {MatSnackBarModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material';
 import {SharedSimpleDialogComponent} from './shared/simple-dialog/simple-dialog.component';
 import {MatProgressBarModule} from '@angular/material';
+import {MatSlideToggleModule} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -145,10 +147,13 @@ const routes: Routes = [
     MatInputModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSlideToggleModule,
+    MatCheckboxModule
   ],
   entryComponents: [
-    SharedSimpleDialogComponent
+    SharedSimpleDialogComponent,
+    AdminLocationDetailComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
