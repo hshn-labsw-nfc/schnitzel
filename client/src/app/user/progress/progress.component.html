@@ -1,6 +1,8 @@
-
-<div class="alert alert-success" role="alert">
-  <mat-progress-bar class="example-margin" [value]="(progressDone / progressCount)*100"></mat-progress-bar>
-  <h4 align="center">{{progressDone}} von {{progressCount}} Orten gefunden</h4>
-</div>
-
+<mat-toolbar>
+  <form id="progress">
+    <section class="progress-header">
+          <h4>{{progressDone}} von {{progressCount}} Orten gefunden</h4>
+          <mat-progress-bar id="bar" [value]="(progressDone / progressCount)*100"></mat-progress-bar>
+    </section>
+  </form>
+</mat-toolbar>
