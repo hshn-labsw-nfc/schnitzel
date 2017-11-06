@@ -5,8 +5,10 @@
   <div class="text-left dbwrap">{{question.getQuestion()}}</div>
 
   <br>
-  <img class="img-responsive center-block" src="data:{{question.getImage().filetype}};base64,{{question.getImage().base64}}">
-  <br>
+  <ng-container *ngIf="imageAvailable() == true">
+    <img class="img-responsive center-block" src="data:{{question.getImage().filetype}};base64,{{question.getImage().base64}}">
+    <br>
+  </ng-container>
   <div class="alert alert-info" *ngIf="showHint" (click)="toggleHint()">
     <b>Hinweis: {{question.getHint()}}</b>
   </div>
