@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Location} from './location';
 import {Question} from './question';
 import {Router} from '@angular/router';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {SharedSimpleDialogComponent} from '../shared/simple-dialog/simple-dialog.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class UserComponent implements OnInit{
   currentTask: string;
 
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,  public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.gameRunning = false;
@@ -36,7 +36,7 @@ export class UserComponent implements OnInit{
     }
     if(this.gameRunning === true){
       if(this.urlContainsTag()){
-        this.handleScannedTag(true);
+        this.handleScannedTag();
       } else {
         this.getStateFromServer();
       }
@@ -52,20 +52,35 @@ export class UserComponent implements OnInit{
     }
   }
 
-  handleScannedTag(reload: boolean) {
+  handleScannedTag() {
     let url = this.router.url;
     url = url.slice(6);
     console.log('url', url);
 
     this.http.post('/api/game/sessions/' + this.sessionID + '/location', {tagID: url}).subscribe(
       (data) => {
-        console.log('scanned tag', data);
-        if (reload === true) {
-          this.getStateFromServer();
+        if (data['correctLocation'] === true){
+          this.snackBar.open('Du hast einen Ort gefunden!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+        } else {
+          this.snackBar.open('Das ist der falsche Ort!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
         }
+        console.log('scanned tag', data);
+        this.getStateFromServer();
+
       },
       (err) => {
+        this.snackBar.open('Es ist ein Fehler Aufgetreten',null, {
+          duration: 2000,
+          horizontalPosition: 'center'
+        });
         console.log('scanned tag error', err);
+        this.getStateFromServer();
       }
     );
   }
