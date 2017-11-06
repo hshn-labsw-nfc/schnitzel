@@ -22,6 +22,10 @@ export class UserLoginComponent implements OnInit {
       this.http.post('/api/game/sessions', {groupName: teamname}).subscribe(
         (data) => {
           console.log('loginPost data', data);
+          this.snackBar.open('Viel Spaß! :)',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
           this.loginOutput.emit('' + data);
         },
         (err) => {

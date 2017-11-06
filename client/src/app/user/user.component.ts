@@ -92,8 +92,11 @@ export class UserComponent implements OnInit{
 
   loggedIn(id: string) {
     localStorage.setItem('sessionID',id);
-    this.getStateFromServer();
-    this.gameRunning = true;
+    this.sessionID = id;
+    console.log('TEST',localStorage.getItem('sessionID'));
+    setTimeout(()=>{
+      this.getStateFromServer();
+      this.gameRunning = true;},500);
   }
 
   getStateFromServer() {
