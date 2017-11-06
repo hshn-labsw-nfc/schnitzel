@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-admin-configuration',
@@ -12,12 +12,10 @@ export class AdminConfigurationComponent implements OnInit {
 
   @Input() adminToken: string;
 
-  error: string;
   currentWinText: string;
   currentUserName: string;
 
-  constructor(private http: HttpClient) {
-    this.error = '';
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
     this.currentWinText = 'There seems to be a problem with the internet connection';
     this.currentUserName = 'There seems to be a problem with the internet connection';
   }
@@ -32,8 +30,23 @@ export class AdminConfigurationComponent implements OnInit {
     this.http.put('/api/admin/config/winText',{winText: text},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
       (data) => {
         console.log('changed end text', data);
+        this.snackBar.open('Erfolgreich gespeichert!',null, {
+          duration: 2000,
+          horizontalPosition: 'center'
+        });
       },
       (err) => {
+        if (err['status']===200){
+          this.snackBar.open('Erfolgreich gespeichert!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+        } else {
+          this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+        }
         console.log('changed end text', err);
       }
     );
@@ -43,27 +56,65 @@ export class AdminConfigurationComponent implements OnInit {
     console.log('changeUserName', name);
     this.http.put('/api/admin/config/username',{username: name},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
       (data) => {
-        console.log('changed end text', data);
+        console.log('changed end text');
+        this.snackBar.open('Erfolgreich gespeichert!',null, {
+          duration: 2000,
+          horizontalPosition: 'center'
+        });
       },
       (err) => {
+        if (err['status']===200){
+          this.snackBar.open('Erfolgreich gespeichert!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+        } else {
+          this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+        }
         console.log('changed end text', err);
       }
     );
   }
 
-  changePassword(oldpassword: string, newpassword: string, newpassword2: string) {
-    console.log('changePassword', oldpassword);
-    if(newpassword === newpassword2) {
-      this.http.put('/api/admin/config/password',{oldPassword: oldpassword, password: newpassword, passwordRepeat: newpassword2},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+  changePassword(newpassword: string, newpassword2: string) {
+    console.log('changePassword');
+    if(newpassword.length === 0) {
+      this.snackBar.open('Passwort darf nicht leer sein!', null, {
+        duration: 2000,
+        horizontalPosition: 'center'
+      });
+    } else if (newpassword !== newpassword2){
+      this.snackBar.open('Passwörter stimmen nicht überein!', null, {
+        duration: 2000,
+        horizontalPosition: 'center'
+      });
+    } else {
+      this.http.put('/api/admin/config/password',{password: newpassword, passwordRepeat: newpassword2},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
         (data) => {
           console.log('changed end text', data);
+          this.snackBar.open('Erfolgreich gespeichert!', null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
         },
         (err) => {
-          console.log('changed end text', err);
+          if (err['status']===200){
+            this.snackBar.open('Erfolgreich gespeichert!',null, {
+              duration: 2000,
+              horizontalPosition: 'center'
+            });
+          } else {
+            this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
+              duration: 2000,
+              horizontalPosition: 'center'
+            });
+          }
+          console.log('Error changing end text',err);
         }
       );
-    } else {
-      this.error = 'Passwörter stimmen nicht überein';
     }
   }
 

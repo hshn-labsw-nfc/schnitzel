@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AdminLocation} from '../locations.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-admin-location-detail',
@@ -12,7 +12,7 @@ export class AdminLocationDetailComponent implements OnInit {
   pageHeader: string;
   createNewEntry: boolean;
 
-  constructor(public dialogRef: MatDialogRef<AdminLocationDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {}
+  constructor(public dialogRef: MatDialogRef<AdminLocationDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {}
 
   ngOnInit() {
     if(this.data.currentLocation != null){
@@ -46,8 +46,17 @@ export class AdminLocationDetailComponent implements OnInit {
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited location');
+          this.snackBar.open('Erfolgreich gespeichert!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+          this.dialogRef.close();
         },
         (err) => {
+          this.snackBar.open('Ein Fehler ist Aufgetreten',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
           console.log('error editing location', err);
         }
       );
@@ -59,15 +68,22 @@ export class AdminLocationDetailComponent implements OnInit {
         name: this.data.currentLocation.name
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
-          console.log('successfully edited location');
+          this.snackBar.open('Erfolgreich gespeichert!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+          console.log('successfully added new location');
+          this.dialogRef.close();
         },
         (err) => {
+          this.snackBar.open('Ein Fehler ist Aufgetreten',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
           console.log('error editing location', err);
         }
       );
     }
-    console.log('saving location detail',this.data.currentLocation);
-    this.dialogRef.close();
   }
   cancel() {
     this.dialogRef.close();

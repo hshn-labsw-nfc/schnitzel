@@ -2,7 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {AdminTag} from '../tags.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminLocation} from '../../locations/locations.component';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-admin-tag-detail',
@@ -14,7 +15,7 @@ export class AdminTagDetailComponent implements OnInit {
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
 
-  constructor(public dialogRef: MatDialogRef<AdminTagDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {}
+  constructor(public dialogRef: MatDialogRef<AdminTagDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient,public snackBar: MatSnackBar) {}
 
   ngOnInit() {
     if(this.data.currentTag != null){
@@ -32,7 +33,7 @@ export class AdminTagDetailComponent implements OnInit {
 
   loadDefaults() {
     this.data.currentTag = new AdminTag('sample alias',
-      'sample location',
+      null,
       'sample ID',
       'sample name');
   }
@@ -41,7 +42,7 @@ export class AdminTagDetailComponent implements OnInit {
     console.log('loading current locations from server');
     this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
-        this.locations = new Array<AdminLocation>()
+        this.locations = new Array<AdminLocation>();
         console.log('loaded current locations',data);
         for(let d in data){
           this.locations.push(
@@ -60,36 +61,61 @@ export class AdminTagDetailComponent implements OnInit {
   }
 
   submit() {
-    if(this.createNewEntry === false) {
-      this.http.put('/api/admin/tags/' + this.data.currentTag._id, {
-        alias: this.data.currentTag.alias,
-        location: this.data.currentTag.location,
-        tagID: this.data.currentTag.tagID,
-        _id: this.data.currentTag._id
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
-        (data) => {
-          console.log('successfully edited quiz');
-        },
-        (err) => {
-          console.log('error editing quiz', err);
-        }
-      );
+    console.log('TEST',this.data.currentTag.location);
+    if(isNullOrUndefined(this.data.currentTag.location)) {
+      this.snackBar.open('Wähle einen zugehörigen Ort aus!', null, {
+        duration: 2000,
+        horizontalPosition: 'center'
+      });
     } else {
-      this.http.post('/api/admin/tags', {
-        alias: this.data.currentTag.alias,
-        location: this.data.currentTag.location,
-        tagID: this.data.currentTag.tagID
-      }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
-        (data) => {
-          console.log('successfully edited quiz');
-        },
-        (err) => {
-          console.log('error editing quiz', err);
-        }
-      );
+      if (this.createNewEntry === false) {
+        this.http.put('/api/admin/tags/' + this.data.currentTag._id, {
+          alias: this.data.currentTag.alias,
+          location: this.data.currentTag.location,
+          tagID: this.data.currentTag.tagID,
+          _id: this.data.currentTag._id
+        }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
+          (data) => {
+            console.log('successfully edited quiz');
+            this.snackBar.open('Erfolgreich gespeichert!', null, {
+              duration: 2000,
+              horizontalPosition: 'center'
+            });
+            this.dialogRef.close();
+          },
+          (err) => {
+            this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
+              duration: 2000,
+              horizontalPosition: 'center'
+            });
+            console.log('error editing quiz', err);
+          }
+        );
+      } else {
+        this.http.post('/api/admin/tags', {
+          alias: this.data.currentTag.alias,
+          location: this.data.currentTag.location,
+          tagID: this.data.currentTag.tagID
+        }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
+          (data) => {
+            console.log('successfully edited quiz');
+            this.snackBar.open('Erfolgreich gespeichert!', null, {
+              duration: 2000,
+              horizontalPosition: 'center'
+            });
+            this.dialogRef.close();
+          },
+          (err) => {
+            this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
+              duration: 2000,
+              horizontalPosition: 'center'
+            });
+            console.log('error editing quiz', err);
+          }
+        );
+      }
+      console.log('saving quiz detail', this.data.currentTag);
     }
-    console.log('saving quiz detail',this.data.currentTag);
-    this.dialogRef.close();
   }
 
   cancel() {

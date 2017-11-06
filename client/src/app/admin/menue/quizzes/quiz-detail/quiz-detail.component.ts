@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminQuiz} from '../quizzes.component';
-import {AdminLocation} from "../../locations/locations.component";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {AdminLocation} from '../../locations/locations.component';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-admin-quiz-detail',
@@ -14,7 +14,7 @@ export class AdminQuizDetailComponent implements OnInit {
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
 
-  constructor(public dialogRef: MatDialogRef<AdminQuizDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {}
+  constructor(public dialogRef: MatDialogRef<AdminQuizDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient,public snackBar: MatSnackBar) {}
 
   ngOnInit() {
     if(this.data.currentQuiz != null){
@@ -71,9 +71,18 @@ export class AdminQuizDetailComponent implements OnInit {
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
+          this.snackBar.open('Erfolgreich gespeichert!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+          this.dialogRef.close();
         },
         (err) => {
           console.log('error editing quiz', err);
+          this.snackBar.open('Ein Fehler ist Aufgetreten',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
         }
       );
     } else {
@@ -86,14 +95,22 @@ export class AdminQuizDetailComponent implements OnInit {
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited quiz');
+          this.snackBar.open('Erfolgreich gespeichert!',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+          this.dialogRef.close();
         },
         (err) => {
           console.log('error editing quiz', err);
+          this.snackBar.open('Ein Fehler ist Aufgetreten',null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
         }
       );
     }
     console.log('saving quiz detail',this.data.currentQuiz);
-    this.dialogRef.close();
   }
   cancel() {
     this.dialogRef.close();
