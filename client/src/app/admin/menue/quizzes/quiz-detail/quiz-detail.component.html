@@ -80,13 +80,6 @@
     <input [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
   </div>
   <div class="form-group">
-    <label class="control-label">Bild Datei</label>
-    <input class="form-control" accept="image/*" type="file" (change)="handleFileSelect($event)">
-    <br/>
-    <img class="img-responsive center-block" src="data:{{data.currentQuiz.image.filetype}};base64,{{data.currentQuiz.image.base64}}">
-  </div>
-
-  <div class="form-group">
     <label class="control-label">Verknüpfter Ort</label>
     <div>
       <p>Falls ausgewählt, wird dieses Rätsel an dem ausgewähltem Ort abgefragt</p>

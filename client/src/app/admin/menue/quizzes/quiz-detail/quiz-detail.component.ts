@@ -33,11 +33,7 @@ export class AdminQuizDetailComponent implements OnInit {
   loadDefaults() {
     this.data.currentQuiz = new AdminQuiz('sample answer',
       'sample description',
-      'sample hint',{
-      filename: '',
-      filesize: '',
-      filetype: '',
-      base64: ''},
+      'sample hint',
       'sample name', 'sample id',null);
   }
 
@@ -45,7 +41,7 @@ export class AdminQuizDetailComponent implements OnInit {
     console.log('loading current locations from server');
     this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
-        this.locations = new Array<AdminLocation>()
+        this.locations = new Array<AdminLocation>();
         console.log('loaded current locations',data);
         for(let d in data){
           this.locations.push(
@@ -69,7 +65,6 @@ export class AdminQuizDetailComponent implements OnInit {
        answer: this.data.currentQuiz.answer,
         description: this.data.currentQuiz.description,
         hint: this.data.currentQuiz.hint,
-        image: this.data.currentQuiz.image,
         name: this.data.currentQuiz.name,
         _id: this.data.currentQuiz._id,
         location: this.data.currentQuiz.location
@@ -86,7 +81,6 @@ export class AdminQuizDetailComponent implements OnInit {
         answer: this.data.currentQuiz.answer,
         description: this.data.currentQuiz.description,
         hint: this.data.currentQuiz.hint,
-        image: this.data.currentQuiz.image,
         name: this.data.currentQuiz.name,
         location: this.data.currentQuiz.location
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(

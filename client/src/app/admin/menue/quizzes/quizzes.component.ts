@@ -28,14 +28,13 @@ export class AdminQuizzesComponent implements OnInit {
     console.log('loading current quizzes from server');
     this.http.get('/api/admin/riddles',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        this.quizzes = new Array<AdminQuiz>()
+        this.quizzes = new Array<AdminQuiz>();
         console.log('loaded current quizzes',data);
         for(let d in data){
            this.quizzes.push(
             new AdminQuiz(data[d]['answer'],
               data[d]['description'],
               data[d]['hint'],
-              data[d]['image'],
               data[d]['name'],
               data[d]['_id'],
               data[d]['location']));
@@ -86,7 +85,6 @@ export class AdminQuiz {
   constructor(public answer: string,
               public description: string,
               public hint: string,
-              public image: any,
               public name: string,
               public _id: string,
               public location: string) {
