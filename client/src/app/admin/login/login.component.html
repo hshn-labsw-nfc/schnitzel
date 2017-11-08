@@ -1,18 +1,14 @@
 <div class="container" id="body">
   <form class="form-signin" (ngSubmit)="submitLogin(name.value,password.value)">
     <h3 class="form-signin-heading" align="center">Bitte melden Sie sich an</h3>
-    <label for="inputEmail" class="sr-only">Benutzername</label>
-    <input type="text" #name id="inputEmail" class="form-control" ng-model="username" placeholder="Benutzername"
-           required autofocus>
-    <label for="inputPassword" class="sr-only">Passwort</label>
-    <input type="password" #password id="inputPassword" class="form-control" ng-model="password" placeholder="Passwort"
-           required>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="remember-me"> Angemeldet bleiben
-      </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
+    <mat-form-field>
+      <input #name matInput placeholder="Benutzername">
+    </mat-form-field>
+    <mat-form-field>
+      <input #password matInput placeholder="Passwort">
+    </mat-form-field>
+    <mat-checkbox>Angemeldet bleiben</mat-checkbox>
+    <button mat-raised-button color="primary" class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
   </form>
 </div>
 
