@@ -1,36 +1,24 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" (click)="select('')">Schnitzeljagd - Admin Dashboard</a>
-    </div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened="true">
+      <mat-toolbar color="primary">
+        <span>Admin Menü:</span>
+        <mat-toolbar-row *ngFor="let entry of menueItems" (click)="sidenav.close(); currentSelection=entry;">
+          <span>{{entry}}</span>
+        </mat-toolbar-row>
+        <mat-toolbar-row (click)="logout()">
+          <span>Logout</span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+  </mat-sidenav>
+  <button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">
+    <mat-icon>></mat-icon>
+  </button>
+  <div (click)="sidenav.close()">
+    <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>
+    <app-admin-configuration *ngIf="currentSelection=='Konfiguration'" [adminToken]="adminToken"></app-admin-configuration>
+    <app-admin-locations *ngIf="currentSelection=='Orte'" [adminToken]="adminToken"></app-admin-locations>
+    <app-admin-quizzes *ngIf="currentSelection=='Rätsel'" [adminToken]="adminToken"></app-admin-quizzes>
+    <app-admin-tags *ngIf="currentSelection=='Tags'" [adminToken]="adminToken"></app-admin-tags>
   </div>
-</nav>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-      <ul class="nav nav-sidebar">
-      <!--  <li class="h4" *ngFor="let entry of menueItems">
-          <div (click)="select(entry)">
-            <span>
-              {{entry}}
-            </span>
-          </div>
-        </li>
-        <li><a id="logout" class="text-danger h4" (click)="logout()"><span class="glyphicon glyphicon-off"></span>Logout</a>
-        </li>
-        -->
-        <li class="h4" *ngFor="let entry of menueItems" (click)="select(entry)">
-            {{entry}}
-        </li>
-        <li><a id="logout" class="text-danger h4" (click)="logout()"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
-      </ul>
-    </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>
-      <app-admin-configuration *ngIf="currentSelection=='Konfiguration'" [adminToken]="adminToken"></app-admin-configuration>
-      <app-admin-locations *ngIf="currentSelection=='Orte'" [adminToken]="adminToken"></app-admin-locations>
-      <app-admin-quizzes *ngIf="currentSelection=='Rätsel'" [adminToken]="adminToken"></app-admin-quizzes>
-      <app-admin-tags *ngIf="currentSelection=='Tags'" [adminToken]="adminToken"></app-admin-tags>
-    </div>
-  </div>
-</div>
+</mat-sidenav-container>
+

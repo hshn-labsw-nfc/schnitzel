@@ -30,10 +30,4 @@ export class AdminMenueComponent implements OnInit {
   logout(): void{
     this.menueLogout.emit();
   }
-
-  select(name: string): void{
-    console.log(name);
-    this.currentSelection = '';
-    this.currentSelection = name;
-  }
 }
