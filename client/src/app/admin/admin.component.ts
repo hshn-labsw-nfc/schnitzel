@@ -17,18 +17,20 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(localStorage.getItem('admintoken') !== null){
+      this.adminToken = localStorage.getItem('admintoken');
+      this.authenticated = true;
+    }
   }
 
 
-  loggedIn(token: string) {
-    this.setAdminToken(token);
+  loggedIn(data: any) {
+    console.log('setting token:',data['token']);
+    if(data['keep'] === true){
+      localStorage.setItem('admintoken',data['token']);
+    }
+    this.adminToken = data['token'];
     this.authenticated = true;
-  }
-
-  setAdminToken(token: string): void {
-    console.log('setting token:',token);
-    localStorage.setItem('admintoken',token);
-    this.adminToken = token;
   }
 
   logout(): void{

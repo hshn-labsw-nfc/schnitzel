@@ -10,19 +10,19 @@ import {MatSnackBar} from '@angular/material';
 export class AdminLoginComponent implements OnInit {
 
   @Output()
-  loginOutput: EventEmitter<string> = new EventEmitter();
+  loginOutput: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
-  submitLogin(name: string, password: string) {
+  submitLogin(name: string, password: string, keeploggedin: boolean) {
     console.log('admin login', name, password);
     this.http.post('/api/admin/session/', {username: name, password: password}).subscribe(
       (data) => {
         console.log('loginPost data', data);
-        this.loginOutput.emit(data['token']);
+        this.loginOutput.emit({token: data['token'], keep: keeploggedin});
       },
       (err) => {
         this.snackBar.open('Wrong Username or Password',null, {
