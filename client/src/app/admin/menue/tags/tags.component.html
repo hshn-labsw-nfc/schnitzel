@@ -1,7 +1,7 @@
 <ng-container>
 <h1 class="page-header">Tags</h1>
 <div class="text-right">
-  <p><a class="btn btn-success"  (click)="addTag()"><span class="glyphicon glyphicon-plus"></span> Tag hinzufügen</a></p>
+  <button mat-raised-button color="primary" (click)="addTag()">Tag hinzufügen</button>
 </div>
 
 <div class="table-responsive">
@@ -19,8 +19,8 @@
       <td>url/tag/#/{{entry.tagID}}</td>
       <td class="text-right">
         <div class="btn-group" role="group">
-          <a class="btn btn-primary" (click)="editTag(entry)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span class="hidden-xs"> editieren</span></a>
-          <a class="btn btn-danger" (click)="deleteTag(entry)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span><span class="hidden-xs"> entfernen</span></a>
+          <button mat-raised-button color="primary" (click)="editTag(entry)">editieren</button>
+          <button mat-raised-button color="warn" (click)="deleteTag(entry)">entfernen</button>
         </div>
       </td>
     </tr>
