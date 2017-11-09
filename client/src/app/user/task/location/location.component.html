@@ -1,8 +1,4 @@
-<mat-sidenav-container>
-  <mat-sidenav #map mode="over" opened="false" class="map-sidenav" id="map" (click)="map.close()">
-    <img width="100%" height="100%" src="https://vignette2.wikia.nocookie.net/adventuretimewithfinnandjake/images/c/c4/S5e24_Lemongrab_eating_clone.png/revision/latest?cb=20140215012455">
-  </mat-sidenav>
-  <div>
+<div>
     <div class="text-center">
       <h4>Finde folgenden Ort: <b>{{location?.getName()}}</b></h4>
     </div>
@@ -10,20 +6,19 @@
     <span>
     <img class="img-responsive" src="data:{{location?.getImage().filetype}};base64,{{location?.getImage().base64}}">
   </span>
-  </div>
-</mat-sidenav-container>
+</div>
 
 <div id="bottom">
   <mat-toolbar>
-    <div class="container" (click)="map.toggle()">
+    <div class="container">
       <div class="lageplan">
         <input type="image"
                src="http://www.images.pajezy.com/notes/location.svg"
-               width="25" height="25"/>
+               width="25" height="25" (click)="openMap()"/>
       </div>
       <div class="qr-code">
         <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/c/c6/WM2007_QRCode.svg"
-               width="25" height="25"/></div>
+               width="25" height="25" (click)="openCamera()"/></div>
     </div>
   </mat-toolbar>
 </div>

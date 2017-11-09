@@ -2,10 +2,5 @@
   <app-user-quiz [question]="question" [sessionID]="sessionID" (quizOutput)="solvedQuiz()"></app-user-quiz>
 </div>
 <div *ngIf="isUnsolvedQuiz() == false">
-  <div *ngIf="mapOpen == true" (click)="toggleMap()">
-    <app-user-map [location]="location">Loading map...</app-user-map>
-  </div>
-  <div *ngIf="mapOpen == false">
     <app-user-location [location]="location"></app-user-location>
-  </div>
 </div>

@@ -7,12 +7,10 @@ import { UserComponent } from './user/user.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
-import { UserFooterComponent } from './user/footer/footer.component';
 import { UserProgressComponent } from './user/progress/progress.component';
 import { UserLoginComponent } from './user/login/login.component';
 import { UserScoreboardComponent } from './user/scoreboard/scoreboard.component';
 import { UserTaskComponent } from './user/task/task.component';
-import { UserMapComponent } from './user/task/map/map.component';
 import { UserQuizComponent } from './user/task/quiz/quiz.component';
 import { UserLocationComponent } from './user/task/location/location.component';
 import { AdminLoginComponent} from './admin/login/login.component';
@@ -40,6 +38,8 @@ import {MatSlideToggleModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material';
 import {MatToolbarModule} from '@angular/material';
 import {MatSidenavModule} from '@angular/material';
+import { UserLocationMapPopupComponent } from './user/task/location/location-map-popup/location-map-popup.component';
+import { UserLocationCameraPopupComponent } from './user/task/location/location-map-camera-popup/location-map-camera-popup.component';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -116,12 +116,10 @@ const routes: Routes = [
     AdminComponent,
     UserComponent,
     UserTaskComponent,
-    UserFooterComponent,
     UserProgressComponent,
     UserLoginComponent,
     UserScoreboardComponent,
     UserTaskComponent,
-    UserMapComponent,
     UserQuizComponent,
     UserLocationComponent,
     AdminLoginComponent,
@@ -135,7 +133,9 @@ const routes: Routes = [
     AdminLocationDetailComponent,
     AdminQuizDetailComponent,
     AdminTagDetailComponent,
-    SharedSimpleDialogComponent
+    SharedSimpleDialogComponent,
+    UserLocationMapPopupComponent,
+    UserLocationCameraPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -159,7 +159,9 @@ const routes: Routes = [
     SharedSimpleDialogComponent,
     AdminLocationDetailComponent,
     AdminQuizDetailComponent,
-    AdminTagDetailComponent
+    AdminTagDetailComponent,
+    UserLocationMapPopupComponent,
+    UserLocationCameraPopupComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

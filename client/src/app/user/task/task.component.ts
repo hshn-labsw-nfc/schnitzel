@@ -9,8 +9,6 @@ import {Location} from '../location';
 })
 export class UserTaskComponent implements OnInit {
 
-  public mapOpen:boolean;
-
   @Input() question: Question;
   @Input() location: Location;
   @Input() sessionID: string;
@@ -22,16 +20,11 @@ export class UserTaskComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.mapOpen = false;
     console.log('TaskComponent got initialized with',this.question,this.location);
   }
 
   isUnsolvedQuiz(): boolean {
     return (this.currentTask !== 'findLocation');
-  }
-
-  toggleMap() {
-    this.mapOpen = !this.mapOpen;
   }
 
   solvedQuiz() {
