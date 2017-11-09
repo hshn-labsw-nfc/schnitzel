@@ -60,16 +60,17 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
         }
       }
     };
+    this.startStream();
   }
 
   openVideo(): void {
     this.video.style.height = 'auto';
   }
 
-  read(a): string {
+  read(a): void {
     console.log('RESULT: ' + a);
     this.stopStream();
-    return a;
+    this.dialogRef.close('a');
   }
 
   capture(): void {
