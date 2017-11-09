@@ -27,3 +27,7 @@ h4{
   display: flex;
   justify-content: space-between;
 }
+
+#image {
+  text-align: center;
+}

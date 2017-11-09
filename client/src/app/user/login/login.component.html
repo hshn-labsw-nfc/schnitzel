@@ -1,14 +1,16 @@
-<h5 class="text-center">LOGO</h5>
-<div class="page-header">
-  <h1 class="text-center">Schnitzeljagd</h1>
-</div>
-<div class="text-center">
-  <form role="form" (ngSubmit)="submitLogin(teamname.value)">
-    <div class="form-group">
-    <mat-form-field class="example-full-width">
-      <input #teamname matInput placeholder="Gruppenname">
-    </mat-form-field>
-    </div>
-    <button mat-raised-button color="primary" type="submit">Start</button>
-  </form>
-</div>
+<form id="order">
+  <h5 class="text-center">LOGO</h5>
+  <div class="page-header">
+    <h1 class="text-center">Schnitzeljagd</h1>
+  </div>
+  <div class="text-center">
+    <form role="form" (ngSubmit)="submitLogin(teamname.value)">
+      <div class="form-group">
+        <mat-form-field class="group">
+          <input #teamname matInput placeholder="Gruppenname">
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" type="submit">Start</button>
+    </form>
+  </div>
+</form>
