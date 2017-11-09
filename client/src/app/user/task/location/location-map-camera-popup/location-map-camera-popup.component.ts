@@ -68,9 +68,8 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
   }
 
   read(a): void {
-    console.log('RESULT: ' + a);
     this.stopStream();
-    this.dialogRef.close('a');
+    this.dialogRef.close(a);
   }
 
   capture(): void {
@@ -86,7 +85,7 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
     console.log(videoTracks);
     this.video.srcObject = stream;
 
-    qrcode.callback = () => this.read;
+    qrcode.callback = this.read.bind(this);
 
     this.captureIntervalId = setInterval(() => {
       this.capture();

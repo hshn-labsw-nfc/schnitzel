@@ -36,7 +36,7 @@ qrcode.decode = function (context, width, height) {
     try {
       qrcode.result = qrcode.process();
       if (qrcode.callback) {
-        console.log(qrcode.result);
+        //console.log(qrcode.result);
         qrcode.callback(qrcode.result);
       }
     } catch (e) {
@@ -57,7 +57,7 @@ qrcode.decode_url = function (s) {
     escaped = escape(s);
   }
   catch (e) {
-    console.log(e);
+    // console.log(e);
     escaped = s;
   }
   let ret = "";
@@ -65,7 +65,7 @@ qrcode.decode_url = function (s) {
     ret = decodeURIComponent(escaped);
   }
   catch (e) {
-    console.log(e);
+    // console.log(e);
     ret = escaped;
   }
   return ret;
