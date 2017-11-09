@@ -16,6 +16,7 @@
     "mongodb-core": "^1.2.21",
     "mongoose": "^4.2.5",
     "morgan": "~1.6.1",
+    "nodemon": "^1.12.1",
     "serve-favicon": "~2.3.0"
   }
 }
