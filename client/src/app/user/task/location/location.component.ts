@@ -20,16 +20,16 @@ export class UserLocationComponent implements OnInit {
   openCamera() {
     const d = this.dialog.open(UserLocationCameraPopupComponent, {});
     d.afterClosed().subscribe(result => {
-      if(result === '') {
+      if(result.length > 1) {
+        // CHANGE URL AND REFRESH, THIS IS A TAG
+
       }
     });
   }
 
   openMap() {
-    const d = this.dialog.open(UserLocationMapPopupComponent, {});
-    d.afterClosed().subscribe(result => {
-      if(result === '') {
-      }
-    });
+    const d = this.dialog.open(UserLocationMapPopupComponent, {data: {
+      location: this.location
+    }});
   }
 }

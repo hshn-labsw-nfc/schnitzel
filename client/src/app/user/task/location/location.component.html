@@ -11,14 +11,8 @@
 <div id="bottom">
   <mat-toolbar>
     <div class="container">
-      <div class="lageplan">
-        <input type="image"
-               src="http://www.images.pajezy.com/notes/location.svg"
-               width="25" height="25" (click)="openMap()"/>
-      </div>
-      <div class="qr-code">
-        <input type="image" src="https://upload.wikimedia.org/wikipedia/commons/c/c6/WM2007_QRCode.svg"
-               width="25" height="25" (click)="openCamera()"/></div>
+      <i class="material-icons" (click)="openMap()">location_on</i>
+      <i class="material-icons" (click)="openCamera()">photo_camera</i>
     </div>
   </mat-toolbar>
 </div>
