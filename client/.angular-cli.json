@@ -21,7 +21,27 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/js/qrcode/grid.js",
+        "assets/js/qrcode/version.js",
+        "assets/js/qrcode/detector.js",
+        "assets/js/qrcode/formatinf.js",
+        "assets/js/qrcode/errorlevel.js",
+        "assets/js/qrcode/bitmat.js",
+        "assets/js/qrcode/datablock.js",
+        "assets/js/qrcode/bmparser.js",
+        "assets/js/qrcode/datamask.js",
+        "assets/js/qrcode/rsdecoder.js",
+        "assets/js/qrcode/gf256poly.js",
+        "assets/js/qrcode/gf256.js",
+        "assets/js/qrcode/decoder.js",
+        "assets/js/qrcode/qrcode.js",
+        "assets/js/qrcode/findpat.js",
+        "assets/js/qrcode/alignpat.js",
+        "assets/js/qrcode/databr.js",
+        "assets/js/webrtc/adapter-latest.js",
+        "assets/js/webrtc/common.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

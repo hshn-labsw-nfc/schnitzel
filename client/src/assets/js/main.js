@@ -100,6 +100,7 @@ function errorMsg(msg, error) {
 
 document.querySelector("#start-button")
   .addEventListener("click", function () {
+    console.log("start");
     startStream()
   });
 

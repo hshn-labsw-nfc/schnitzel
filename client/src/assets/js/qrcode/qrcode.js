@@ -35,8 +35,8 @@ qrcode.decode = function (context, width, height) {
 
     try {
       qrcode.result = qrcode.process();
-      if (qrcode.callback != null) {
-        console.log(qrcode.result)
+      if (qrcode.callback) {
+        console.log(qrcode.result);
         qrcode.callback(qrcode.result);
       }
     } catch (e) {
