@@ -1,3 +1,48 @@
-<p>
-  location-map-camera-popup works!
-</p>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+<div id="container">
+  <h1>QRCode Scanner Prototype</h1>
+  <video id="v" autoplay playsinline></video>
+  <canvas id="qr-canvas"></canvas>
+
+  <div>
+    <button id="start-button">
+      START
+    </button>
+    <button id="stop-button">
+      STOP
+    </button>
+  </div>
+</div>
+
+<div id="mdc-align-start-js-snackbar" aria-live="assertive"
+     aria-atomic="true" aria-hidden="true">
+  <div class="mdc-snackbar__text"></div>
+  <div class="mdc-snackbar__action-wrapper">
+    <button type="button"></button>
+  </div>
+</div>
+
+
+<script type="text/javascript" src="js/qr/grid.js"></script>
+<script type="text/javascript" src="js/qr/version.js"></script>
+<script type="text/javascript" src="js/qr/detector.js"></script>
+<script type="text/javascript" src="js/qr/formatinf.js"></script>
+<script type="text/javascript" src="js/qr/errorlevel.js"></script>
+<script type="text/javascript" src="js/qr/bitmat.js"></script>
+<script type="text/javascript" src="js/qr/datablock.js"></script>
+<script type="text/javascript" src="js/qr/bmparser.js"></script>
+<script type="text/javascript" src="js/qr/datamask.js"></script>
+<script type="text/javascript" src="js/qr/rsdecoder.js"></script>
+<script type="text/javascript" src="js/qr/gf256poly.js"></script>
+<script type="text/javascript" src="js/qr/gf256.js"></script>
+<script type="text/javascript" src="js/qr/decoder.js"></script>
+<script type="text/javascript" src="js/qr/qrcode.js"></script>
+<script type="text/javascript" src="js/qr/findpat.js"></script>
+<script type="text/javascript" src="js/qr/alignpat.js"></script>
+<script type="text/javascript" src="js/qr/databr.js"></script>
+
+<script type="text/javascript" src="js/webrtc/adapter-latest.js"></script>
+<script type="text/javascript" src="js/webrtc/common.js"></script>
+
+<script type="text/javascript" src="js/main.js"></script>
