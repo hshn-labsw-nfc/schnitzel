@@ -40,6 +40,7 @@ import {MatToolbarModule} from '@angular/material';
 import {MatSidenavModule} from '@angular/material';
 import { UserLocationMapPopupComponent } from './user/task/location/location-map-popup/location-map-popup.component';
 import { UserLocationCameraPopupComponent } from './user/task/location/location-map-camera-popup/location-map-camera-popup.component';
+import { UserQuizHintPopupComponent } from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -135,7 +136,8 @@ const routes: Routes = [
     AdminTagDetailComponent,
     SharedSimpleDialogComponent,
     UserLocationMapPopupComponent,
-    UserLocationCameraPopupComponent
+    UserLocationCameraPopupComponent,
+    UserQuizHintPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -161,7 +163,8 @@ const routes: Routes = [
     AdminQuizDetailComponent,
     AdminTagDetailComponent,
     UserLocationMapPopupComponent,
-    UserLocationCameraPopupComponent
+    UserLocationCameraPopupComponent,
+    UserQuizHintPopupComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

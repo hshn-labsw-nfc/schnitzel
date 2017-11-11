@@ -1,8 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Question} from '../../question';
 import {HttpClient} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {isNullOrUndefined} from 'util';
+import {UserLocationMapPopupComponent} from '../location/location-map-popup/location-map-popup.component';
+import {Location} from '../../location';
+import {UserQuizHintPopupComponent} from "./quiz-hint-popup/quiz-hint-popup.component";
 
 
 @Component({
@@ -11,20 +14,16 @@ import {isNullOrUndefined} from 'util';
   styleUrls: ['./quiz.component.css']
 })
 export class UserQuizComponent implements OnInit, OnChanges {
-
-  showHint: boolean;
-
   @Input() question: Question;
   @Input() sessionID: string;
+  @Input() location: Location;
 
 
 
   @Output()
   quizOutput: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar) {
-    this.showHint = false;
-  }
+  constructor(private http: HttpClient, public snackBar: MatSnackBar,public dialog: MatDialog) {}
 
   ngOnInit() {
     console.log('QuizComponent got initialized with',this.question);
@@ -39,7 +38,9 @@ export class UserQuizComponent implements OnInit, OnChanges {
   }
 
   toggleHint() {
-    this.showHint = !this.showHint;
+    const d = this.dialog.open(UserQuizHintPopupComponent, {data: {
+      hint: this.question.getHint()
+    }});
   }
 
   solveQuestion(answer: string) {
@@ -72,5 +73,10 @@ export class UserQuizComponent implements OnInit, OnChanges {
         }
       );
     }
+  }
+  openMap(): void {
+    const d = this.dialog.open(UserLocationMapPopupComponent, {data: {
+      location: this.location
+    }});
   }
 }

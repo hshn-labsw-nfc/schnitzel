@@ -10,10 +10,6 @@
     <br>
   </ng-container>
 
-  <div class="alert alert-info" *ngIf="showHint" (click)="toggleHint()">
-    <b>Hinweis: {{question.getHint()}}</b>
-  </div>
-
   <div class="form-group">
     <input type="text" #answer class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
   </div>
