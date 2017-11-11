@@ -1,26 +1,43 @@
 <div>
-  <div class="text-center">
+  <div class="question-center">
     <h4>{{question.getName()}}</h4>
   </div>
-  <div class="text-left dbwrap">{{question.getQuestion()}}</div>
+  <div class="question">{{question.getQuestion()}}</div>
 
   <br>
   <ng-container *ngIf="imageAvailable() == true">
     <img class="img-responsive center-block" src="data:{{question.getImage().filetype}};base64,{{question.getImage().base64}}">
     <br>
   </ng-container>
+
   <div class="alert alert-info" *ngIf="showHint" (click)="toggleHint()">
     <b>Hinweis: {{question.getHint()}}</b>
   </div>
 
   <div class="form-group">
-    <label for="answer">Deine Antwort</label>
     <input type="text" #answer class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
   </div>
-  <div class="text-center">
-    <a class="btn btn-primary" (click)="solveQuestion(answer.value)"><span class="glyphicon glyphicon-ok"></span>Überprüfen</a>
-    <span *ngIf="(showHint==false && question?.isHintAvailable()==true)">
-      <a class="btn btn-primary" (click)="toggleHint()"><span class="glyphicon glyphicon-question-sign"></span>Hinweis</a>
-    </span>
-  </div>
+
+  <!--<div class="text-center">-->
+    <!--<a class="btn btn-primary" (click)="solveQuestion(answer.value)"><span class="glyphicon glyphicon-ok"></span>Überprüfen</a>-->
+    <!---->
+    <!--<span *ngIf="(showHint==false && question?.isHintAvailable()==true)">-->
+      <!--<a class="btn btn-primary" (click)="toggleHint()"><span class="glyphicon glyphicon-question-sign"></span>Hinweis</a>-->
+    <!--</span>-->
+    <!---->
+  <!--</div>-->
+
 </div>
+
+
+
+<div id="bottom">
+  <mat-toolbar>
+    <div class="container">
+      <i class="material-icons" (click)="openMap()" >location_on</i>
+      <i class="material-icons" (click)="toggleHint()">info</i>
+      <i class="material-icons" (click)="solveQuestion(answer.value)">done</i>
+    </div>
+  </mat-toolbar>
+</div>
+

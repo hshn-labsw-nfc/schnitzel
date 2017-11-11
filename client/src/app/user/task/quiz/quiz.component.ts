@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material';
 import {isNullOrUndefined} from 'util';
 
+
 @Component({
   selector: 'app-user-quiz',
   templateUrl: './quiz.component.html',
@@ -15,6 +16,8 @@ export class UserQuizComponent implements OnInit, OnChanges {
 
   @Input() question: Question;
   @Input() sessionID: string;
+
+
 
   @Output()
   quizOutput: EventEmitter<any> = new EventEmitter();
@@ -38,6 +41,7 @@ export class UserQuizComponent implements OnInit, OnChanges {
   toggleHint() {
     this.showHint = !this.showHint;
   }
+
   solveQuestion(answer: string) {
     console.log('clicked solvebutton',answer);
     if(isNullOrUndefined(answer) || answer === ''){

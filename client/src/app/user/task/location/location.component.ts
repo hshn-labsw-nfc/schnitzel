@@ -18,7 +18,6 @@ export class UserLocationComponent implements OnInit {
   ngOnInit() {
 
   }
-
   openCamera() {
     const d = this.dialog.open(UserLocationCameraPopupComponent, {});
     d.afterClosed().subscribe(result => {
@@ -38,7 +37,6 @@ export class UserLocationComponent implements OnInit {
     console.log('suffix=',suffix);
     window.open(location.origin+suffix,'_self');
   }
-
   openMap() {
     const d = this.dialog.open(UserLocationMapPopupComponent, {data: {
       location: this.location
