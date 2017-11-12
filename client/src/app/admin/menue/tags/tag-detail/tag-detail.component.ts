@@ -15,9 +15,8 @@ export class AdminTagDetailComponent implements OnInit {
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
 
-  constructor(
-    public dialogRef: MatDialogRef<AdminTagDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {
+  constructor(public dialogRef: MatDialogRef<AdminTagDetailComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -45,15 +44,17 @@ export class AdminTagDetailComponent implements OnInit {
     console.log('loading current locations from server');
     this.http.get('/api/admin/locations', {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
-        this.locations = new Array<AdminLocation>();
+        this.locations = [];
         console.log('loaded current locations', data);
-        for (let d in data) {
-          this.locations.push(
-            new AdminLocation(data[d]['description'],
-              data[d]['image'],
-              data[d]['isActive'],
-              data[d]['name'],
-              data[d]['_id']));
+        for (const d in data) {
+          if (data.hasOwnProperty(d)) {
+            this.locations.push(
+              new AdminLocation(data[d]['description'],
+                data[d]['image'],
+                data[d]['isActive'],
+                data[d]['name'],
+                data[d]['_id']));
+          }
         }
         console.log('initialized array', this.locations);
       },
@@ -78,7 +79,7 @@ export class AdminTagDetailComponent implements OnInit {
           tagID: this.data.currentTag.tagID,
           _id: this.data.currentTag._id
         }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
-          (data) => {
+          () => {
             console.log('successfully edited quiz');
             this.snackBar.open('Erfolgreich gespeichert!', null, {
               duration: 2000,
@@ -100,7 +101,7 @@ export class AdminTagDetailComponent implements OnInit {
           location: this.data.currentTag.location,
           tagID: this.data.currentTag.tagID
         }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
-          (data) => {
+          () => {
             console.log('successfully edited quiz');
             this.snackBar.open('Erfolgreich gespeichert!', null, {
               duration: 2000,

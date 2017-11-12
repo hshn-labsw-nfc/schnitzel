@@ -13,13 +13,14 @@ export class AdminQuizzesComponent implements OnInit {
   @Input() adminToken: string;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
+    this.tableHeaders = [];
     this.tableHeaders.push('Rätselname');
     this.tableHeaders.push('Beschreibung');
     this.tableHeaders.push('ID');
   }
 
-  public quizzes = new Array<AdminQuiz>();
-  public tableHeaders = new Array<string>();
+  public quizzes: Array<AdminQuiz>;
+  public tableHeaders: Array<string>;
 
   ngOnInit() {
     this.loadQuizzesFromServer();
@@ -29,16 +30,18 @@ export class AdminQuizzesComponent implements OnInit {
     console.log('loading current quizzes from server');
     this.http.get('/api/admin/riddles', {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        this.quizzes = new Array<AdminQuiz>();
+        this.quizzes = [];
         console.log('loaded current quizzes', data);
-        for (let d in data) {
-          this.quizzes.push(
-            new AdminQuiz(data[d]['answer'],
-              data[d]['description'],
-              data[d]['hint'],
-              data[d]['name'],
-              data[d]['_id'],
-              data[d]['location']));
+        for (const d in data) {
+          if (data.hasOwnProperty(d)) {
+            this.quizzes.push(
+              new AdminQuiz(data[d]['answer'],
+                data[d]['description'],
+                data[d]['hint'],
+                data[d]['name'],
+                data[d]['_id'],
+                data[d]['location']));
+          }
         }
         console.log('initialized array', this.quizzes);
       },
@@ -56,7 +59,7 @@ export class AdminQuizzesComponent implements OnInit {
         adminToken: this.adminToken
       }
     });
-    edit.afterClosed().subscribe(result => {
+    edit.afterClosed().subscribe(() => {
       this.loadQuizzesFromServer();
     });
   }
@@ -69,7 +72,7 @@ export class AdminQuizzesComponent implements OnInit {
         adminToken: this.adminToken
       }
     });
-    edit.afterClosed().subscribe(result => {
+    edit.afterClosed().subscribe(() => {
       this.loadQuizzesFromServer();
     });
   }
@@ -77,7 +80,7 @@ export class AdminQuizzesComponent implements OnInit {
   deleteQuiz(quiz: AdminQuiz) {
     console.log('delete quiz', quiz._id);
     this.http.delete('/api/admin/riddles/' + quiz._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
-      (data) => {
+      () => {
         console.log('successfully deleted quiz', quiz._id);
         this.loadQuizzesFromServer();
       },

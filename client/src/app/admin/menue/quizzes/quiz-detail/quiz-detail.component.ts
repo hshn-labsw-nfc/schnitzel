@@ -43,15 +43,17 @@ export class AdminQuizDetailComponent implements OnInit {
     console.log('loading current locations from server');
     this.http.get('/api/admin/locations', {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
-        this.locations = new Array<AdminLocation>();
+        this.locations = [];
         console.log('loaded current locations', data);
-        for (let d in data) {
-          this.locations.push(
-            new AdminLocation(data[d]['description'],
-              data[d]['image'],
-              data[d]['isActive'],
-              data[d]['name'],
-              data[d]['_id']));
+        for (const d in data) {
+          if (data.hasOwnProperty(d)) {
+            this.locations.push(
+              new AdminLocation(data[d]['description'],
+                data[d]['image'],
+                data[d]['isActive'],
+                data[d]['name'],
+                data[d]['_id']));
+          }
         }
         console.log('initialized array', this.locations);
       },
@@ -71,7 +73,7 @@ export class AdminQuizDetailComponent implements OnInit {
         _id: this.data.currentQuiz._id,
         location: this.data.currentQuiz.location
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
-        (data) => {
+        () => {
           console.log('successfully edited quiz');
           this.snackBar.open('Erfolgreich gespeichert!', null, {
             duration: 2000,
@@ -95,7 +97,7 @@ export class AdminQuizDetailComponent implements OnInit {
         name: this.data.currentQuiz.name,
         location: this.data.currentQuiz.location
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
-        (data) => {
+        () => {
           console.log('successfully edited quiz');
           this.snackBar.open('Erfolgreich gespeichert!', null, {
             duration: 2000,

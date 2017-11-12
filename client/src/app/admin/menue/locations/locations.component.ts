@@ -14,13 +14,14 @@ export class AdminLocationsComponent implements OnInit {
   @Input() adminToken: string;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
+    this.tableHeaders = [];
     this.tableHeaders.push('Aktiv?');
     this.tableHeaders.push('Raumname');
     this.tableHeaders.push('Beschreibung');
   }
 
-  public locations = new Array<AdminLocation>();
-  public tableHeaders = new Array<string>();
+  public locations : Array<AdminLocation>;
+  public tableHeaders : Array<string>;
 
   ngOnInit() {
     this.loadLocationsFromServer();
@@ -30,15 +31,17 @@ export class AdminLocationsComponent implements OnInit {
     console.log('loading current locations from server');
     this.http.get('/api/admin/locations', {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        this.locations = new Array<AdminLocation>()
+        this.locations = [];
         console.log('loaded current locations', data);
-        for (let d in data) {
-          this.locations.push(
-            new AdminLocation(data[d]['description'],
-              data[d]['image'],
-              data[d]['isActive'],
-              data[d]['name'],
-              data[d]['_id']));
+        for (const d in data) {
+          if (data.hasOwnProperty(d)) {
+            this.locations.push(
+              new AdminLocation(data[d]['description'],
+                data[d]['image'],
+                data[d]['isActive'],
+                data[d]['name'],
+                data[d]['_id']));
+          }
         }
         console.log('initialized array', this.locations);
       },
@@ -56,7 +59,7 @@ export class AdminLocationsComponent implements OnInit {
         adminToken: this.adminToken
       }
     });
-    edit.afterClosed().subscribe(result => {
+    edit.afterClosed().subscribe(() => {
       this.loadLocationsFromServer();
     });
   }
@@ -69,7 +72,7 @@ export class AdminLocationsComponent implements OnInit {
         adminToken: this.adminToken
       }
     });
-    edit.afterClosed().subscribe(result => {
+    edit.afterClosed().subscribe(() => {
       this.loadLocationsFromServer();
     });
   }
@@ -77,7 +80,7 @@ export class AdminLocationsComponent implements OnInit {
   deleteLocation(location: AdminLocation) {
     console.log('delete location', location._id);
     this.http.delete('/api/admin/locations/' + location._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
-      (data) => {
+      () => {
         console.log('successfully deleted location', location._id);
         this.loadLocationsFromServer();
       },

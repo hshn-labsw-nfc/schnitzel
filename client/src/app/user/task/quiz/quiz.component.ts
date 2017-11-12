@@ -5,7 +5,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {isNullOrUndefined} from 'util';
 import {UserLocationMapPopupComponent} from '../location/location-map-popup/location-map-popup.component';
 import {Location} from '../../location';
-import {UserQuizHintPopupComponent} from "./quiz-hint-popup/quiz-hint-popup.component";
+import {UserQuizHintPopupComponent} from './quiz-hint-popup/quiz-hint-popup.component';
 
 
 @Component({
@@ -19,14 +19,14 @@ export class UserQuizComponent implements OnInit, OnChanges {
   @Input() location: Location;
 
 
-
   @Output()
   quizOutput: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar,public dialog: MatDialog) {}
+  constructor(private http: HttpClient, public snackBar: MatSnackBar, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
-    console.log('QuizComponent got initialized with',this.question);
+    console.log('QuizComponent got initialized with', this.question);
   }
 
   ngOnChanges() {
@@ -38,14 +38,16 @@ export class UserQuizComponent implements OnInit, OnChanges {
   }
 
   toggleHint() {
-    const d = this.dialog.open(UserQuizHintPopupComponent, {data: {
-      hint: this.question.getHint()
-    }});
+    const d = this.dialog.open(UserQuizHintPopupComponent, {
+      data: {
+        hint: this.question.getHint()
+      }
+    });
   }
 
   solveQuestion(answer: string) {
-    console.log('clicked solvebutton',answer);
-    if(isNullOrUndefined(answer) || answer === ''){
+    console.log('clicked solvebutton', answer);
+    if (isNullOrUndefined(answer) || answer === '') {
       this.snackBar.open('Keine Antwort eingegeben!', null, {
         duration: 2000,
         horizontalPosition: 'center'
@@ -74,9 +76,12 @@ export class UserQuizComponent implements OnInit, OnChanges {
       );
     }
   }
+
   openMap(): void {
-    const d = this.dialog.open(UserLocationMapPopupComponent, {data: {
-      location: this.location
-    }});
+    const d = this.dialog.open(UserLocationMapPopupComponent, {
+      data: {
+        location: this.location
+      }
+    });
   }
 }

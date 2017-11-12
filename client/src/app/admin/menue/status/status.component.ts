@@ -12,26 +12,29 @@ export class AdminStatusComponent implements OnInit {
 
   @Input() adminToken: string;
 
-  public activePlaySessions = new Array<PlaySession>();
+  public activePlaySessions: Array<PlaySession>;
   public currentMaximized = '';
 
-  constructor(private http: HttpClient, public dialog: MatDialog) { }
+  constructor(private http: HttpClient, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.loadSessions();
   }
 
-  deleteActiveSessions(){
-    const d = this.dialog.open(SharedSimpleDialogComponent, {data: {
-      title: 'ALLE SESSIONS LÖSCHEN',
-      message: 'Möchtest du wirklich alle aktiven Schnitzeljagd Sessions löschen?',
-      button1: 'Löschen',
-      button2: 'Abbrechen'
-    }});
+  deleteActiveSessions() {
+    const d = this.dialog.open(SharedSimpleDialogComponent, {
+      data: {
+        title: 'ALLE SESSIONS LÖSCHEN',
+        message: 'Möchtest du wirklich alle aktiven Schnitzeljagd Sessions löschen?',
+        button1: 'Löschen',
+        button2: 'Abbrechen'
+      }
+    });
     d.afterClosed().subscribe(result => {
-      if(result === 'b1') {
+      if (result === 'b1') {
         console.log('deleting all active sessions');
-        for(let i = 0; i< this.activePlaySessions.length; i++){
+        for (let i = 0; i < this.activePlaySessions.length; i++) {
           this.deleteSession(this.activePlaySessions[i].session_id);
         }
       }
@@ -42,17 +45,17 @@ export class AdminStatusComponent implements OnInit {
     this.currentMaximized = '';
   }
 
-  maximize(sessionID: string){
+  maximize(sessionID: string) {
     this.currentMaximized = sessionID;
   }
 
-  deleteSession(sessionID: string){
+  deleteSession(sessionID: string) {
     console.log('deleting session', sessionID);
-    this.http.delete('/api/admin/playsessions/' + sessionID,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+    this.http.delete('/api/admin/playsessions/' + sessionID, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
         console.log('delete session successfull', data);
-        for(let index = 0; index < this.activePlaySessions.length; index ++){
-          if(this.activePlaySessions[index].session_id === sessionID){
+        for (let index = 0; index < this.activePlaySessions.length; index++) {
+          if (this.activePlaySessions[index].session_id === sessionID) {
             this.activePlaySessions.splice(index, 1);
           }
         }
@@ -65,20 +68,22 @@ export class AdminStatusComponent implements OnInit {
 
   loadSessions() {
     console.log('loading current play sessions');
-    this.http.get('/api/admin/playsessions',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+    this.http.get('/api/admin/playsessions', {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
-        for(let d in data){
-          this.activePlaySessions = new Array<PlaySession>();
-          this.activePlaySessions.push(
-            new PlaySession(data[d]['groupName'],
-              data[d]['lastUpdated'],
-              data[d]['location'],
-              data[d]['locationCount'],
-              data[d]['locationsToVisit'],
-              data[d]['riddle'],
-              data[d]['task'],
-              data[d]['usedRiddles'],
-              data[d]['_id']));
+        for (const d in data) {
+          if (data.hasOwnProperty(d)) {
+            this.activePlaySessions = [];
+            this.activePlaySessions.push(
+              new PlaySession(data[d]['groupName'],
+                data[d]['lastUpdated'],
+                data[d]['location'],
+                data[d]['locationCount'],
+                data[d]['locationsToVisit'],
+                data[d]['riddle'],
+                data[d]['task'],
+                data[d]['usedRiddles'],
+                data[d]['_id']));
+          }
         }
         console.log('current play sessions', this.activePlaySessions);
       },

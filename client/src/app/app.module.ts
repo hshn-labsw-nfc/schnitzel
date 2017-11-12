@@ -109,7 +109,7 @@ const routes: Routes = [
     component: UserComponent
   },
   {path: '**', redirectTo: 'user'}
-]
+];
 
 @NgModule({
   declarations: [

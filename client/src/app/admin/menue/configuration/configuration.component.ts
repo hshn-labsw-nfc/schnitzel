@@ -27,17 +27,20 @@ export class AdminConfigurationComponent implements OnInit {
 
   changeEndText(text: string) {
     console.log('changeEndText', text);
-    this.http.put('/api/admin/config/winText',{winText: text},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+    this.http.put(
+      '/api/admin/config/winText',
+      {winText: text},
+      {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
       (data) => {
         console.log('changed end text', data);
-        this.snackBar.open('Erfolgreich gespeichert!',null, {
+        this.snackBar.open('Erfolgreich gespeichert!', null, {
           duration: 2000,
           horizontalPosition: 'center'
         });
       },
       (err) => {
-        if (err['status']===200){
-          this.snackBar.open('Erfolgreich gespeichert!',null, {
+        if (err['status'] === 200) {
+          this.snackBar.open('Erfolgreich gespeichert!', null, {
             duration: 2000,
             horizontalPosition: 'center'
           });
@@ -54,17 +57,20 @@ export class AdminConfigurationComponent implements OnInit {
 
   changeUserName(name: string) {
     console.log('changeUserName', name);
-    this.http.put('/api/admin/config/username',{username: name},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
-      (data) => {
+    this.http.put(
+      '/api/admin/config/username',
+      {username: name},
+      {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+      () => {
         console.log('changed end text');
-        this.snackBar.open('Erfolgreich gespeichert!',null, {
+        this.snackBar.open('Erfolgreich gespeichert!', null, {
           duration: 2000,
           horizontalPosition: 'center'
         });
       },
       (err) => {
-        if (err['status']===200){
-          this.snackBar.open('Erfolgreich gespeichert!',null, {
+        if (err['status'] === 200) {
+          this.snackBar.open('Erfolgreich gespeichert!', null, {
             duration: 2000,
             horizontalPosition: 'center'
           });
@@ -81,18 +87,21 @@ export class AdminConfigurationComponent implements OnInit {
 
   changePassword(newpassword: string, newpassword2: string) {
     console.log('changePassword');
-    if(newpassword.length === 0) {
+    if (newpassword.length === 0) {
       this.snackBar.open('Passwort darf nicht leer sein!', null, {
         duration: 2000,
         horizontalPosition: 'center'
       });
-    } else if (newpassword !== newpassword2){
+    } else if (newpassword !== newpassword2) {
       this.snackBar.open('Passwörter stimmen nicht überein!', null, {
         duration: 2000,
         horizontalPosition: 'center'
       });
     } else {
-      this.http.put('/api/admin/config/password',{password: newpassword, passwordRepeat: newpassword2},{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+      this.http.put('/api/admin/config/password', {
+        password: newpassword,
+        passwordRepeat: newpassword2
+      }, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
         (data) => {
           console.log('changed end text', data);
           this.snackBar.open('Erfolgreich gespeichert!', null, {
@@ -101,8 +110,8 @@ export class AdminConfigurationComponent implements OnInit {
           });
         },
         (err) => {
-          if (err['status']===200){
-            this.snackBar.open('Erfolgreich gespeichert!',null, {
+          if (err['status'] === 200) {
+            this.snackBar.open('Erfolgreich gespeichert!', null, {
               duration: 2000,
               horizontalPosition: 'center'
             });
@@ -112,7 +121,7 @@ export class AdminConfigurationComponent implements OnInit {
               horizontalPosition: 'center'
             });
           }
-          console.log('Error changing end text',err);
+          console.log('Error changing end text', err);
         }
       );
     }
@@ -120,7 +129,9 @@ export class AdminConfigurationComponent implements OnInit {
 
   loadCurrentWinText() {
     console.log('loading current win text');
-    this.http.get('/api/admin/config/winText',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+    this.http.get(
+      '/api/admin/config/winText',
+      {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
       (data) => {
         console.log('current win text', data);
         this.currentWinText = data['text'];
@@ -135,7 +146,9 @@ export class AdminConfigurationComponent implements OnInit {
 
   loadCurrentUserName() {
     console.log('loading current win text');
-    this.http.get('/api/admin/config/username',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
+    this.http.get(
+      '/api/admin/config/username',
+      {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).map((res: Response) => res.json()).subscribe(
       (data) => {
         console.log('current win text', data);
         this.currentUserName = data['text'];
