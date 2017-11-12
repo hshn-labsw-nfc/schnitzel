@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AdminLocation} from '../locations.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AdminLocation} from '../admin-location';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 
 @Component({
@@ -12,10 +12,13 @@ export class AdminLocationDetailComponent implements OnInit {
   pageHeader: string;
   createNewEntry: boolean;
 
-  constructor(public dialogRef: MatDialogRef<AdminLocationDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {}
+  constructor(
+    public dialogRef: MatDialogRef<AdminLocationDetailComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
-    if(this.data.currentLocation != null){
+    if (this.data.currentLocation != null) {
       console.log('location detail initialized with location');
       this.pageHeader = 'Vorhandenen Ort Bearbeiten';
       this.createNewEntry = false;
@@ -32,11 +35,12 @@ export class AdminLocationDetailComponent implements OnInit {
       filename: '',
       filesize: '',
       filetype: '',
-      base64: ''}, true, 'sample name', '12345');
+      base64: ''
+    }, true, 'sample name', '12345');
   }
 
   submit() {
-    if(this.createNewEntry === false) {
+    if (this.createNewEntry === false) {
       this.http.put('/api/admin/locations/' + this.data.currentLocation._id, {
         description: this.data.currentLocation.description,
         image: this.data.currentLocation.image,
@@ -46,14 +50,14 @@ export class AdminLocationDetailComponent implements OnInit {
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
           console.log('successfully edited location');
-          this.snackBar.open('Erfolgreich gespeichert!',null, {
+          this.snackBar.open('Erfolgreich gespeichert!', null, {
             duration: 2000,
             horizontalPosition: 'center'
           });
           this.dialogRef.close();
         },
         (err) => {
-          this.snackBar.open('Ein Fehler ist Aufgetreten',null, {
+          this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
             duration: 2000,
             horizontalPosition: 'center'
           });
@@ -68,7 +72,7 @@ export class AdminLocationDetailComponent implements OnInit {
         name: this.data.currentLocation.name
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         (data) => {
-          this.snackBar.open('Erfolgreich gespeichert!',null, {
+          this.snackBar.open('Erfolgreich gespeichert!', null, {
             duration: 2000,
             horizontalPosition: 'center'
           });
@@ -76,7 +80,7 @@ export class AdminLocationDetailComponent implements OnInit {
           this.dialogRef.close();
         },
         (err) => {
-          this.snackBar.open('Ein Fehler ist Aufgetreten',null, {
+          this.snackBar.open('Ein Fehler ist Aufgetreten', null, {
             duration: 2000,
             horizontalPosition: 'center'
           });
@@ -85,6 +89,7 @@ export class AdminLocationDetailComponent implements OnInit {
       );
     }
   }
+
   cancel() {
     this.dialogRef.close();
   }
@@ -93,9 +98,9 @@ export class AdminLocationDetailComponent implements OnInit {
     const files = evt.target.files;
     const file = files[0];
 
-    console.log('filename',file.name);
-    console.log('filesize',file.size);
-    console.log('filetype',file.type);
+    console.log('filename', file.name);
+    console.log('filesize', file.size);
+    console.log('filetype', file.type);
 
     this.data.currentLocation.image.filename = file.name;
     this.data.currentLocation.image.filesize = file.size;
@@ -112,6 +117,4 @@ export class AdminLocationDetailComponent implements OnInit {
     const binaryString = readerEvt.target.result;
     this.data.currentLocation.image.base64 = btoa(binaryString);
   }
-
-
 }

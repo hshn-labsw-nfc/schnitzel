@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminLocationDetailComponent} from './location-detail/location-detail.component';
 import {MatDialog} from '@angular/material';
+import {AdminLocation} from './admin-location';
 
 @Component({
   selector: 'app-admin-locations',
@@ -27,11 +28,11 @@ export class AdminLocationsComponent implements OnInit {
 
   loadLocationsFromServer() {
     console.log('loading current locations from server');
-    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+    this.http.get('/api/admin/locations', {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
         this.locations = new Array<AdminLocation>()
-        console.log('loaded current locations',data);
-        for(let d in data){
+        console.log('loaded current locations', data);
+        for (let d in data) {
           this.locations.push(
             new AdminLocation(data[d]['description'],
               data[d]['image'],
@@ -39,7 +40,7 @@ export class AdminLocationsComponent implements OnInit {
               data[d]['name'],
               data[d]['_id']));
         }
-        console.log('initialized array',this.locations);
+        console.log('initialized array', this.locations);
       },
       (err) => {
         console.log('loaded current locations error', err);
@@ -49,29 +50,33 @@ export class AdminLocationsComponent implements OnInit {
 
   addLocation() {
     console.log('add location');
-    const edit = this.dialog.open(AdminLocationDetailComponent, {data: {
-      currentLocation: null,
-      adminToken: this.adminToken
-    }});
+    const edit = this.dialog.open(AdminLocationDetailComponent, {
+      data: {
+        currentLocation: null,
+        adminToken: this.adminToken
+      }
+    });
     edit.afterClosed().subscribe(result => {
       this.loadLocationsFromServer();
     });
   }
 
   editLocation(location: AdminLocation) {
-    console.log('edit location',location._id);
-    const edit = this.dialog.open(AdminLocationDetailComponent, {data: {
-      currentLocation: location,
-      adminToken: this.adminToken
-    }});
+    console.log('edit location', location._id);
+    const edit = this.dialog.open(AdminLocationDetailComponent, {
+      data: {
+        currentLocation: location,
+        adminToken: this.adminToken
+      }
+    });
     edit.afterClosed().subscribe(result => {
       this.loadLocationsFromServer();
     });
   }
 
   deleteLocation(location: AdminLocation) {
-    console.log('delete location',location._id);
-    this.http.delete('/api/admin/locations/'+location._id,{headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+    console.log('delete location', location._id);
+    this.http.delete('/api/admin/locations/' + location._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
       (data) => {
         console.log('successfully deleted location', location._id);
         this.loadLocationsFromServer();
@@ -80,14 +85,5 @@ export class AdminLocationsComponent implements OnInit {
         console.log('error deleting location', err);
       }
     );
-  }
-}
-
-export class AdminLocation {
-  constructor(public description: string,
-              public image: any,
-              public isActive: boolean,
-              public name: string,
-              public _id: string){
   }
 }

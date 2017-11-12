@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AdminTag} from '../tags.component';
+import {AdminTag} from '../admin-tag';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AdminLocation} from '../../locations/locations.component';
+import {AdminLocation} from '../../locations/admin-location';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-admin-tag-detail',
@@ -15,10 +15,13 @@ export class AdminTagDetailComponent implements OnInit {
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
 
-  constructor(public dialogRef: MatDialogRef<AdminTagDetailComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient,public snackBar: MatSnackBar) {}
+  constructor(
+    public dialogRef: MatDialogRef<AdminTagDetailComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
-    if(this.data.currentTag != null){
+    if (this.data.currentTag != null) {
       console.log('tag detail initialized with location', this.data.currentTag);
       this.pageHeader = 'Vorhandenen Tag Bearbeiten';
       this.createNewEntry = false;
@@ -40,11 +43,11 @@ export class AdminTagDetailComponent implements OnInit {
 
   loadLocations() {
     console.log('loading current locations from server');
-    this.http.get('/api/admin/locations',{headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
+    this.http.get('/api/admin/locations', {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
       (data) => {
         this.locations = new Array<AdminLocation>();
-        console.log('loaded current locations',data);
-        for(let d in data){
+        console.log('loaded current locations', data);
+        for (let d in data) {
           this.locations.push(
             new AdminLocation(data[d]['description'],
               data[d]['image'],
@@ -52,7 +55,7 @@ export class AdminTagDetailComponent implements OnInit {
               data[d]['name'],
               data[d]['_id']));
         }
-        console.log('initialized array',this.locations);
+        console.log('initialized array', this.locations);
       },
       (err) => {
         console.log('loaded current locations error', err);
@@ -61,8 +64,8 @@ export class AdminTagDetailComponent implements OnInit {
   }
 
   submit() {
-    console.log('TEST',this.data.currentTag.location);
-    if(isNullOrUndefined(this.data.currentTag.location)) {
+    console.log('TEST', this.data.currentTag.location);
+    if (isNullOrUndefined(this.data.currentTag.location)) {
       this.snackBar.open('Wähle einen zugehörigen Ort aus!', null, {
         duration: 2000,
         horizontalPosition: 'center'

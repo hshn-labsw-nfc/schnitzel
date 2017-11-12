@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminTagDetailComponent} from './tag-detail/tag-detail.component';
 import {MatDialog} from '@angular/material';
+import {AdminTag} from './admin-tag';
 
 @Component({
   selector: 'app-admin-tags',
@@ -76,13 +77,5 @@ export class AdminTagsComponent implements OnInit {
         console.log('error deleting Tag//', err);
       }
     );
-  }
-}
-
-export class AdminTag {
-  constructor(public alias: string,
-              public location: string,
-              public tagID: string,
-              public _id: string) {
   }
 }
