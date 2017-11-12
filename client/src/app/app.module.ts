@@ -39,7 +39,7 @@ import {MatCheckboxModule} from '@angular/material';
 import {MatToolbarModule} from '@angular/material';
 import {MatSidenavModule} from '@angular/material';
 import { UserLocationMapPopupComponent } from './user/task/location/location-map-popup/location-map-popup.component';
-import { UserLocationCameraPopupComponent } from './user/task/location/location-map-camera-popup/location-map-camera-popup.component';
+import { UserLocationCameraPopupComponent } from './user/task/location/location-camera-popup/location-camera-popup.component';
 import { UserQuizHintPopupComponent } from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
 
 const routes: Routes = [

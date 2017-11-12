@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserLocationCameraPopupComponent } from './location-map-camera-popup.component';
+import { UserLocationCameraPopupComponent } from './location-camera-popup.component';
 
 describe('LocationMapCameraPopupComponent', () => {
   let component: UserLocationCameraPopupComponent;

@@ -1,18 +1,30 @@
-import {Component, Inject, OnInit, AfterContentInit} from '@angular/core';
+import {Component, Inject, OnInit, AfterContentInit, Input} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {UserLocationMapPopupComponent} from '../location-map-popup/location-map-popup.component';
+import {CameraConfig} from '../camera-config';
+import set = Reflect.set;
 
 declare const qrcode: any;
 
 @Component({
   selector: 'app-user-location-camera-popup',
-  templateUrl: './location-map-camera-popup.component.html',
-  styleUrls: ['./location-map-camera-popup.component.css']
+  templateUrl: './location-camera-popup.component.html',
+  styleUrls: ['./location-camera-popup.component.css']
 })
 export class UserLocationCameraPopupComponent implements OnInit, AfterContentInit {
 
-  constructor(public dialogRef: MatDialogRef<UserLocationMapPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<UserLocationCameraPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.cameraConfig = data;
   }
+
+  cameraIcon: string;
+
+  frontIcon = '<i class="material-icons">camera_front</i>';
+
+  backIcon = '<i class="material-icons">camera_rear</i>';
+
+  cameraConfig: CameraConfig;
+
+  backActive = true;
 
   width = 0;
   height = 0;
@@ -22,12 +34,9 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
 
   streaming = false;
 
-  constraints: any;
-
-  captureIntervalId: any;
+  captureIntervalId: number;
 
   ngOnInit() {
-
   }
 
   ngAfterContentInit() {
@@ -52,15 +61,18 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
       this.streaming = true;
     });
 
-    this.constraints = {
-      audio: false,
-      video: {
-        facingMode: {
-          exact: 'user'
-        }
+    // We have two Cameras
+    if (this.cameraConfig.back === true && this.cameraConfig.front === true) {
+      this.setCamera();
+    } else {
+      // Prefer back Camera
+      if (this.cameraConfig.back === true) {
+        this.startStream(CameraConfig.backConstraints);
+        this.backActive = true;
+      } else if (this.cameraConfig.front === true) {
+        this.startStream(CameraConfig.frontConstraints);
       }
-    };
-    this.startStream();
+    }
   }
 
   openVideo(): void {
@@ -80,28 +92,28 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
     qrcode.decode(context, this.width, this.height);
   }
 
-  handleSuccess(stream) {
+  handleSuccess(stream): void {
     const videoTracks = stream.getVideoTracks();
     console.log(videoTracks);
     this.video.srcObject = stream;
 
     qrcode.callback = this.read.bind(this);
 
-    this.captureIntervalId = setInterval(() => {
+    this.captureIntervalId = window.setInterval(() => {
       this.capture();
     }, 200);
   }
 
-  handleError(error) {
+  handleError(error): void {
     console.error(error);
     this.streaming = false;
   }
 
-  startStream() {
+  startStream(constraints: MediaStreamConstraints): void {
     if (!this.streaming) {
       console.log('Starting Stream!');
       navigator.mediaDevices
-        .getUserMedia(this.constraints)
+        .getUserMedia(constraints)
         .then(response => {
           this.handleSuccess(response);
         })
@@ -113,7 +125,7 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
     }
   }
 
-  stopStream() {
+  stopStream(): void {
     if (this.streaming) {
       console.log('Stopping Stream!');
       clearInterval(this.captureIntervalId);
@@ -125,6 +137,21 @@ export class UserLocationCameraPopupComponent implements OnInit, AfterContentIni
       });
       this.video.srcObject = null;
       this.streaming = false;
+    }
+  }
+
+  switchCamera(): void {
+    this.backActive = !this.backActive;
+    this.setCamera();
+  }
+  setCamera(): void {
+    this.stopStream();
+    if (this.backActive) {
+      this.startStream(CameraConfig.backConstraints);
+      this.cameraIcon = this.backIcon;
+    } else {
+      this.startStream(CameraConfig.frontConstraints);
+      this.cameraIcon = this.frontIcon;
     }
   }
 }
