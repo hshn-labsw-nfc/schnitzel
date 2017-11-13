@@ -92,6 +92,10 @@ export class AdminStatusComponent implements OnInit {
       }
     );
   }
+
+  convertInt(s: string): number {
+    return parseInt(s);
+  }
 }
 
 export class PlaySession {
