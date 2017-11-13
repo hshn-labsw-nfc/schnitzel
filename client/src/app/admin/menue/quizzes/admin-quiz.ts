@@ -4,6 +4,7 @@ export class AdminQuiz {
               public hint: string,
               public name: string,
               public _id: string,
-              public location: string) {
+              public location: string,
+              public isActive: boolean) {
   }
 }

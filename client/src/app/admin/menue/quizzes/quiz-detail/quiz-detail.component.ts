@@ -36,7 +36,7 @@ export class AdminQuizDetailComponent implements OnInit {
     this.data.currentQuiz = new AdminQuiz('sample answer',
       'sample description',
       'sample hint',
-      'sample name', 'sample id', null);
+      'sample name', 'sample id', null,false);
   }
 
   loadLocations() {

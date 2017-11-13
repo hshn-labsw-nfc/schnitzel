@@ -13,6 +13,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let entry of quizzes" id="tableRow">
+      <td>{{entry.isActive}}</td>
       <td>{{entry.name}}</td>
       <td>{{entry.description}}</td>
       <td>{{entry._id}}</td>

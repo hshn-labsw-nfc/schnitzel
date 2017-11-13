@@ -14,6 +14,7 @@ export class AdminQuizzesComponent implements OnInit {
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.tableHeaders = [];
+    this.tableHeaders.push('Aktiv?');
     this.tableHeaders.push('Rätselname');
     this.tableHeaders.push('Beschreibung');
     this.tableHeaders.push('ID');
@@ -40,7 +41,7 @@ export class AdminQuizzesComponent implements OnInit {
                 data[d]['hint'],
                 data[d]['name'],
                 data[d]['_id'],
-                data[d]['location']));
+                data[d]['location'],false));
           }
         }
         console.log('initialized array', this.quizzes);
