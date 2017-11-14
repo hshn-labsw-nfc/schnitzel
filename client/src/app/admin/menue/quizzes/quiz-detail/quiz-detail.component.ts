@@ -36,7 +36,7 @@ export class AdminQuizDetailComponent implements OnInit {
     this.data.currentQuiz = new AdminQuiz('sample answer',
       'sample description',
       'sample hint',
-      'sample name', 'sample id', null,false);
+      'sample name', 'sample id', null,true);
   }
 
   loadLocations() {
@@ -71,7 +71,8 @@ export class AdminQuizDetailComponent implements OnInit {
         hint: this.data.currentQuiz.hint,
         name: this.data.currentQuiz.name,
         _id: this.data.currentQuiz._id,
-        location: this.data.currentQuiz.location
+        location: this.data.currentQuiz.location,
+        isActive: this.data.currentQuiz.isActive
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         () => {
           console.log('successfully edited quiz');
@@ -95,7 +96,8 @@ export class AdminQuizDetailComponent implements OnInit {
         description: this.data.currentQuiz.description,
         hint: this.data.currentQuiz.hint,
         name: this.data.currentQuiz.name,
-        location: this.data.currentQuiz.location
+        location: this.data.currentQuiz.location,
+        isActive: this.data.currentQuiz.isActive
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         () => {
           console.log('successfully edited quiz');

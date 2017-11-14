@@ -8,7 +8,8 @@ var RiddleSchema   = new Schema({
     answer: String,
     hint: String,
     location: {type: Schema.Types.ObjectId, ref: 'Location'},
-    heat: Number
+    heat: Number,
+    isActive: {type: Boolean, default: true}
 });
 
 module.exports = mongoose.model('Riddle', RiddleSchema);

@@ -41,7 +41,8 @@ export class AdminQuizzesComponent implements OnInit {
                 data[d]['hint'],
                 data[d]['name'],
                 data[d]['_id'],
-                data[d]['location'],false));
+                data[d]['location'],
+                data[d]['isActive']));
           }
         }
         console.log('initialized array', this.quizzes);
