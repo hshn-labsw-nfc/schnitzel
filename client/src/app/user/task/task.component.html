@@ -1,6 +1,6 @@
 <div *ngIf="isUnsolvedQuiz() == true">
-  <app-user-quiz [location]="location" [question]="question" [sessionID]="sessionID" (quizOutput)="solvedQuiz()"></app-user-quiz>
+  <app-user-quiz [location]="location" [question]="question" [sessionID]="sessionID" (quizOutput)="solvedQuiz()" (quizLogout)="loggedOut()"></app-user-quiz>
 </div>
 <div *ngIf="isUnsolvedQuiz() == false">
-    <app-user-location [location]="location"></app-user-location>
+    <app-user-location [location]="location" (locationLogout)="loggedOut()"></app-user-location>
 </div>

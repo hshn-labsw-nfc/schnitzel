@@ -22,7 +22,7 @@ export class UserLocationComponent implements OnInit {
   cameraChecked = false;
 
   @Output()
-  locationOutput: EventEmitter<any> = new EventEmitter();
+  locationLogout: EventEmitter<any> = new EventEmitter();
 
   constructor(public dialog: MatDialog, public snackBar: MatSnackBar, private router: Router) {
   }
@@ -132,7 +132,7 @@ export class UserLocationComponent implements OnInit {
     deleteSession.afterClosed().subscribe(result => {
       if(result === 'b1') {
         console.log('user deleted session');
-        this.locationOutput.emit();
+        this.locationLogout.emit();
       }
     });
   }

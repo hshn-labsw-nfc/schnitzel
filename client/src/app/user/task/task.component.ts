@@ -17,6 +17,9 @@ export class UserTaskComponent implements OnInit {
   @Output()
   taskOutput: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  taskLogout: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -29,6 +32,10 @@ export class UserTaskComponent implements OnInit {
 
   solvedQuiz() {
     this.taskOutput.emit();
+  }
+
+  loggedOut(): void {
+    this.taskLogout.emit();
   }
 
 }

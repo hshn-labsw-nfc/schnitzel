@@ -6,7 +6,7 @@ import {isNullOrUndefined} from 'util';
 import {UserLocationMapPopupComponent} from '../location/location-map-popup/location-map-popup.component';
 import {Location} from '../../location';
 import {UserQuizHintPopupComponent} from './quiz-hint-popup/quiz-hint-popup.component';
-import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
+import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
 
 
 @Component({
@@ -22,6 +22,11 @@ export class UserQuizComponent implements OnInit, OnChanges {
 
   @Output()
   quizOutput: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  quizLogout: EventEmitter<any> = new EventEmitter();
+
+
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar, public dialog: MatDialog) {
   }
@@ -96,7 +101,7 @@ export class UserQuizComponent implements OnInit, OnChanges {
     deleteSession.afterClosed().subscribe(result => {
       if(result === 'b1') {
         console.log('user deleted session');
-        this.quizOutput.emit();
+        this.quizLogout.emit();
       }
     });
   }
