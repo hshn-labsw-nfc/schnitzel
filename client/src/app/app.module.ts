@@ -42,6 +42,7 @@ import { UserLocationMapPopupComponent } from './user/task/location/location-map
 import { UserLocationCameraPopupComponent } from './user/task/location/location-camera-popup/location-camera-popup.component';
 import { UserQuizHintPopupComponent } from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
 
+
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
     children: [

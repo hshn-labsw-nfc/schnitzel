@@ -6,6 +6,7 @@ import {isNullOrUndefined} from 'util';
 import {UserLocationMapPopupComponent} from '../location/location-map-popup/location-map-popup.component';
 import {Location} from '../../location';
 import {UserQuizHintPopupComponent} from './quiz-hint-popup/quiz-hint-popup.component';
+import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
 
 
 @Component({
@@ -81,6 +82,21 @@ export class UserQuizComponent implements OnInit, OnChanges {
     const d = this.dialog.open(UserLocationMapPopupComponent, {
       data: {
         location: this.location
+      }
+    });
+  }
+
+  abbrechen() {
+    const deleteSession = this.dialog.open(SharedSimpleDialogComponent, {data: {
+      title: 'Schnitzeljagd löschen',
+      message: 'Möchtest du deine aktuelle Schnitzeljagd wirklich (permanent) löschen?',
+      button1: 'JA LÖSCHEN',
+      button2: 'Abbrechen'
+    }});
+    deleteSession.afterClosed().subscribe(result => {
+      if(result === 'b1') {
+        console.log('user deleted session');
+        this.quizOutput.emit();
       }
     });
   }

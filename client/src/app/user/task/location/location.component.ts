@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Location} from '../../location';
 import {UserLocationCameraPopupComponent} from './location-camera-popup/location-camera-popup.component';
 import {UserLocationMapPopupComponent} from './location-map-popup/location-map-popup.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 import {CameraConfig} from './camera-config';
+import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
 
 @Component({
   selector: 'app-user-location',
@@ -19,6 +20,9 @@ export class UserLocationComponent implements OnInit {
 
   cameraReady = false;
   cameraChecked = false;
+
+  @Output()
+  locationOutput: EventEmitter<any> = new EventEmitter();
 
   constructor(public dialog: MatDialog, public snackBar: MatSnackBar, private router: Router) {
   }
@@ -114,6 +118,21 @@ export class UserLocationComponent implements OnInit {
     const d = this.dialog.open(UserLocationMapPopupComponent, {
       data: {
         location: this.location
+      }
+    });
+  }
+
+  abbrechen() {
+    const deleteSession = this.dialog.open(SharedSimpleDialogComponent, {data: {
+      title: 'Schnitzeljagd löschen',
+      message: 'Möchtest du deine aktuelle Schnitzeljagd wirklich (permanent) löschen?',
+      button1: 'JA LÖSCHEN',
+      button2: 'Abbrechen'
+    }});
+    deleteSession.afterClosed().subscribe(result => {
+      if(result === 'b1') {
+        console.log('user deleted session');
+        this.locationOutput.emit();
       }
     });
   }
