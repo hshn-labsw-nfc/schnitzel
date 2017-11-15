@@ -5,7 +5,7 @@ import {UserLocationMapPopupComponent} from './location-map-popup/location-map-p
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 import {CameraConfig} from './camera-config';
-import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
+import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
 
 @Component({
   selector: 'app-user-location',

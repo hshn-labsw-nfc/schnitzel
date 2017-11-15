@@ -2,10 +2,10 @@
   <form class="form-signin" (ngSubmit)="submitLogin(name.value,password.value,keeploggedin.checked)">
     <h3 class="form-signin-heading" align="center">Bitte melden Sie sich an</h3>
     <mat-form-field>
-      <input #name matInput placeholder="Benutzername">
+      <input #name matInput type="text" placeholder="Benutzername">
     </mat-form-field>
     <mat-form-field>
-      <input #password matInput placeholder="Passwort">
+      <input #password matInput type="password" placeholder="Passwort">
     </mat-form-field>
     <mat-checkbox #keeploggedin>Angemeldet bleiben</mat-checkbox>
     <button mat-raised-button color="primary" class="btn btn-lg btn-primary btn-block" type="submit">Anmelden</button>
