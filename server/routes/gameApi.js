@@ -73,15 +73,20 @@ function startPlaySession(req, res, next) {
                     }
 
                     var nonLocationRiddles = riddles.filter(function (riddle) {
-                        return (riddle.location == undefined || riddle.location == null);
+                        return ((riddle.location == undefined || riddle.location == null) && riddle.isActive);
                     });
 
                     var locationRiddles = riddles.filter(function (riddle) {
-                        return (riddle.location != undefined && riddle.location.isActive == true);
+                        return (riddle.location != undefined && riddle.location.isActive == true && riddle.isActive);
+                    });
+
+                    var inactiveRiddles = riddles.filter(function (riddle) {
+                        return (!riddle.isActive);
                     });
 
                     console.log("nonLocationRiddles", nonLocationRiddles);
                     console.log("locationRiddles", locationRiddles);
+                    console.log("inactiveRiddles", inactiveRiddles);
 
                     var riddlecount = nonLocationRiddles.length + locationRiddles.length;
                     //TODO way more complicated then this
@@ -198,16 +203,16 @@ function _finishAdvanceState(playSession, res, callback) {
 
 function _getRiddleID(session, riddles) {
 
-     var unusedRiddles = riddles.filter(function (riddle) {
+    var unusedRiddles = riddles.filter(function (riddle) {
         return session.usedRiddles.indexOf(riddle._id) == -1;
     });
 
     var nonLocationRiddles = unusedRiddles.filter(function (riddle) {
-        return (riddle.location == undefined || riddle.location == null);
+        return ((riddle.location == undefined || riddle.location == null) && riddle.isActive);
     });
 
     var locationRiddles = unusedRiddles.filter(function (riddle) {
-        return (riddle.location != undefined && riddle.location.equals(session.location));
+        return (riddle.location != undefined && riddle.location.equals(session.location) && riddle.isActive);
     });
 
     if (locationRiddles.length > 0) {
