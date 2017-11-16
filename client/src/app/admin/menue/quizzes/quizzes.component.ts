@@ -27,6 +27,9 @@ export class AdminQuizzesComponent implements OnInit {
     this.loadQuizzesFromServer();
   }
 
+  /**
+   * loads all quizzes in the database from the server to display them in the list
+   */
   loadQuizzesFromServer() {
     console.log('loading current quizzes from server');
     this.http.get('/api/admin/riddles', {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
@@ -53,6 +56,10 @@ export class AdminQuizzesComponent implements OnInit {
     );
   }
 
+  /**
+   * opens a new popup dialog for editing a quiz.
+   * Current Quiz is null and Popup dialog handles this and initializes default values.
+   */
   addQuiz() {
     console.log('add quiz');
     const edit = this.dialog.open(AdminQuizDetailComponent, {
@@ -66,6 +73,10 @@ export class AdminQuizzesComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a new Popup dialog for editing a quiz.
+   * @param {AdminQuiz} quiz to edit.
+   */
   editQuiz(quiz: AdminQuiz) {
     console.log('edit quiz', quiz._id);
     const edit = this.dialog.open(AdminQuizDetailComponent, {
@@ -79,6 +90,10 @@ export class AdminQuizzesComponent implements OnInit {
     });
   }
 
+  /**
+   * uses rest api to delete selected quiz in the database
+   * @param {AdminQuiz} quiz to be deleted.
+   */
   deleteQuiz(quiz: AdminQuiz) {
     console.log('delete quiz', quiz._id);
     this.http.delete('/api/admin/riddles/' + quiz._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(

@@ -32,6 +32,9 @@ export class AdminQuizDetailComponent implements OnInit {
     this.loadLocations();
   }
 
+  /**
+   * initializes quiz with default values for adding a new quiz.
+   */
   loadDefaults() {
     this.data.currentQuiz = new AdminQuiz('sample answer',
       'sample description',
@@ -39,6 +42,9 @@ export class AdminQuizDetailComponent implements OnInit {
       'sample name', 'sample id', null,true);
   }
 
+  /**
+   * loads locations from server to populate the list of locations in the dialog to select corresponding location
+   */
   loadLocations() {
     console.log('loading current locations from server');
     this.http.get('/api/admin/locations', {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
@@ -63,6 +69,9 @@ export class AdminQuizDetailComponent implements OnInit {
     );
   }
 
+  /**
+   * submits new / edited quiz to the server using rest api
+   */
   submit() {
     if (this.createNewEntry === false) {
       this.http.put('/api/admin/riddles/' + this.data.currentQuiz._id, {
@@ -119,10 +128,17 @@ export class AdminQuizDetailComponent implements OnInit {
     console.log('saving quiz detail', this.data.currentQuiz);
   }
 
+  /**
+   * closes dialog
+   */
   cancel() {
     this.dialogRef.close();
   }
 
+  /**
+   * parses by user selected image file
+   * @param evt
+   */
   handleFileSelect(evt) {
     const files = evt.target.files;
     const file = files[0];
