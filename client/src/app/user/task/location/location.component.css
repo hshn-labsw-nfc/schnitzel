@@ -4,7 +4,6 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color:#F5F5F5;
 }
 
 #map {
@@ -13,14 +12,26 @@
 }
 
 h4{
-  text-align: center;
-  margin-top: 50px;
+  font-size: 3vh;
+  padding-left: 10px;
+}
+
+h5{
+  font-size: 4vh;
+  padding-left: 10px;
+}
+
+.border{
+  margin-top: 10px;
+  border: thick hidden whitesmoke;
+  padding-top: 10px;
+  padding-bottom: 30px;
 }
 
 .img-responsive {
   max-width: 100%;
   height: auto;
-
+  margin-top: 50px;
 }
 
 .container {
@@ -31,3 +42,23 @@ h4{
 #image {
   text-align: center;
 }
+
+.jumbotron{
+  background-color:white;
+}
+
+
+@media only screen and (min-width: 768px) {
+  /* For tablets: */
+  .border { margin-top: 80px;}
+  .img-responsive {margin-top: 80px;}
+
+}
+@media only screen and (min-width: 1200px) {
+  /* For desktop: */
+  .border {margin-top: 50px; margin-right: 26%; margin-left: 26%; }
+  .img-responsive {margin-top: 30px;}
+}
+
+
+
