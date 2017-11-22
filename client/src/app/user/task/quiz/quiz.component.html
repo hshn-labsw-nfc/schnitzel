@@ -13,7 +13,9 @@
     </ng-container>
 
     <div class="form-group">
-      <input type="text" #answer class="form-control" id="answer" placeholder="Antwort" ng-model="riddle.answer">
+      <mat-form-field>
+        <input matInput placeholder="Antwort" type="text" #answer ng-model="riddle.answer">
+      </mat-form-field>
     </div>
   </div>
 </div>
