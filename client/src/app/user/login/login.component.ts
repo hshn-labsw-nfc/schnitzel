@@ -11,6 +11,8 @@ export class UserLoginComponent implements OnInit {
   @Output()
   loginOutput: EventEmitter<string> = new EventEmitter();
 
+  imageLogo = '/assets/images/schnitzel_logo.png';
+
   constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
 
   ngOnInit() {

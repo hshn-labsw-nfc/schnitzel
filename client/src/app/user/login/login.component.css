@@ -5,3 +5,39 @@
 .group{
   margin-top: 50px;
 }
+
+img {
+  width: 200px;
+  height: 200px;
+  display:block;
+  margin:auto;
+}
+
+@media only screen and (min-width: 768px) {
+  #order{
+    margin-top: 10%;
+  }
+
+  h1 {
+    font-size: 48pt;
+  }
+
+  img {
+    width: 400px;
+    height: 400px;
+  }
+
+  form {
+    font-size: 24pt;
+  }
+
+  form mat-form-field {
+    width: 400px;
+  }
+
+  form button {
+    width: 200px;
+    height: 60px;
+    font-size: 24pt;
+  }
+}
