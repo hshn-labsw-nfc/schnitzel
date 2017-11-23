@@ -1,9 +1,14 @@
 <div class="jumbotron">
+
   <div>
+
+
+<mat-card>
     <div class="question-center">
       <h4>{{question.getName()}}</h4>
     </div>
     <div class="question">{{question.getQuestion()}}</div>
+
 
     <br>
     <ng-container *ngIf="imageAvailable() == true">
@@ -12,13 +17,16 @@
       <br>
     </ng-container>
 
+
     <div class="form-group">
       <mat-form-field>
         <input matInput placeholder="Antwort" type="text" #answer ng-model="riddle.answer">
       </mat-form-field>
     </div>
+</mat-card>
   </div>
 </div>
+
 
 <div id="bottom">
   <mat-toolbar>

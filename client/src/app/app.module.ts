@@ -41,6 +41,7 @@ import {MatSidenavModule} from '@angular/material';
 import { UserLocationMapPopupComponent } from './user/task/location/location-map-popup/location-map-popup.component';
 import { UserLocationCameraPopupComponent } from './user/task/location/location-camera-popup/location-camera-popup.component';
 import { UserQuizHintPopupComponent } from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 const routes: Routes = [
@@ -139,6 +140,7 @@ const routes: Routes = [
     UserLocationMapPopupComponent,
     UserLocationCameraPopupComponent,
     UserQuizHintPopupComponent
+
   ],
   imports: [
     BrowserModule,
@@ -156,7 +158,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatToolbarModule,
     MatProgressBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatCardModule
   ],
   entryComponents: [
     SharedSimpleDialogComponent,
