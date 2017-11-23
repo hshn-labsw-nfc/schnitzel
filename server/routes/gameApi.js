@@ -80,6 +80,9 @@ function startPlaySession(req, res, next) {
                         return (riddle.location != undefined && riddle.location.isActive == true && riddle.isActive);
                     });
 
+                    /**
+                     * selects all inactive quizzes
+                     */
                     var inactiveRiddles = riddles.filter(function (riddle) {
                         return (!riddle.isActive);
                     });
@@ -90,6 +93,9 @@ function startPlaySession(req, res, next) {
 
                     var riddlecount = nonLocationRiddles.length + locationRiddles.length;
                     //TODO way more complicated then this
+                    /**
+                     * starts new session only when enough quizzes are available
+                     */
                     if (locationCount > 0 && riddlecount >= locationCount) {
                         var groupName = req.body.groupName;
                         var playSession = new PlaySession();

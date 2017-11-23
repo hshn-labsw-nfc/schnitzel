@@ -1,15 +1,14 @@
-<div>
-    <div class="text-center">
-      <h4>Finde folgenden Ort: <b>{{location?.getName()}}</b></h4>
-    </div>
-    <br>
+<div class="jumbotron">
+  <div class="border">
+    <h4>Finde folgenden Ort: <br></h4>
+    <h5>{{location?.getName()}}</h5>
+  </div>
   <div id="image">
     <span>
     <img class="img-responsive" src="data:{{location?.getImage().filetype}};base64,{{location?.getImage().base64}}">
   </span>
   </div>
 </div>
-
 <div id="bottom">
   <mat-toolbar>
     <div class="container">
@@ -19,4 +18,5 @@
     </div>
   </mat-toolbar>
 </div>
+
 
