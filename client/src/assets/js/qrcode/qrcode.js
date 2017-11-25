@@ -15,7 +15,7 @@
 */
 
 
-let qrcode = {};
+const qrcode = {};
 qrcode.imagedata = null;
 qrcode.width = 0;
 qrcode.height = 0;
@@ -47,12 +47,12 @@ qrcode.decode = function (context, width, height) {
 };
 
 qrcode.isUrl = function (s) {
-  let regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+  const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
   return regexp.test(s);
 };
 
 qrcode.decode_url = function (s) {
-  let escaped = "";
+  var escaped = "";
   try {
     escaped = escape(s);
   }
@@ -60,7 +60,7 @@ qrcode.decode_url = function (s) {
     // console.log(e);
     escaped = s;
   }
-  let ret = "";
+  var ret = "";
   try {
     ret = decodeURIComponent(escaped);
   }
@@ -79,16 +79,16 @@ qrcode.decode_utf8 = function (s) {
 };
 
 qrcode.process = function () {
-  let image = qrcode.grayScaleToBitmap(qrcode.grayscale());
-  let detector = new Detector(image);
+  const image = qrcode.grayScaleToBitmap(qrcode.grayscale());
+  const detector = new Detector(image);
 
-  let qRCodeMatrix = detector.detect();
+  const qRCodeMatrix = detector.detect();
 
-  let reader = Decoder.decode(qRCodeMatrix.bits);
-  let data = reader.DataByte;
-  let str = "";
-  for (let i = 0; i < data.length; i++) {
-    for (let j = 0; j < data[i].length; j++)
+  const reader = Decoder.decode(qRCodeMatrix.bits);
+  const data = reader.DataByte;
+  var str = "";
+  for (var i = 0; i < data.length; i++) {
+    for (var j = 0; j < data[i].length; j++)
       str += String.fromCharCode(data[i][j]);
   }
 
@@ -102,15 +102,15 @@ qrcode.getPixel = function (x, y) {
   if (qrcode.height < y) {
     throw "point error";
   }
-  let point = (x * 4) + (y * qrcode.width * 4);
+  const point = (x * 4) + (y * qrcode.width * 4);
   return (qrcode.imagedata.data[point] * 33 + qrcode.imagedata.data[point + 1] * 34 + qrcode.imagedata.data[point + 2] * 33) / 100;
 };
 
 qrcode.binarize = function (th) {
-  let ret = new Array(qrcode.width * qrcode.height);
-  for (let y = 0; y < qrcode.height; y++) {
-    for (let x = 0; x < qrcode.width; x++) {
-      let gray = qrcode.getPixel(x, y);
+  const ret = new Array(qrcode.width * qrcode.height);
+  for (var y = 0; y < qrcode.height; y++) {
+    for (var x = 0; x < qrcode.width; x++) {
+      var gray = qrcode.getPixel(x, y);
 
       ret[x + y * qrcode.width] = gray <= th;
     }
@@ -119,23 +119,23 @@ qrcode.binarize = function (th) {
 };
 
 qrcode.getMiddleBrightnessPerArea = function (image) {
-  let numSqrtArea = 4;
+  const numSqrtArea = 4;
   //obtain middle brightness((min + max) / 2) per area
-  let areaWidth = Math.floor(qrcode.width / numSqrtArea);
-  let areaHeight = Math.floor(qrcode.height / numSqrtArea);
-  let minmax = new Array(numSqrtArea);
-  for (let i = 0; i < numSqrtArea; i++) {
+  const areaWidth = Math.floor(qrcode.width / numSqrtArea);
+  const areaHeight = Math.floor(qrcode.height / numSqrtArea);
+  const minmax = new Array(numSqrtArea);
+  for (var i = 0; i < numSqrtArea; i++) {
     minmax[i] = new Array(numSqrtArea);
-    for (let i2 = 0; i2 < numSqrtArea; i2++) {
+    for (var i2 = 0; i2 < numSqrtArea; i2++) {
       minmax[i][i2] = new Array(0, 0);
     }
   }
-  for (let ay = 0; ay < numSqrtArea; ay++) {
-    for (let ax = 0; ax < numSqrtArea; ax++) {
+  for (var ay = 0; ay < numSqrtArea; ay++) {
+    for (var ax = 0; ax < numSqrtArea; ax++) {
       minmax[ax][ay][0] = 0xFF;
-      for (let dy = 0; dy < areaHeight; dy++) {
-        for (let dx = 0; dx < areaWidth; dx++) {
-          let target = image[areaWidth * ax + dx + (areaHeight * ay + dy) * qrcode.width];
+      for (var dy = 0; dy < areaHeight; dy++) {
+        for (var dx = 0; dx < areaWidth; dx++) {
+          const target = image[areaWidth * ax + dx + (areaHeight * ay + dy) * qrcode.width];
           if (target < minmax[ax][ay][0])
             minmax[ax][ay][0] = target;
           if (target > minmax[ax][ay][1])
@@ -144,12 +144,12 @@ qrcode.getMiddleBrightnessPerArea = function (image) {
       }
     }
   }
-  let middle = new Array(numSqrtArea);
-  for (let i3 = 0; i3 < numSqrtArea; i3++) {
+  const middle = new Array(numSqrtArea);
+  for (var i3 = 0; i3 < numSqrtArea; i3++) {
     middle[i3] = new Array(numSqrtArea);
   }
-  for (let ay = 0; ay < numSqrtArea; ay++) {
-    for (let ax = 0; ax < numSqrtArea; ax++) {
+  for (var ay = 0; ay < numSqrtArea; ay++) {
+    for (var ax = 0; ax < numSqrtArea; ax++) {
       middle[ax][ay] = Math.floor((minmax[ax][ay][0] + minmax[ax][ay][1]) / 2);
     }
   }
@@ -157,18 +157,18 @@ qrcode.getMiddleBrightnessPerArea = function (image) {
 };
 
 qrcode.grayScaleToBitmap = function (grayScale) {
-  let middle = qrcode.getMiddleBrightnessPerArea(grayScale);
-  let sqrtNumArea = middle.length;
-  let areaWidth = Math.floor(qrcode.width / sqrtNumArea);
-  let areaHeight = Math.floor(qrcode.height / sqrtNumArea);
+  const middle = qrcode.getMiddleBrightnessPerArea(grayScale);
+  const sqrtNumArea = middle.length;
+  const areaWidth = Math.floor(qrcode.width / sqrtNumArea);
+  const areaHeight = Math.floor(qrcode.height / sqrtNumArea);
 
-  let buff = new ArrayBuffer(qrcode.width * qrcode.height);
-  let bitmap = new Uint8Array(buff);
+  const buff = new ArrayBuffer(qrcode.width * qrcode.height);
+  const bitmap = new Uint8Array(buff);
 
-  for (let ay = 0; ay < sqrtNumArea; ay++) {
-    for (let ax = 0; ax < sqrtNumArea; ax++) {
-      for (let dy = 0; dy < areaHeight; dy++) {
-        for (let dx = 0; dx < areaWidth; dx++) {
+  for (var ay = 0; ay < sqrtNumArea; ay++) {
+    for (var ax = 0; ax < sqrtNumArea; ax++) {
+      for (var dy = 0; dy < areaHeight; dy++) {
+        for (var dx = 0; dx < areaWidth; dx++) {
           bitmap[areaWidth * ax + dx + (areaHeight * ay + dy) * qrcode.width] = (grayScale[areaWidth * ax + dx + (areaHeight * ay + dy) * qrcode.width] < middle[ax][ay]) ? true : false;
         }
       }
@@ -178,12 +178,12 @@ qrcode.grayScaleToBitmap = function (grayScale) {
 };
 
 qrcode.grayscale = function () {
-  let buff = new ArrayBuffer(qrcode.width * qrcode.height);
-  let ret = new Uint8Array(buff);
+  const buff = new ArrayBuffer(qrcode.width * qrcode.height);
+  const ret = new Uint8Array(buff);
 
-  for (let y = 0; y < qrcode.height; y++) {
-    for (let x = 0; x < qrcode.width; x++) {
-      let gray = qrcode.getPixel(x, y);
+  for (var y = 0; y < qrcode.height; y++) {
+    for (var x = 0; x < qrcode.width; x++) {
+      var gray = qrcode.getPixel(x, y);
 
       ret[x + y * qrcode.width] = gray;
     }
