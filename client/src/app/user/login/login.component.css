@@ -19,16 +19,16 @@ img {
   }
 
   h1 {
-    font-size: 48pt;
+    font-size: 32pt;
   }
 
   img {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
   }
 
   form {
-    font-size: 24pt;
+    font-size: 18pt;
   }
 
   form mat-form-field {
