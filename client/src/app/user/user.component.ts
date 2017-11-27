@@ -20,6 +20,7 @@ export class UserComponent implements OnInit{
   currentLocation: Location;
   currentQuestion: Question;
   currentTask: string;
+  startTime: Date;
 
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,  public snackBar: MatSnackBar) { }
@@ -41,6 +42,10 @@ export class UserComponent implements OnInit{
         this.getStateFromServer();
       }
     }
+    this.startTime = new Date();
+    this.startTime.setSeconds(50);
+    this.startTime.setMinutes(59);
+    this.startTime.setHours(23);
   }
 
   urlContainsTag():boolean {
