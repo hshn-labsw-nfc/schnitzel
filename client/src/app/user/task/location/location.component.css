@@ -1,5 +1,6 @@
 #bottom {
   position: fixed;
+  z-index: 100;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -37,9 +38,10 @@
   text-align: center;
 }
 
-.jumbotron {
-  margin-top: 5%;
+.card {
+  margin-top: 100px;
   background-color: white;
+  margin-bottom: 100px;
 }
 
 @media only screen and (min-width: 768px) {
