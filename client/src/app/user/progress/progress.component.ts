@@ -20,7 +20,6 @@ export class UserProgressComponent implements OnInit {
   }
 
   incrementTimer(): void {
-    console.log('it works',this.currentTime);
     this.currentTime.setTime(this.currentTime.getTime() + 1000);
   }
 
