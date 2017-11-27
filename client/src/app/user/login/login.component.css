@@ -1,25 +1,21 @@
-#order{
+.order{
   margin-top: 20%;
 }
 
-.group{
-  margin-top: 50px;
+img {
+  width: 250px;
+  height: 250px;
 }
 
-img {
-  width: 200px;
-  height: 200px;
-  display:block;
-  margin:auto;
+.centered {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }
 
 @media only screen and (min-width: 768px) {
-  #order{
+  .order{
     margin-top: 10%;
-  }
-
-  h1 {
-    font-size: 32pt;
   }
 
   img {
@@ -34,6 +30,7 @@ img {
   form mat-form-field {
     width: 400px;
   }
+
 
   form button {
     width: 150px;
