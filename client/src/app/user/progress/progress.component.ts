@@ -51,9 +51,6 @@ export class UserProgressComponent implements OnInit {
     } else {
       time += this.currentTime.getSeconds();
     }
-
-    console.log('TIMETEST',this.currentTime.getMinutes(),this.currentTime.getSeconds());
-
     return time;
   }
 }
