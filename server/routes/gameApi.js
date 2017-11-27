@@ -7,7 +7,9 @@ var Tag = require('../models/tag');
 var PlaySession = require('../models/playSession');
 var Config = require('../models/config');
 
-var ResponseHandler = require('../util/responsehandler.js');
+const ResponseHandler = require('../util/responsehandler');
+
+const gameService = require('../services/gameService');
 
 router.post('/sessions', startPlaySession);
 router.delete('/sessions/:sessionid', deletePlaySession);
@@ -248,57 +250,16 @@ function destroySession(sessionID, res) {
   });
 }
 
-function getState(req, res, next) {
-  var handler = new ResponseHandler(res);
-  var sessionID = req.params.sessionid;
+async function getState(req, res, next) {
+  const handler = ResponseHandler(res);
+  const sessionID = req.params.sessionid;
 
-  PlaySession.findById(sessionID)
-    .populate('location')
-    .populate('riddle')
-    .exec(function (err, session) {
-      if (err) {
-        handler.error(err);
-        return;
-      }
-      if (session == null) {
-        handler.error(new Error('Session doesn\'t exist'));
-        return;
-      }
-
-      var result = {
-        task: session.task,
-        progress: {
-          count: session.locationCount,
-          done: session.locationCount - session.locationsToVisit.length - (session.task == 'findLocation' ? 1 : 0)
-        },
-        dates: {
-          startDate: session.startDate,
-          endDate: session.endDate
-        }
-      };
-
-      if (session.task == 'won') {
-        Config.get('winText', function (err, winText) {
-          if (err) {
-            handler.error(err);
-            return;
-          }
-          result.winText = winText;
-          res.send(result);
-        })
-      } else {
-
-        if (!session.location) {
-          destroySession(session.session._id, res);
-          handler.error(new Error("location not found, session is invalid"));
-          return;
-        }
-        result.location = filterObject(session.location, ['name', 'image']);
-
-        result.riddle = filterObject(session.riddle, ['name', 'description', 'hint', 'image']);
-        res.send(result);
-      }
-    });
+  try {
+    const result = await gameService.getGameState(sessionID);
+    handler.success(result);
+  } catch(err) {
+    handler.error(err)
+  }
 }
 
 // Will return whether the sent solution was right
