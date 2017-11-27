@@ -19,11 +19,19 @@ export class UserProgressComponent implements OnInit {
   }
 
   ngOnInit() {
+    /**
+     * when the enddate is null the session is still running, so the timer has to increase every second.
+     */
     if(this.endDate === null) {
       IntervalObservable.create(1000).subscribe(n => this.parsedTime = this.parseTime());
     }
   }
 
+  /**
+   * parses the start/end timestamp to a time Interval.
+   * Hours, Minutes and Seconds are splitted by a :
+   * @returns {string}
+   */
   parseTime(): string{
 
     let currentTime: Date;

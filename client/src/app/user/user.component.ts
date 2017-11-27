@@ -109,15 +109,23 @@ export class UserComponent implements OnInit{
         this.progressDone = dataProgress['done'];
         this.currentTask = data['task'];
 
-
+        /**
+         * If server transmitted a startdate the date gets parsed
+         */
         if (!(isUndefined((data['dates'])['startDate']))) {
           this.startDate = this.parseJsonDateToDate((data['dates'])['startDate']);
         }
 
+        /**
+         * If server transmitted an enddate the date gets parsed
+         */
         if (!(isUndefined((data['dates'])['endDate']))) {
           this.endDate = this.parseJsonDateToDate((data['dates'])['endDate']);
         }
 
+        /**
+         * when the session is not finished the current location and question get parsed.
+         */
         if(this.currentTask !== 'won') {
           this.currentLocation = new Location(dataLocation['name'], 0, 0, 0, dataLocation['image']);
           this.currentQuestion = new QuestionSingleanswer('0', dataQuestion['description'], dataQuestion['hint'], dataQuestion['image']);
@@ -144,6 +152,11 @@ export class UserComponent implements OnInit{
     );
   }
 
+  /**
+   * converts servertimestamp to es6 Date
+   * @param data
+   * @returns {Date}
+   */
   parseJsonDateToDate(data: any): Date {
     const date = new Date(data);
     console.log('PARSED',date);
