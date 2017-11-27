@@ -7,5 +7,4 @@ var gameApi = require('./gameApi');
 router.use('/admin', adminApi);
 router.use('/game', gameApi);
 
-
 module.exports = router;
