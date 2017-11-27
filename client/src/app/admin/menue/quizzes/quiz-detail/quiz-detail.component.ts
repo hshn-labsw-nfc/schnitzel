@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AdminQuiz} from '../admin-quiz';
+import {AdminQuizMultipleChoice, AdminQuizSingleAnswer} from '../admin-quiz';
 import {AdminLocation} from '../../locations/admin-location';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar,MatSlideToggleModule} from '@angular/material';
 
 @Component({
   selector: 'app-admin-quiz-detail',
@@ -10,6 +10,7 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
   styleUrls: ['./quiz-detail.component.css']
 })
 export class AdminQuizDetailComponent implements OnInit {
+  type: string;
   pageHeader: string;
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
@@ -25,18 +26,29 @@ export class AdminQuizDetailComponent implements OnInit {
       this.createNewEntry = false;
     } else {
       console.log('location detail initialized without location');
-      this.loadDefaults();
+      this.loadDefaultsSingleAnswer();
       this.pageHeader = 'Neues Quiz Hinzufügen';
       this.createNewEntry = true;
     }
     this.loadLocations();
+    this.type = 'singleAnswer';
   }
 
   /**
-   * initializes quiz with default values for adding a new quiz.
+   * initializes quiz with default values for adding a new singleanswer quiz.
    */
-  loadDefaults() {
-    this.data.currentQuiz = new AdminQuiz('sample answer',
+  loadDefaultsSingleAnswer() {
+    this.data.currentQuiz = new AdminQuizSingleAnswer('sample answer',
+      'sample description',
+      'sample hint',
+      'sample name', 'sample id', null,true);
+  }
+
+  /**
+   * initializes quiz with default values for adding a new multiple choice quiz.
+   */
+  loadDefaultsMultipleChoice() {
+    this.data.currentQuiz = new AdminQuizMultipleChoice(['a','b','c','d'],
       'sample description',
       'sample hint',
       'sample name', 'sample id', null,true);
@@ -161,5 +173,19 @@ export class AdminQuizDetailComponent implements OnInit {
   _handleReaderLoaded(readerEvt) {
     const binaryString = readerEvt.target.result;
     this.data.currentQuiz.image.base64 = btoa(binaryString);
+  }
+
+  changeType(mc: boolean) {
+    if(!mc && this.type !== 'multipleChoice') {
+      if (this.createNewEntry){
+        this.loadDefaultsMultipleChoice();
+      }
+      this.type = 'multipleChoice';
+    } else if (mc && this.type !== 'singleAnswer') {
+      if (this.createNewEntry){
+        this.loadDefaultsSingleAnswer();
+      }
+      this.type = 'singleAnswer';
+    }
   }
 }

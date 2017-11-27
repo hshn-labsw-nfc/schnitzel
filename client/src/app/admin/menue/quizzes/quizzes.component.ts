@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MatDialog} from '@angular/material';
-import {AdminQuiz} from './admin-quiz';
+import {AdminQuiz, AdminQuizMultipleChoice, AdminQuizSingleAnswer} from './admin-quiz';
 import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
 
 @Component({
@@ -14,6 +14,7 @@ export class AdminQuizzesComponent implements OnInit {
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
     this.tableHeaders = [];
+    this.tableHeaders.push('Typ');
     this.tableHeaders.push('Aktiv?');
     this.tableHeaders.push('Rätselname');
     this.tableHeaders.push('Beschreibung');
@@ -39,7 +40,7 @@ export class AdminQuizzesComponent implements OnInit {
         for (const d in data) {
           if (data.hasOwnProperty(d)) {
             this.quizzes.push(
-              new AdminQuiz(data[d]['answer'],
+              new AdminQuizSingleAnswer(data[d]['answer'],
                 data[d]['description'],
                 data[d]['hint'],
                 data[d]['name'],
@@ -75,7 +76,7 @@ export class AdminQuizzesComponent implements OnInit {
 
   /**
    * Opens a new Popup dialog for editing a quiz.
-   * @param {AdminQuiz} quiz to edit.
+   * @param {AdminQuizSingleAnswer} quiz to edit.
    */
   editQuiz(quiz: AdminQuiz) {
     console.log('edit quiz', quiz._id);
@@ -92,7 +93,7 @@ export class AdminQuizzesComponent implements OnInit {
 
   /**
    * uses rest api to delete selected quiz in the database
-   * @param {AdminQuiz} quiz to be deleted.
+   * @param {AdminQuizSingleAnswer} quiz to be deleted.
    */
   deleteQuiz(quiz: AdminQuiz) {
     console.log('delete quiz', quiz._id);
@@ -105,5 +106,15 @@ export class AdminQuizzesComponent implements OnInit {
         console.log('error deleting quiz', err);
       }
     );
+  }
+
+  getName(quiz: AdminQuiz): string {
+    if(quiz instanceof AdminQuizSingleAnswer) {
+      return 'SA';
+    }
+    if(quiz instanceof AdminQuizSingleAnswer) {
+      return 'MC';
+    }
+    return 'unknown';
   }
 }
