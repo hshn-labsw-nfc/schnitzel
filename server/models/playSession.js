@@ -4,6 +4,8 @@ var mongoose = require('mongoose')
 var PlaySessionSchema = new Schema({
     lastUpdated: Date,
     groupName: String,
+    startDate: Date,
+    endDate: Date,
     locationsToVisit: [String],
     locationCount: Number,
     usedRiddles: [Schema.Types.ObjectId],
