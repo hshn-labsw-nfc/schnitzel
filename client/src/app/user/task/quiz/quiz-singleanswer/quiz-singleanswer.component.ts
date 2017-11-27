@@ -1,21 +1,21 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Question} from '../../question';
+import {QuestionSingleanswer} from '../../../questionsingleanswer';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {isNullOrUndefined} from 'util';
-import {UserLocationMapPopupComponent} from '../location/location-map-popup/location-map-popup.component';
-import {Location} from '../../location';
-import {UserQuizHintPopupComponent} from './quiz-hint-popup/quiz-hint-popup.component';
-import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
+import {UserLocationMapPopupComponent} from '../../location/location-map-popup/location-map-popup.component';
+import {Location} from '../../../location';
+import {UserQuizHintPopupComponent} from '../quiz-hint-popup/quiz-hint-popup.component';
+import {SharedSimpleDialogComponent} from '../../../../shared/simple-dialog/simple-dialog.component';
 
 
 @Component({
-  selector: 'app-user-quiz',
-  templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.css']
+  selector: 'app-user-quiz-singleanswer',
+  templateUrl: './quiz-singleanswer.component.html',
+  styleUrls: ['./quiz-singleanswer.component.css']
 })
-export class UserQuizComponent implements OnInit, OnChanges {
-  @Input() question: Question;
+export class UserQuizSingleanswerComponent implements OnInit, OnChanges {
+  @Input() question: QuestionSingleanswer;
   @Input() sessionID: string;
   @Input() location: Location;
 

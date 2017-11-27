@@ -1,11 +1,7 @@
 import {isUndefined} from 'util';
 
-export class Question {
+export class QuestionSingleanswer {
   constructor(private type: string,private name: string,private question: string,private hint?: string, private image?: any) {}
-
-  public getType(): string {
-    return this.type;
-  }
 
   public getQuestion(): string {
     return this.question;

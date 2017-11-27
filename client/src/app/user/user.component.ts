@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Location} from './location';
-import {Question} from './question';
+import {QuestionSingleanswer} from './questionsingleanswer';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {SharedSimpleDialogComponent} from '../shared/simple-dialog/simple-dialog.component';
@@ -18,7 +18,7 @@ export class UserComponent implements OnInit{
   progressCount: number;
   progressDone: number;
   currentLocation: Location;
-  currentQuestion: Question;
+  currentQuestion: any;
   currentTask: string;
   startTime: Date;
 
@@ -117,7 +117,7 @@ export class UserComponent implements OnInit{
         this.currentTask = data['task'];
 
         this.currentLocation = new Location(dataLocation['name'],0,0,0,dataLocation['image']);
-        this.currentQuestion = new Question('0',dataQuestion['description'],dataQuestion['hint'],dataQuestion['image']);
+        this.currentQuestion = new QuestionSingleanswer('0',dataQuestion['description'],dataQuestion['hint'],dataQuestion['image']);
 
         console.log('the new question/location',this.currentQuestion,this.currentLocation);
       },

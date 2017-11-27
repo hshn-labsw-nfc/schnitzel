@@ -11,7 +11,6 @@ import { UserProgressComponent } from './user/progress/progress.component';
 import { UserLoginComponent } from './user/login/login.component';
 import { UserScoreboardComponent } from './user/scoreboard/scoreboard.component';
 import { UserTaskComponent } from './user/task/task.component';
-import { UserQuizComponent } from './user/task/quiz/quiz.component';
 import { UserLocationComponent } from './user/task/location/location.component';
 import { AdminLoginComponent} from './admin/login/login.component';
 import { AdminMenueComponent } from './admin/menue/menue.component';
@@ -25,6 +24,8 @@ import { AdminStatusDetailComponent } from './admin/menue/status/status-detail/s
 import { AdminLocationDetailComponent } from './admin/menue/locations/location-detail/location-detail.component';
 import { AdminQuizDetailComponent } from './admin/menue/quizzes/quiz-detail/quiz-detail.component';
 import { AdminTagDetailComponent } from './admin/menue/tags/tag-detail/tag-detail.component';
+import { UserQuizSingleanswerComponent} from './user/task/quiz/quiz-singleanswer/quiz-singleanswer.component';
+import { UserQuizMultiplechoiceComponent} from './user/task/quiz/quiz-multiplechoice/quiz-multiplechoice.component';
 
 // Material
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -42,7 +43,6 @@ import { UserLocationMapPopupComponent } from './user/task/location/location-map
 import { UserLocationCameraPopupComponent } from './user/task/location/location-camera-popup/location-camera-popup.component';
 import { UserQuizHintPopupComponent } from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
 import {MatCardModule} from '@angular/material/card';
-
 
 const routes: Routes = [
   {path: 'admin', component: AdminComponent,
@@ -123,7 +123,6 @@ const routes: Routes = [
     UserLoginComponent,
     UserScoreboardComponent,
     UserTaskComponent,
-    UserQuizComponent,
     UserLocationComponent,
     AdminLoginComponent,
     AdminMenueComponent,
@@ -139,7 +138,9 @@ const routes: Routes = [
     SharedSimpleDialogComponent,
     UserLocationMapPopupComponent,
     UserLocationCameraPopupComponent,
-    UserQuizHintPopupComponent
+    UserQuizHintPopupComponent,
+    UserQuizMultiplechoiceComponent,
+    UserQuizSingleanswerComponent
 
   ],
   imports: [

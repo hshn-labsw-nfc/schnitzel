@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Question} from '../question';
+import {QuestionSingleanswer} from '../questionsingleanswer';
 import {Location} from '../location';
+import {QuestionMultiplechoice} from "../questionmc";
 
 @Component({
   selector: 'app-user-task',
@@ -9,7 +10,7 @@ import {Location} from '../location';
 })
 export class UserTaskComponent implements OnInit {
 
-  @Input() question: Question;
+  @Input() question: any;
   @Input() location: Location;
   @Input() sessionID: string;
   @Input() currentTask: string;
@@ -38,4 +39,11 @@ export class UserTaskComponent implements OnInit {
     this.taskLogout.emit();
   }
 
+  isQuestionSingleanswer(): boolean {
+    return (this.question instanceof QuestionSingleanswer);
+  }
+
+  isQuestionMultiplechoice(): boolean {
+    return (this.question instanceof QuestionMultiplechoice);
+  }
 }

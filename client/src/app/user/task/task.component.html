@@ -1,5 +1,10 @@
 <div *ngIf="isUnsolvedQuiz() == true">
-  <app-user-quiz [location]="location" [question]="question" [sessionID]="sessionID" (quizOutput)="solvedQuiz()" (quizLogout)="loggedOut()"></app-user-quiz>
+  <ng-container *ngIf="isQuestionSingleanswer()">
+    <app-user-quiz-singleanswer [location]="location" [question]="question" [sessionID]="sessionID" (quizOutput)="solvedQuiz()" (quizLogout)="loggedOut()"></app-user-quiz-singleanswer>
+  </ng-container>
+  <ng-container *ngIf="isQuestionMultiplechoice()">
+
+  </ng-container>
 </div>
 <div *ngIf="isUnsolvedQuiz() == false">
     <app-user-location [location]="location" (locationLogout)="loggedOut()"></app-user-location>
