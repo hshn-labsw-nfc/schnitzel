@@ -28,14 +28,17 @@
 </div>
 
 
+
 <div id="bottom">
   <mat-toolbar>
-    <div class="container">
-      <i class="material-icons" (click)="abbrechen()">exit_to_app</i>
-      <i class="material-icons" (click)="openMap()">location_on</i>
-      <i class="material-icons" (click)="toggleHint()">info</i>
-      <i class="material-icons" (click)="solveQuestion(answer.value)">done</i>
-    </div>
+    <i class="material-icons" (click)="abbrechen()">exit_to_app</i>
+    <span class="spacer"></span>
+    <i class="material-icons" (click)="openMap()">location_on</i>
+    <span class="spacer"></span>
+    <i class="material-icons" (click)="toggleHint()">info</i>
+    <span class="spacer"></span>
+    <i class="material-icons" (click)="solveQuestion(answer.value)">done</i>
   </mat-toolbar>
 </div>
+
 
