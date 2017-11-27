@@ -1,5 +1,5 @@
 <div *ngIf="gameRunning == true">
-  <app-user-progress [progressCount]="progressCount" [progressDone]="progressDone">Progress Bar Loading..</app-user-progress>
+  <app-user-progress [progressCount]="progressCount" [progressDone]="progressDone" [currentTime]="startTime">Progress Bar Loading..</app-user-progress>
   <div *ngIf="isGameFinished() == false">
     <app-user-task *ngIf="(currentQuestion!= undefined) && (currentLocation != undefined)" [question]="currentQuestion" [location]="currentLocation" [sessionID]="sessionID" [currentTask]="currentTask" (taskOutput)="getStateFromServer()" (taskLogout)="clearLocalSession()">Quiz Loading..</app-user-task>
   </div>
