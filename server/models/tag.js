@@ -1,10 +1,12 @@
-var mongoose = require('mongoose')
-    , Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var TagSchema   = new Schema({
-    tagID: {type: String, unique: true},
-    alias: String,
-    location: {type: Schema.Types.ObjectId, ref: 'Location'}
+const TagSchema = mongoose.Schema({
+  tagID: {type: String, unique: true},
+  alias: String,
+  location: {type: mongoose.Schema.Types.ObjectId, ref: 'Location'}
 });
 
-module.exports = mongoose.model('Tag', TagSchema);
+/** @class Tag */
+const Tag = mongoose.model('Tag', TagSchema);
+
+module.exports = Tag;
