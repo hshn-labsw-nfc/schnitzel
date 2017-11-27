@@ -2,7 +2,7 @@
   <mat-toolbar>
     <form id="progress">
       <section class="progress-header">
-        <h4>{{progressDone}} von {{progressCount}} Orten gefunden ({{parseTime()}})</h4>
+        <h4>{{progressDone}} von {{progressCount}} Orten gefunden ({{parsedTime}})</h4>
         <mat-progress-bar id="bar" [value]="(progressDone / progressCount)*100"></mat-progress-bar>
       </section>
     </form>

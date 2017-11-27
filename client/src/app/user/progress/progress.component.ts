@@ -10,46 +10,58 @@ export class UserProgressComponent implements OnInit {
 
   @Input() progressCount: number;
   @Input() progressDone: number;
-  @Input() currentTime: Date;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
+
+  parsedTime: string;
 
   constructor() {
   }
 
   ngOnInit() {
-    IntervalObservable.create(1000).subscribe(n => this.incrementTimer());
-  }
-
-  incrementTimer(): void {
-    this.currentTime.setTime(this.currentTime.getTime() + 1000);
+    if(this.endDate === null) {
+      IntervalObservable.create(1000).subscribe(n => this.parsedTime = this.parseTime());
+    }
   }
 
   parseTime(): string{
+
+    let currentTime: Date;
+
+    if(this.endDate !== null) {
+      currentTime = new Date(this.endDate.getTime() - this.startDate.getTime());
+    } else {
+      currentTime = new Date((new Date().getTime() - this.startDate.getTime()));
+    }
+    currentTime = new Date(currentTime.getTime() + (currentTime.getTimezoneOffset() * 60 * 1000));
+
     let time = '';
 
-    if (this.currentTime.getHours() < 10){
+    if (currentTime.getHours() < 10){
       time += '0';
-      time += this.currentTime.getHours();
+      time += currentTime.getHours();
     } else {
-      time += this.currentTime.getHours();
+      time += currentTime.getHours();
     }
 
     time += ':';
 
-    if (this.currentTime.getMinutes() < 10){
+    if (currentTime.getMinutes() < 10){
       time += '0';
-      time += this.currentTime.getMinutes();
+      time += currentTime.getMinutes();
     } else {
-      time += this.currentTime.getMinutes();
+      time += currentTime.getMinutes();
     }
 
     time += ':';
 
-    if (this.currentTime.getSeconds() < 10){
+    if (currentTime.getSeconds() < 10){
       time += '0';
-      time += this.currentTime.getSeconds();
+      time += currentTime.getSeconds();
     } else {
-      time += this.currentTime.getSeconds();
+      time += currentTime.getSeconds();
     }
+
     return time;
   }
 }
