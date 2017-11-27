@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AdminQuiz} from '../admin-quiz';
+import {AdminQuizSingleAnswer} from '../admin-quiz';
 import {AdminLocation} from '../../locations/admin-location';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 
@@ -36,7 +36,7 @@ export class AdminQuizDetailComponent implements OnInit {
    * initializes quiz with default values for adding a new quiz.
    */
   loadDefaults() {
-    this.data.currentQuiz = new AdminQuiz('sample answer',
+    this.data.currentQuiz = new AdminQuizSingleAnswer('sample answer',
       'sample description',
       'sample hint',
       'sample name', 'sample id', null,true);
