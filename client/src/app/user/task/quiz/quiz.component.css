@@ -24,11 +24,40 @@
   margin-top: 7%;
 }
 
-.jumbotron{
-  background-color:white;
+
+.jumbotron {
   position: fixed;
+  margin-top: 5%;
+  background-color: white;
   text-align: center;
 }
+
+
+@media only screen and (min-width: 768px) {
+  /* For tablets: */
+  mat-card {
+    margin: 0 auto;
+    max-width: 75%;
+  }
+
+  .img-responsive {
+    margin-top: 80px;
+  }
+
+}
+
+@media only screen and (min-width: 1200px) {
+  /* For desktop: */
+  mat-card {
+    margin: 0 auto;
+    max-width: 50%;
+  }
+
+  .img-responsive {
+    margin-top: 30px;
+  }
+}
+
 
 
 
