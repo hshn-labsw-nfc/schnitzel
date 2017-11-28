@@ -36,7 +36,7 @@ async function getGameState(sessionID) {
       throw new Error("location not found, session is invalid");
     }
     result.location = filterObject(session.location, ['name', 'image']);
-    result.riddle = filterObject(session.riddle, ['name', 'description', 'hint', 'image']);
+    result.riddle = filterObject(session.riddle, ['name', 'choices', 'description', 'hint', 'image']);
     return result;
   }
 }

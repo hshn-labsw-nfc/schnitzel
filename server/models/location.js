@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var LocationSchema = new mongoose.Schema({
+const LocationSchema = new mongoose.Schema({
   name: {type: String, unique: true},
   description: String,
   isActive: {type: Boolean, default: false},

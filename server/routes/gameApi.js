@@ -1,11 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var Location = require('../models/location');
-var Riddle = require('../models/riddle');
-var Tag = require('../models/tag');
-var PlaySession = require('../models/playSession');
-var Config = require('../models/config');
+const Location = require('../models/location');
+const Riddle = require('../models/riddle');
+const Tag = require('../models/tag');
+const PlaySession = require('../models/playSession');
 
 const ResponseHandler = require('../util/responsehandler');
 
@@ -26,16 +25,8 @@ function getAndRemoveRandomElement(arr) {
   return arr.splice(getRandomInt(0, arr.length), 1)[0];
 }
 
-function filterObject(obj, keys) {
-  var filteredObj = {};
-  keys.forEach(function (key) {
-    filteredObj[key] = obj[key];
-  });
-  return filteredObj;
-}
-
 function uniqueFilter(property) {
-  var foundElements = {};
+  const foundElements = {};
   return function (el) {
     if (foundElements.hasOwnProperty(el[property])) {
       return false;
@@ -47,7 +38,8 @@ function uniqueFilter(property) {
 
 // Will return the sessionid of the playsession
 function startPlaySession(req, res, next) {
-  var locationCount = 0;
+  const handler = new ResponseHandler(res);
+  let locationCount = 0;
 
   Tag.find()
     .populate('location')
@@ -57,8 +49,8 @@ function startPlaySession(req, res, next) {
         return;
       }
 
-      var activeTags = tags.filter(function (tag) {
-        return (tag.location != undefined && tag.location.isActive == true);
+      const activeTags = tags.filter(function (tag) {
+        return (tag.location !== undefined && tag.location.isActive === true);
       }).filter(uniqueFilter('location'));
 
       console.log("activeTags", activeTags);
@@ -69,23 +61,22 @@ function startPlaySession(req, res, next) {
         .populate('location')
         .exec(function (err, riddles) {
           if (err) {
-
             handler.error(err);
             return;
           }
 
-          var nonLocationRiddles = riddles.filter(function (riddle) {
+          const nonLocationRiddles = riddles.filter(function (riddle) {
             return ((riddle.location == undefined || riddle.location == null) && riddle.isActive);
           });
 
-          var locationRiddles = riddles.filter(function (riddle) {
+          const locationRiddles = riddles.filter(function (riddle) {
             return (riddle.location != undefined && riddle.location.isActive == true && riddle.isActive);
           });
 
           /**
            * selects all inactive quizzes
            */
-          var inactiveRiddles = riddles.filter(function (riddle) {
+          const inactiveRiddles = riddles.filter(function (riddle) {
             return (!riddle.isActive);
           });
 
@@ -93,14 +84,14 @@ function startPlaySession(req, res, next) {
           console.log("locationRiddles", locationRiddles);
           console.log("inactiveRiddles", inactiveRiddles);
 
-          var riddlecount = nonLocationRiddles.length + locationRiddles.length;
+          const riddlecount = nonLocationRiddles.length + locationRiddles.length;
           //TODO way more complicated then this
           /**
            * starts new session only when enough quizzes are available
            */
           if (locationCount > 0 && riddlecount >= locationCount) {
-            var groupName = req.body.groupName;
-            var playSession = new PlaySession();
+            const groupName = req.body.groupName;
+            const playSession = new PlaySession();
             playSession.groupName = groupName;
             playSession.startDate = new Date();
             advanceState(playSession, res, function (savedPlaySession) {
@@ -116,7 +107,7 @@ function startPlaySession(req, res, next) {
 }
 
 function advanceState(playSession, res, callback) {
-  var handler = new ResponseHandler(res);
+  const handler = new ResponseHandler(res);
   playSession.lastUpdated = new Date();
   playSession.task = 'findLocation';
 
@@ -128,8 +119,8 @@ function advanceState(playSession, res, callback) {
         return;
       }
 
-      var activeTags = tags.filter(function (tag) {
-        return (tag.location != undefined && tag.location.isActive == true);
+      const activeTags = tags.filter(function (tag) {
+        return (tag.location !== undefined && tag.location.isActive === true);
       }).filter(uniqueFilter('location'));
 
       if (!playSession.locationCount) {
@@ -139,12 +130,12 @@ function advanceState(playSession, res, callback) {
         });
       }
 
-      if (playSession.locationsToVisit.length == 0) {
+      if (playSession.locationsToVisit.length === 0) {
         playSession.task = 'won';
         playSession.endDate = new Date();
         _finishAdvanceState(playSession, res, callback);
       } else {
-        var locations = activeTags.map(function (tag) {
+        const locations = activeTags.map(function (tag) {
           return tag.location;
         });
         _getLocationID(playSession, locations, function (res) {
@@ -157,11 +148,11 @@ function advanceState(playSession, res, callback) {
 
 function _getLocationID(session, locations, callback) {
 
-  var objLocationsToVisit = locations.filter(function (location) {
-    return session.locationsToVisit.indexOf(location._id) != -1;
+  const objLocationsToVisit = locations.filter(function (location) {
+    return session.locationsToVisit.indexOf(location._id) !== -1;
   });
 
-  var result = objLocationsToVisit.sort(function () {
+  const result = objLocationsToVisit.sort(function () {
     return Math.random();
   }).sort(function (a, b) {
     return a.heat - b.heat;
@@ -187,16 +178,16 @@ function _saveState(playSession, res, callback) {
 }
 
 function _finishAdvanceState(playSession, res, callback) {
-  var handler = new ResponseHandler(res);
+  const handler = new ResponseHandler(res);
 
-  if (playSession.task != 'won') {
+  if (playSession.task !== 'won') {
     Riddle.find().exec(function (err, riddles) {
       if (err) {
 
         handler.error(err);
         return;
       }
-      if (!riddles || riddles.length == 0) {
+      if (!riddles || riddles.length === 0) {
         handler.error(new Error('no Riddles in database'));
         return;
       }
@@ -214,15 +205,15 @@ function _finishAdvanceState(playSession, res, callback) {
 
 function _getRiddleID(session, riddles) {
 
-  var unusedRiddles = riddles.filter(function (riddle) {
-    return session.usedRiddles.indexOf(riddle._id) == -1;
+  const unusedRiddles = riddles.filter(function (riddle) {
+    return session.usedRiddles.indexOf(riddle._id) === -1;
   });
 
-  var nonLocationRiddles = unusedRiddles.filter(function (riddle) {
+  const nonLocationRiddles = unusedRiddles.filter(function (riddle) {
     return ((riddle.location == undefined || riddle.location == null) && riddle.isActive);
   });
 
-  var locationRiddles = unusedRiddles.filter(function (riddle) {
+  const locationRiddles = unusedRiddles.filter(function (riddle) {
     return (riddle.location != undefined && riddle.location.equals(session.location) && riddle.isActive);
   });
 
@@ -233,7 +224,7 @@ function _getRiddleID(session, riddles) {
 }
 
 function deletePlaySession(req, res, next) {
-  var id = req.params.sessionid;
+  const id = req.params.sessionid;
 
   destroySession(id, res);
 }
@@ -265,8 +256,8 @@ async function getState(req, res, next) {
 // Will return whether the sent solution was right
 // TODO: check for gamestate
 function solveRiddle(req, res, next) {
-  var sessionID = req.params.sessionid;
-  var answer = req.body.answer;
+  const sessionID = req.params.sessionid;
+  const answer = req.body.answer;
   if (!answer) {
     res.send(new Error('No answer provided'));
     return;
@@ -291,7 +282,7 @@ function solveRiddle(req, res, next) {
         res.send(err);
         return;
       }
-      if (normalize(riddle.answer) == normalize(answer)) {
+      if (riddle.answer.toLowerCase().trim() === answer.toLowerCase().trim()) {
         advanceState(session, res, function () {
           res.send({correctAnswer: true});
         });
@@ -321,8 +312,8 @@ function updateHeat(location, change, callback) {
 
 // Will check if the location is right. if it is, will allow to solve riddle
 function checkLocation(req, res, next) {
-  var sessionID = req.params.sessionid;
-  var tagID = req.body.tagID;
+  const sessionID = req.params.sessionid;
+  const tagID = req.body.tagID;
   PlaySession.findById(sessionID, function (err, session) {
     if (err) {
       res.send(err);
@@ -333,7 +324,7 @@ function checkLocation(req, res, next) {
       return;
     }
     session.lastUpdated = new Date();
-    if (session.task != 'findLocation') {
+    if (session.task !== 'findLocation') {
       res.send(new Error('Not the time to solve riddles.'));
       return;
     }
@@ -366,11 +357,6 @@ function checkLocation(req, res, next) {
   });
 }
 
-function normalize(string) {
-  return string.toLowerCase().trim();
-}
-
-
 //cleanup and stuff
 function heatCountdown() {
   Location.find(function (err, locations) {
@@ -381,7 +367,6 @@ function heatCountdown() {
       updateHeat(location, -1, function (err) {
         if (err) {
           console.log('ERROR: ' + err);
-          return;
         }
       });
     });
@@ -395,7 +380,7 @@ function sessionDeleter() {
       console.log('ERROR: ' + err);
       return;
     }
-    var currentTime = Date.now();
+    const currentTime = Date.now();
     sessions.forEach(function (session) {
       if (currentTime > session.lastUpdated.getTime() + sessionToDeleteTime) {
         session.remove(function (err) {
@@ -408,7 +393,7 @@ function sessionDeleter() {
   });
 }
 
-var sessionToDeleteTime = 1000 * 60 * 60 * 24 * 3; //3 Days
+const sessionToDeleteTime = 1000 * 60 * 60 * 24 * 3; //3 Days
 
 setInterval(heatCountdown, 1000 * 60 * 8);
 setInterval(sessionDeleter, 1000 * 60 * 60);

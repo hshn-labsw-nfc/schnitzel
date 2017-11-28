@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
-var RiddleSchema = new mongoose.Schema({
+const RiddleSchema = new mongoose.Schema({
   name: String,
   image: Object,
   description: String,
   answer: String,
+  choices: [String],
   hint: String,
   location: {type: mongoose.Schema.Types.ObjectId, ref: 'Location'},
   heat: Number,
