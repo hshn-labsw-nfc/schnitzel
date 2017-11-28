@@ -6,40 +6,14 @@
       Löschen
     </button>
   </div>
-  <table class="table table-striped">
-    <thead class="bg-primary">
-    <tr>
-      <th>Gruppenname</th>
-      <th>Ort</th>
-      <th>Fortschritt</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let entry of activePlaySessions">
-      <ng-container *ngIf="currentMaximized != entry.session_id">
-        <td (click)="maximize(entry.session_id)">{{entry.sessionGroupName}}</td>
-        <td (click)="maximize(entry.session_id)">{{entry.sessionLocation}}</td>
-        <td (click)="maximize(entry.session_id)">
-          <section>
-            <mat-progress-bar
-              [value]="((convertInt(entry.sessionLocationCount) - entry.sessionLocationsToVisit.length) / convertInt(entry.sessionLocationCount))*100"></mat-progress-bar>
-          </section>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="currentMaximized == entry.session_id">
-        <app-admin-status-detail [session]="entry" (detailDelete)="deleteSession($event)"
-                                 (detailMinimize)="detailMinimize()"></app-admin-status-detail>
-        <td></td>
-        <td></td>
-      </ng-container>
-    </tr>
-    </tbody>
-  </table>
 </div>
-
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
 <div class="example-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource">
-
+  <mat-table #table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Gruppenname</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.sessionGroupName}}</mat-cell>
@@ -50,15 +24,21 @@
       <mat-cell *matCellDef="let element"> {{element.sessionLocation}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="process">
+    <ng-container matColumnDef="progress">
       <mat-header-cell *matHeaderCellDef> Fortschritt</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <mat-progress-bar
           [value]="((convertInt(element.sessionLocationCount) - element.sessionLocationsToVisit.length) / convertInt(element.sessionLocationCount))*100"></mat-progress-bar>
       </mat-cell>
+
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
 </div>
