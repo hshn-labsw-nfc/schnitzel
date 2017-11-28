@@ -1,7 +1,10 @@
 <h1 class="page-header">Gruppenstatus</h1>
+
 <div class="table-responsive">
   <div class="text-right">
-    <button mat-raised-button color="warn" (click)="deleteActiveSessions()">Alle Aktiven Schnitzeljagd-Sessions Löschen</button>
+    <button mat-raised-button color="warn" (click)="deleteActiveSessions()">Alle Aktiven Schnitzeljagd-Sessions
+      Löschen
+    </button>
   </div>
   <table class="table table-striped">
     <thead class="bg-primary">
@@ -17,8 +20,9 @@
         <td (click)="maximize(entry.session_id)">{{entry.sessionGroupName}}</td>
         <td (click)="maximize(entry.session_id)">{{entry.sessionLocation}}</td>
         <td (click)="maximize(entry.session_id)">
-          <section class="progress-header">
-            <mat-progress-bar id="bar" [value]="((convertInt(entry.sessionLocationCount) - entry.sessionLocationsToVisit.length) / convertInt(entry.sessionLocationCount))*100"></mat-progress-bar>
+          <section>
+            <mat-progress-bar
+              [value]="((convertInt(entry.sessionLocationCount) - entry.sessionLocationsToVisit.length) / convertInt(entry.sessionLocationCount))*100"></mat-progress-bar>
           </section>
         </td>
       </ng-container>
@@ -31,4 +35,30 @@
     </tr>
     </tbody>
   </table>
+</div>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Gruppenname</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.sessionGroupName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+      <mat-header-cell *matHeaderCellDef> Ort</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.sessionLocation}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="process">
+      <mat-header-cell *matHeaderCellDef> Fortschritt</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-progress-bar
+          [value]="((convertInt(element.sessionLocationCount) - element.sessionLocationsToVisit.length) / convertInt(element.sessionLocationCount))*100"></mat-progress-bar>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>

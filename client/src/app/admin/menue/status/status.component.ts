@@ -1,7 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+
+const ELEMENT_DATA: PlaySession[] = [
+  {
+    sessionGroupName: '', sessionlastUpdated: '',
+    sessionLocation: '', sessionLocationCount: '',
+    sessionLocationsToVisit: [''], sessionRiddle: '', task: '',
+    sessionUsedRiddles: [''], session_id: ''
+  }
+];
 
 @Component({
   selector: 'app-admin-status',
@@ -14,6 +23,9 @@ export class AdminStatusComponent implements OnInit {
 
   public activePlaySessions: Array<PlaySession>;
   public currentMaximized = '';
+
+  displayedColumns = ['name', 'location', 'process'];
+  dataSource = new MatTableDataSource<PlaySession>(ELEMENT_DATA);
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }
@@ -94,7 +106,7 @@ export class AdminStatusComponent implements OnInit {
   }
 
   convertInt(s: string): number {
-    return parseInt(s);
+    return parseInt(s, 10);
   }
 }
 

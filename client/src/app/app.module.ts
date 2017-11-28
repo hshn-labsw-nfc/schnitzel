@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {AdminComponent} from './admin/admin.component';
@@ -43,6 +44,7 @@ import {UserLocationMapPopupComponent} from './user/task/location/location-map-p
 import {UserLocationCameraPopupComponent} from './user/task/location/location-camera-popup/location-camera-popup.component';
 import {UserQuizHintPopupComponent} from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
 import {MatCardModule} from '@angular/material/card';
+import {HttpModule} from '@angular/http';
 
 const routes: Routes = [
   {
@@ -149,6 +151,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
@@ -163,7 +166,8 @@ const routes: Routes = [
     MatToolbarModule,
     MatProgressBarModule,
     MatSidenavModule,
-    MatCardModule
+    MatCardModule,
+    MatTableModule
   ],
   entryComponents: [
     SharedSimpleDialogComponent,
