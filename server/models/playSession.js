@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var PlaySessionSchema = new Schema({
+const PlaySessionSchema = new Schema({
   lastUpdated: Date,
   groupName: String,
   startDate: Date,

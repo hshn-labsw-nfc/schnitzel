@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var ConfigSchema = new mongoose.Schema({
+const ConfigSchema = new mongoose.Schema({
   _id: String,
   value: {type: String, required: true}
 });
 
-var Model = mongoose.model('Config', ConfigSchema);
+const Model = mongoose.model('Config', ConfigSchema);
 
 function set(key, value, callback) {
   console.log('invoking setter');
