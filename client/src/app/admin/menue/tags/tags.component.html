@@ -3,29 +3,52 @@
 <div class="text-right">
   <button mat-raised-button color="primary" (click)="addTag()">Tag hinzufügen</button>
 </div>
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="tagID">
+        <mat-header-cell *matHeaderCellDef> tagID</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tagID}}</mat-cell>
+      </ng-container>
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead class="bg-primary">
-    <tr>
-      <th *ngFor="let entry of tableHeaders">{{entry}}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let entry of tags" id="tableRow">
-      <td>{{entry.tagID}}</td>
-      <td>{{entry.alias}}</td>
-      <td>{{entry.location}}</td>
-      <td>url/tag/#/{{entry.tagID}}</td>
-      <td class="text-right">
-        <div class="btn-group" role="group">
-          <button mat-raised-button color="primary" (click)="editTag(entry)">editieren</button>
-          <button mat-raised-button color="warn" (click)="deleteTag(entry)">entfernen</button>
-        </div>
-      </td>
-    </tr>
+      <ng-container matColumnDef="alias">
+        <mat-header-cell *matHeaderCellDef> Alias</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.alias}}</mat-cell>
+      </ng-container>
 
-    </tbody>
-  </table>
-</div>
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.location}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef> URL</mat-header-cell>
+        <mat-cell *matCellDef="let element">url/tag/#/{{element.tagID}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef> edit</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="btn-group" role="group">
+            <button mat-raised-button color="primary" (click)="editTag(element)">editieren</button>
+            <button mat-raised-button color="warn" (click)="deleteTag(element)">entfernen</button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="5"
+                   [pageSizeOptions]="[5, 10, 20, 50]">
+    </mat-paginator>
+  </div>
 </ng-container>

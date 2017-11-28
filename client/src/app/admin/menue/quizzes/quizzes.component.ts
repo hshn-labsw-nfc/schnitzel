@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AdminQuiz, AdminQuizMultipleChoice, AdminQuizSingleAnswer} from './admin-quiz';
 import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
 
@@ -9,20 +9,35 @@ import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
   templateUrl: './quizzes.component.html',
   styleUrls: ['./quizzes.component.css']
 })
-export class AdminQuizzesComponent implements OnInit {
+export class AdminQuizzesComponent implements OnInit, AfterViewInit {
   @Input() adminToken: string;
 
+  displayedColumns = ['isActive','name', 'description','_id', 'edit'];
+
+  dataSource = new MatTableDataSource();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.tableHeaders = [];
-    this.tableHeaders.push('Typ');
-    this.tableHeaders.push('Aktiv?');
-    this.tableHeaders.push('Rätselname');
-    this.tableHeaders.push('Beschreibung');
-    this.tableHeaders.push('ID');
   }
 
   public quizzes: Array<AdminQuiz>;
-  public tableHeaders: Array<string>;
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  /**
+   * Set the paginator after the view init since this component will
+   * be able to query its view for the initialized paginator.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnInit() {
     this.loadQuizzesFromServer();
@@ -49,6 +64,7 @@ export class AdminQuizzesComponent implements OnInit {
                 data[d]['isActive']));
           }
         }
+        this.dataSource.data = this.quizzes;
         console.log('initialized array', this.quizzes);
       },
       (err) => {

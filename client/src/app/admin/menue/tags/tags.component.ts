@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminTagDetailComponent} from './tag-detail/tag-detail.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AdminTag} from './admin-tag';
 
 @Component({
@@ -9,23 +9,40 @@ import {AdminTag} from './admin-tag';
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css']
 })
-export class AdminTagsComponent implements OnInit {
+export class AdminTagsComponent implements OnInit, AfterViewInit {
   @Input() adminToken: string;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    this.tableHeaders = [];
-    this.tableHeaders.push('TagID');
-    this.tableHeaders.push('Alias');
-    this.tableHeaders.push('Ort');
-    this.tableHeaders.push('Tag Url');
   }
 
   public tags: Array<AdminTag>;
-  public tableHeaders: Array<string>;
+
+  displayedColumns = ['tagID','alias', 'location','url', 'edit'];
+
+  dataSource = new MatTableDataSource();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
     this.loadTagsFromServer();
   }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  /**
+   * Set the paginator after the view init since this component will
+   * be able to query its view for the initialized paginator.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
 
   loadTagsFromServer() {
     console.log('loading current tags from server');
@@ -42,6 +59,7 @@ export class AdminTagsComponent implements OnInit {
                 data[d]['_id']));
           }
         }
+        this.dataSource.data = this.tags;
         console.log('initialized array', this.tags);
       },
       (err) => {
