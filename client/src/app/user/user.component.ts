@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {SharedSimpleDialogComponent} from '../shared/simple-dialog/simple-dialog.component';
 import {isUndefined} from 'util';
+import {QuestionMultiplechoice} from "./questionmc";
 
 @Component({
   selector: 'app-user',
@@ -128,7 +129,16 @@ export class UserComponent implements OnInit{
          */
         if(this.currentTask !== 'won') {
           this.currentLocation = new Location(dataLocation['name'], 0, 0, 0, dataLocation['image']);
-          this.currentQuestion = new QuestionSingleanswer('0', dataQuestion['description'], dataQuestion['hint'], dataQuestion['image']);
+
+          /**
+           * check if Riddle is Singleanswer or Multiple Choice
+           * @type {QuestionSingleanswer}
+           */
+          if (dataQuestion['choices'].length === 0){
+            this.currentQuestion = new QuestionSingleanswer(dataQuestion['description'],dataQuestion['question'],dataQuestion['hint'], dataQuestion['image']);
+          } else {
+            this.currentQuestion = new QuestionMultiplechoice(dataQuestion['description'],dataQuestion['question'] ,dataQuestion['choices'],dataQuestion['hint'], dataQuestion['image']);
+          }
           console.log('the new question/location', this.currentQuestion, this.currentLocation);
         }
       },
