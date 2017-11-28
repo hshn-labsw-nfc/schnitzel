@@ -11,7 +11,6 @@
       </mat-toolbar>
   </mat-sidenav>
   <button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">
-    <mat-icon>></mat-icon>
   </button>
   <div (click)="sidenav.close()">
     <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>
