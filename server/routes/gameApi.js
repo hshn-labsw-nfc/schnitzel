@@ -50,7 +50,7 @@ function startPlaySession(req, res, next) {
       }
 
       const activeTags = tags.filter(function (tag) {
-        return (tag.location !== undefined && tag.location.isActive === true);
+        return (tag.location != undefined && tag.location.isActive == true);
       }).filter(uniqueFilter('location'));
 
       console.log("activeTags", activeTags);
@@ -120,7 +120,7 @@ function advanceState(playSession, res, callback) {
       }
 
       const activeTags = tags.filter(function (tag) {
-        return (tag.location !== undefined && tag.location.isActive === true);
+        return (tag.location != undefined && tag.location.isActive == true);
       }).filter(uniqueFilter('location'));
 
       if (!playSession.locationCount) {
