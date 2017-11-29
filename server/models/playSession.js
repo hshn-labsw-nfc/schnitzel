@@ -8,14 +8,14 @@ const PlaySessionSchema = new Schema({
   endDate: Date,
   locationsToVisit: [String],
   locationCount: Number,
-  usedRiddles: [Schema.Types.ObjectId],
+  solvedRiddles: [{type: Schema.Types.ObjectId, ref: 'SolvedRiddle'}],
   task: String, // won, solveRiddle, findLocation
   riddle: {type: Schema.Types.ObjectId, ref: 'Riddle'},
   location: {type: Schema.Types.ObjectId, ref: 'Location'},
   image: Object
 });
 
-/** @class Location */
-const Location = mongoose.model('PlaySession', PlaySessionSchema);
+/** @class PlaySession */
+const PlaySession = mongoose.model('PlaySession', PlaySessionSchema);
 
-module.exports = Location;
+module.exports = PlaySession;
