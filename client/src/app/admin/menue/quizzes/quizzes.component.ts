@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {AdminQuiz, AdminQuizMultipleChoice, AdminQuizSingleAnswer} from './admin-quiz';
+import {AdminQuiz} from './admin-quiz';
 import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
 
 @Component({
@@ -12,7 +12,7 @@ import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
 export class AdminQuizzesComponent implements OnInit, AfterViewInit {
   @Input() adminToken: string;
 
-  displayedColumns = ['isActive','name', 'description','_id', 'edit'];
+  displayedColumns = ['type','isActive','name', 'description','_id', 'edit'];
 
   dataSource = new MatTableDataSource();
 
@@ -55,13 +55,15 @@ export class AdminQuizzesComponent implements OnInit, AfterViewInit {
         for (const d in data) {
           if (data.hasOwnProperty(d)) {
             this.quizzes.push(
-              new AdminQuizSingleAnswer(data[d]['answer'],
+              new AdminQuiz(data[d]['answer'],
+                data[d]['choices'],
                 data[d]['description'],
                 data[d]['hint'],
-                data[d]['name'],
-                data[d]['_id'],
+                data[d]['image'],
+                data[d]['isActive'],
                 data[d]['location'],
-                data[d]['isActive']));
+                data[d]['name'],
+                data[d]['_id']));
           }
         }
         this.dataSource.data = this.quizzes;
@@ -92,7 +94,7 @@ export class AdminQuizzesComponent implements OnInit, AfterViewInit {
 
   /**
    * Opens a new Popup dialog for editing a quiz.
-   * @param {AdminQuizSingleAnswer} quiz to edit.
+   * @param {AdminQuiz} quiz to edit.
    */
   editQuiz(quiz: AdminQuiz) {
     console.log('edit quiz', quiz._id);
@@ -109,7 +111,7 @@ export class AdminQuizzesComponent implements OnInit, AfterViewInit {
 
   /**
    * uses rest api to delete selected quiz in the database
-   * @param {AdminQuizSingleAnswer} quiz to be deleted.
+   * @param {AdminQuiz} quiz to be deleted.
    */
   deleteQuiz(quiz: AdminQuiz) {
     console.log('delete quiz', quiz._id);
@@ -124,13 +126,11 @@ export class AdminQuizzesComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getName(quiz: AdminQuiz): string {
-    if(quiz instanceof AdminQuizSingleAnswer) {
+  getType(quiz: AdminQuiz): string {
+    if(quiz.choices.length === 0){
       return 'SA';
-    }
-    if(quiz instanceof AdminQuizSingleAnswer) {
+    } else  {
       return 'MC';
     }
-    return 'unknown';
   }
 }

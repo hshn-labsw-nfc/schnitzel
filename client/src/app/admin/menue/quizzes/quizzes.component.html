@@ -11,6 +11,11 @@
   </div>
   <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef> Type</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{getType(element)}}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="isActive">
         <mat-header-cell *matHeaderCellDef> isActive</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.isActive}}</mat-cell>

@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AdminQuizMultipleChoice, AdminQuizSingleAnswer} from '../admin-quiz';
 import {AdminLocation} from '../../locations/admin-location';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar,MatSlideToggleModule} from '@angular/material';
+import {AdminQuiz} from '../admin-quiz';
 
 @Component({
   selector: 'app-admin-quiz-detail',
@@ -26,32 +26,48 @@ export class AdminQuizDetailComponent implements OnInit {
       this.createNewEntry = false;
     } else {
       console.log('location detail initialized without location');
-      this.loadDefaultsSingleAnswer();
+      this.loadDefaults();
       this.pageHeader = 'Neues Quiz Hinzufügen';
       this.createNewEntry = true;
     }
     this.loadLocations();
-    this.type = 'singleAnswer';
+    if(this.data.currentQuiz.choices.length !== 0){
+      this.type = 'multipleChoice';
+    } else {
+      this.type = 'singleAnswer';
+    }
   }
 
   /**
    * initializes quiz with default values for adding a new singleanswer quiz.
    */
-  loadDefaultsSingleAnswer() {
-    this.data.currentQuiz = new AdminQuizSingleAnswer('sample answer',
+  loadDefaults() {
+    this.data.currentQuiz = new AdminQuiz('sample answer',
+      [],
       'sample description',
       'sample hint',
-      'sample name', 'sample id', null,true);
+      null,
+      false,
+      null,
+      'sample name',
+      'sample id');
   }
 
   /**
-   * initializes quiz with default values for adding a new multiple choice quiz.
+   * removes specified choice from the array
    */
-  loadDefaultsMultipleChoice() {
-    this.data.currentQuiz = new AdminQuizMultipleChoice(['a','b','c','d'],
-      'sample description',
-      'sample hint',
-      'sample name', 'sample id', null,true);
+  removeChoice(choice: string){
+    const index = this.data.currentQuiz.choices.indexOf(choice, 0);
+    if (index > -1) {
+      this.data.currentQuiz.choices.splice(index, 1);
+    }
+  }
+
+  /**
+   * adds a choice to the array
+   */
+  addChoice(){
+    this.data.currentQuiz.choices.push('');
   }
 
   /**
@@ -88,12 +104,14 @@ export class AdminQuizDetailComponent implements OnInit {
     if (this.createNewEntry === false) {
       this.http.put('/api/admin/riddles/' + this.data.currentQuiz._id, {
         answer: this.data.currentQuiz.answer,
+        choices: this.data.currentQuiz.choices,
         description: this.data.currentQuiz.description,
         hint: this.data.currentQuiz.hint,
         name: this.data.currentQuiz.name,
         _id: this.data.currentQuiz._id,
         location: this.data.currentQuiz.location,
-        isActive: this.data.currentQuiz.isActive
+        isActive: this.data.currentQuiz.isActive,
+        image: this.data.currentQuiz.image
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         () => {
           console.log('successfully edited quiz');
@@ -114,11 +132,13 @@ export class AdminQuizDetailComponent implements OnInit {
     } else {
       this.http.post('/api/admin/riddles', {
         answer: this.data.currentQuiz.answer,
+        choices: this.data.currentQuiz.choices,
         description: this.data.currentQuiz.description,
         hint: this.data.currentQuiz.hint,
         name: this.data.currentQuiz.name,
         location: this.data.currentQuiz.location,
-        isActive: this.data.currentQuiz.isActive
+        isActive: this.data.currentQuiz.isActive,
+        image: this.data.currentQuiz.image
       }, {headers: new HttpHeaders().set('X-Auth-Token', this.data.adminToken)}).subscribe(
         () => {
           console.log('successfully edited quiz');
@@ -175,17 +195,33 @@ export class AdminQuizDetailComponent implements OnInit {
     this.data.currentQuiz.image.base64 = btoa(binaryString);
   }
 
+  /**
+   * converts singleanswer quiz to multiplechoice
+   */
+  convertToMultipleChoice(){
+    this.data.currentQuiz.choices = [];
+    this.data.currentQuiz.choices.push(this.data.currentQuiz.answer);
+    this.type = 'multipleChoice';
+  }
+
+  /**
+   * converts multiplechoice quiz to singleanswer
+   */
+  convertToSingleAnswer(){
+    this.data.currentQuiz.choices = [];
+    this.type = 'singleAnswer';
+  }
+
+  /**
+   * handles mc/singleanswer toggle switch
+   * @param {boolean} mc
+   */
   changeType(mc: boolean) {
-    if(!mc && this.type !== 'multipleChoice') {
-      if (this.createNewEntry){
-        this.loadDefaultsMultipleChoice();
-      }
-      this.type = 'multipleChoice';
-    } else if (mc && this.type !== 'singleAnswer') {
-      if (this.createNewEntry){
-        this.loadDefaultsSingleAnswer();
-      }
-      this.type = 'singleAnswer';
-    }
+   if(mc && this.type !== 'multipleChoice') {
+     this.convertToMultipleChoice();
+   }
+   if(!mc && this.type !== 'singleAnswer') {
+      this.convertToSingleAnswer();
+   }
   }
 }

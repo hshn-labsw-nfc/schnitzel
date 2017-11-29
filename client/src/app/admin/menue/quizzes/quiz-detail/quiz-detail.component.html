@@ -1,59 +1,6 @@
-<!--
-<h1 class="page-header">{{pageHeader}}</h1>
-<form role="form" (ngSubmit)="submit()">
-  <div class="form-group">
-    <label class="control-label">
-      Rätselname
-    </label>
-    <input [(ngModel)]="currentQuiz.name" name="name" class="form-control" required autofocus>
-  </div>
-
-  <div class="form-group">
-    <label class="control-label">
-      Beschreibung
-    </label>
-    <textarea [(ngModel)]="currentQuiz.description" name="description" class="form-control" rows="10" required></textarea>
-  </div>
-
-  <div class="form-group">
-    <label class="control-label">
-      Antwort
-    </label>
-    <input [(ngModel)]="currentQuiz.answer" name="answer" class="form-control" required>
-  </div>
-  <div class="form-group">
-    <label class="control-label">
-      Hinweis
-    </label>
-    <input [(ngModel)]="currentQuiz.hint" name="hint" class="form-control">
-  </div>
-  <div class="form-group">
-    <label class="control-label">Bild Datei</label>
-    <input class="form-control" accept="image/*" type="file" (change)="handleFileSelect($event)">
-    <br/>
-    <img class="img-responsive center-block" src="data:{{currentQuiz.image.filetype}};base64,{{currentQuiz.image.base64}}">
-  </div>
-
-  <div class="form-group">
-    <label class="control-label">Verknüpfter Ort</label>
-    <div>
-      <p>Falls ausgewählt, wird dieses Rätsel an dem ausgewähltem Ort abgefragt</p>
-    </div>
-    <select class="form-control" [(ngModel)]="currentQuiz.location" name="locationSelect">
-      <option *ngFor="let entry of locations" [value]="entry._id" >{{entry._id}}</option>
-    </select>
-  </div>
-
-  <div class="text-right">
-    <input class="btn btn-success" type="submit" value="Speichern">
-    <a class="btn btn-default" (click)="cancel()">Abbrechen</a>
-  </div>
-</form>
--->
-
 <h1 mat-dialog-title>{{pageHeader}}</h1>
 <div mat-dialog-content>
-  <mat-slide-toggle *ngIf="createNewEntry" #slider (click)="changeType(slider.checked)">Multiple Choice</mat-slide-toggle>
+  <mat-slide-toggle #slider (change)="changeType(slider.checked)">Multiple Choice</mat-slide-toggle>
   <div class="form-group">
     <label class="control-label">
       Rätselname
@@ -73,19 +20,21 @@
     </div>
   </div>
 
-  <ng-container *ngIf="type=='singleAnswer'">
-    <div class="form-group">
-      <label class="control-label">
-        Antwort
-      </label>
-      <input [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control" required>
-    </div>
-  </ng-container>
+  <div class="form-group">
+    <label class="control-label">
+      Antwort
+    </label>
+    <input [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control" required>
+  </div>
+
   <ng-container *ngIf="type=='multipleChoice'">
     <div class="form-group">
-      <div *ngFor="let entry of data.currentQuiz.answer">
-        <input value="{{entry}}" name="answer" class="form-control" required>
+      Antwortmöglichkeiten:
+      <div *ngFor="let entry of data.currentQuiz.choices; let i=index">
+        <input [(ngModel)]="data.currentQuiz.choices[i]" class="form-control">
+        <button mat-raised-button color="primary" (click)="removeChoice(entry)">-</button>
       </div>
+      <button mat-raised-button color="primary" (click)="addChoice()">+</button>
     </div>
   </ng-container>
 
