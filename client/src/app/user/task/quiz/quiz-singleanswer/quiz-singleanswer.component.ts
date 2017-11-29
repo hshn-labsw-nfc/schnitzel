@@ -26,7 +26,8 @@ export class UserQuizSingleanswerComponent implements OnInit, OnChanges {
   @Output()
   quizLogout: EventEmitter<any> = new EventEmitter();
 
-
+  @Output()
+  quizPointEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient, public snackBar: MatSnackBar, public dialog: MatDialog) {
   }
@@ -74,6 +75,9 @@ export class UserQuizSingleanswerComponent implements OnInit, OnChanges {
               duration: 2000,
               horizontalPosition: 'center'
             });
+            if (!isNullOrUndefined(data['points'])) {
+              this.quizPointEmitter.emit(data['points']);
+            }
             this.quizOutput.emit();
           } else {
             console.log('wrong answer');

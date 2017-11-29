@@ -12,9 +12,11 @@ export class UserScoreComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.points = 0;
   }
 
   increasePoints(amount: number): void{
     this.points += amount;
+    console.log('Points got increased by',amount);
   }
 }

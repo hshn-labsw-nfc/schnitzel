@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Location} from './location';
 import {QuestionSingleanswer} from './questionsingleanswer';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {SharedSimpleDialogComponent} from '../shared/simple-dialog/simple-dialog.component';
-import {isUndefined} from 'util';
-import {QuestionMultiplechoice} from "./questionmc";
+import {isNullOrUndefined, isUndefined} from 'util';
+import {QuestionMultiplechoice} from './questionmc';
 
 @Component({
   selector: 'app-user',
@@ -15,6 +15,7 @@ import {QuestionMultiplechoice} from "./questionmc";
 })
 export class UserComponent implements OnInit{
 
+  points: number;
   gameRunning: boolean;
   sessionID: string;
   progressCount: number;
@@ -24,6 +25,8 @@ export class UserComponent implements OnInit{
   currentTask: string;
   startDate: Date = null;
   endDate: Date = null;
+
+  @ViewChild('score') score;
 
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,  public snackBar: MatSnackBar) { }
@@ -54,6 +57,10 @@ export class UserComponent implements OnInit{
     } else {
       return false;
     }
+  }
+
+  increasePoints(amount: number) {
+    this.score.increasePoints(amount);
   }
 
   handleScannedTag() {
@@ -109,6 +116,13 @@ export class UserComponent implements OnInit{
         this.progressCount = dataProgress['count'];
         this.progressDone = dataProgress['done'];
         this.currentTask = data['task'];
+
+        /**
+         * If server transmitted valid points the userscore gets initialized
+         */
+        if(!isNullOrUndefined(data['points'])){
+          this.points = data['points'];
+        }
 
         /**
          * If server transmitted a startdate the date gets parsed

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {QuestionSingleanswer} from '../questionsingleanswer';
 import {Location} from '../location';
-import {QuestionMultiplechoice} from "../questionmc";
+import {QuestionMultiplechoice} from '../questionmc';
 
 @Component({
   selector: 'app-user-task',
@@ -20,6 +20,9 @@ export class UserTaskComponent implements OnInit {
 
   @Output()
   taskLogout: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  taskPointEmitter: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
@@ -45,6 +48,9 @@ export class UserTaskComponent implements OnInit {
     this.taskLogout.emit();
   }
 
+  passThroughPoints(amount: number){
+    this.taskPointEmitter.emit(amount);
+  }
 
   isQuestionSingleanswer(): boolean {
     return (this.question instanceof QuestionSingleanswer);

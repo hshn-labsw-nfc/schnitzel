@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {QuestionSingleanswer} from "../../../questionsingleanswer";
-import {QuestionMultiplechoice} from "../../../questionmc";
-import {HttpClient} from "@angular/common/http";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {isNullOrUndefined} from "util";
-import {UserQuizHintPopupComponent} from "../quiz-hint-popup/quiz-hint-popup.component";
-import {UserLocationMapPopupComponent} from "../../location/location-map-popup/location-map-popup.component";
-import {SharedSimpleDialogComponent} from "../../../../shared/simple-dialog/simple-dialog.component";
+import {QuestionSingleanswer} from '../../../questionsingleanswer';
+import {QuestionMultiplechoice} from '../../../questionmc';
+import {HttpClient} from '@angular/common/http';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {isNullOrUndefined} from 'util';
+import {UserQuizHintPopupComponent} from '../quiz-hint-popup/quiz-hint-popup.component';
+import {UserLocationMapPopupComponent} from '../../location/location-map-popup/location-map-popup.component';
+import {SharedSimpleDialogComponent} from '../../../../shared/simple-dialog/simple-dialog.component';
 
 @Component({
   selector: 'app-user-quiz-multiplechoice',
@@ -24,6 +24,9 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
 
   @Output()
   quizLogout: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  quizPointEmitter: EventEmitter<any> = new EventEmitter();
 
 
 
@@ -70,6 +73,9 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
               duration: 2000,
               horizontalPosition: 'center'
             });
+            if (!isNullOrUndefined(data['points'])) {
+              this.quizPointEmitter.emit(data['points']);
+            }
             this.quizOutput.emit();
           } else {
             console.log('wrong answer');
