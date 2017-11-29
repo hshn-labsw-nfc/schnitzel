@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminLocationDetailComponent} from './location-detail/location-detail.component';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AdminLocation} from './admin-location';
+import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
 
 @Component({
   selector: 'app-admin-locations',
@@ -96,15 +97,27 @@ export class AdminLocationsComponent implements OnInit, AfterViewInit {
   }
 
   deleteLocation(location: AdminLocation) {
-    console.log('delete location', location._id);
-    this.http.delete('/api/admin/locations/' + location._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
-      () => {
-        console.log('successfully deleted location', location._id);
-        this.loadLocationsFromServer();
-      },
-      (err) => {
-        console.log('error deleting location', err);
+    const d = this.dialog.open(SharedSimpleDialogComponent, {
+      data: {
+        title: 'Location Löschen',
+        message: 'Möchtest du wirklich diese Location löschen?',
+        button1: 'Löschen',
+        button2: 'Abbrechen'
       }
-    );
+    });
+    d.afterClosed().subscribe(result => {
+      if (result === 'b1') {
+        console.log('delete location', location._id);
+        this.http.delete('/api/admin/locations/' + location._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+          () => {
+            console.log('successfully deleted location', location._id);
+            this.loadLocationsFromServer();
+          },
+          (err) => {
+            console.log('error deleting location', err);
+          }
+        );
+      }
+    });
   }
 }

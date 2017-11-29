@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AdminQuiz} from './admin-quiz';
 import {AdminQuizDetailComponent} from './quiz-detail/quiz-detail.component';
+import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
 
 @Component({
   selector: 'app-admin-quizzes',
@@ -114,16 +115,28 @@ export class AdminQuizzesComponent implements OnInit, AfterViewInit {
    * @param {AdminQuiz} quiz to be deleted.
    */
   deleteQuiz(quiz: AdminQuiz) {
-    console.log('delete quiz', quiz._id);
-    this.http.delete('/api/admin/riddles/' + quiz._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
-      () => {
-        console.log('successfully deleted quiz', quiz._id);
-        this.loadQuizzesFromServer();
-      },
-      (err) => {
-        console.log('error deleting quiz', err);
+    const d = this.dialog.open(SharedSimpleDialogComponent, {
+      data: {
+        title: 'Quiz Löschen',
+        message: 'Möchtest du wirklich dieses Quiz löschen?',
+        button1: 'Löschen',
+        button2: 'Abbrechen'
       }
-    );
+    });
+    d.afterClosed().subscribe(result => {
+      if (result === 'b1') {
+        console.log('delete quiz', quiz._id);
+        this.http.delete('/api/admin/riddles/' + quiz._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+          () => {
+            console.log('successfully deleted quiz', quiz._id);
+            this.loadQuizzesFromServer();
+          },
+          (err) => {
+            console.log('error deleting quiz', err);
+          }
+        );
+      }
+    });
   }
 
   /**

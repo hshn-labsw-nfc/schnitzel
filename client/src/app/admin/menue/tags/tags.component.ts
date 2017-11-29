@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminTagDetailComponent} from './tag-detail/tag-detail.component';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {AdminTag} from './admin-tag';
+import {SharedSimpleDialogComponent} from "../../../shared/simple-dialog/simple-dialog.component";
 
 @Component({
   selector: 'app-admin-tags',
@@ -95,15 +96,27 @@ export class AdminTagsComponent implements OnInit, AfterViewInit {
   }
 
   deleteTag(tag: AdminTag) {
-    console.log('delete quiz', tag._id);
-    this.http.delete('/api/admin/tags/' + tag._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
-      () => {
-        console.log('successfully deleted Tag', tag._id);
-        this.loadTagsFromServer();
-      },
-      (err) => {
-        console.log('error deleting Tag//', err);
+    const d = this.dialog.open(SharedSimpleDialogComponent, {
+      data: {
+        title: 'Quiz Löschen',
+        message: 'Möchtest du wirklich diesen Tag löschen?',
+        button1: 'Löschen',
+        button2: 'Abbrechen'
       }
-    );
+    });
+    d.afterClosed().subscribe(result => {
+      if (result === 'b1') {
+        console.log('delete quiz', tag._id);
+        this.http.delete('/api/admin/tags/' + tag._id, {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
+          () => {
+            console.log('successfully deleted Tag', tag._id);
+            this.loadTagsFromServer();
+          },
+          (err) => {
+            console.log('error deleting Tag//', err);
+          }
+        );
+      }
+    });
   }
 }
