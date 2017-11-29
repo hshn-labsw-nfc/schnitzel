@@ -132,6 +132,7 @@ export class UserComponent implements OnInit{
 
           /**
            * check if Riddle is Singleanswer or Multiple Choice
+           * choices array is empty if the riddle is a singleanswer
            * @type {QuestionSingleanswer}
            */
           if (dataQuestion['choices'].length === 0){
@@ -173,6 +174,9 @@ export class UserComponent implements OnInit{
     return date;
   }
 
+  /**
+   * clears local storage
+   */
   clearLocalSession(): void {
     localStorage.clear();
     this.gameRunning = false;
