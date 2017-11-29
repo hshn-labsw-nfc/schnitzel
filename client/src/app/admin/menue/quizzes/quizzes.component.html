@@ -1,14 +1,13 @@
 <ng-container>
-<h1 class="page-header">Quizzes</h1>
-<div class="text-right">
-  <button mat-raised-button color="primary" (click)="addQuiz()">Rätsel hinzufügen</button>
-</div>
+  <h1 class="mat-display-2">Rätsel</h1>
 
-  <div class="example-header">
+  <div class="container">
+  <button mat-raised-button color="primary" (click)="addQuiz()">Rätsel hinzufügen</button>
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
+
   <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="type">
