@@ -31,13 +31,20 @@ export class UserTaskComponent implements OnInit {
     return (this.currentTask !== 'findLocation');
   }
 
+  /**
+   * passes the event through this component for the quiz solving
+   */
   solvedQuiz() {
     this.taskOutput.emit();
   }
 
+  /**
+   * passes the event through this component for logging out
+   */
   loggedOut(): void {
     this.taskLogout.emit();
   }
+
 
   isQuestionSingleanswer(): boolean {
     return (this.question instanceof QuestionSingleanswer);

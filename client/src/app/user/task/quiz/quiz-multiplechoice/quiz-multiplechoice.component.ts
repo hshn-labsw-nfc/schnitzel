@@ -39,6 +39,9 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
     return !isNullOrUndefined(this.question.getImage());
   }
 
+  /**
+   * opens popup dialog for the hint
+   */
   toggleHint() {
     const d = this.dialog.open(UserQuizHintPopupComponent, {
       data: {
@@ -47,6 +50,10 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
     });
   }
 
+  /**
+   * sends answer to the server and checks if its correct
+   * @param {string} answer
+   */
   solveQuestion(answer: string) {
     console.log('clicked solvebutton', answer);
     if (isNullOrUndefined(answer) || answer === '') {
@@ -79,6 +86,9 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
     }
   }
 
+  /**
+   * opens popup for the map
+   */
   openMap(): void {
     const d = this.dialog.open(UserLocationMapPopupComponent, {
       data: {
@@ -87,6 +97,9 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
     });
   }
 
+  /**
+   * deletes the local session when the user accepts the dialog
+   */
   abbrechen() {
     const deleteSession = this.dialog.open(SharedSimpleDialogComponent, {data: {
       title: 'Schnitzeljagd löschen',

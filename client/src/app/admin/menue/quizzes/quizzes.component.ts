@@ -126,6 +126,10 @@ export class AdminQuizzesComponent implements OnInit, AfterViewInit {
     );
   }
 
+  /**
+   * gets a string description of the quiz
+   * @param quiz
+   */
   getType(quiz: AdminQuiz): string {
     if(quiz.choices.length === 0){
       return 'SA';
