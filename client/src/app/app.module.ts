@@ -46,6 +46,7 @@ import {UserQuizHintPopupComponent} from './user/task/quiz/quiz-hint-popup/quiz-
 import {MatCardModule} from '@angular/material/card';
 import {HttpModule} from '@angular/http';
 import {MatPaginatorModule} from '@angular/material';
+import { UserScoreComponent } from './user/score/score.component';
 
 const routes: Routes = [
   {
@@ -147,7 +148,8 @@ const routes: Routes = [
     UserLocationCameraPopupComponent,
     UserQuizHintPopupComponent,
     UserQuizMultiplechoiceComponent,
-    UserQuizSingleanswerComponent
+    UserQuizSingleanswerComponent,
+    UserScoreComponent
 
   ],
   imports: [
