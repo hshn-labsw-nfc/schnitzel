@@ -16,25 +16,24 @@
               matAutosizeMaxRows="5"></textarea>
     </mat-form-field>
   </div>
-  <div class="form-group">
-    <div>
-      <mat-checkbox [(ngModel)]="data.currentQuiz.isActive">Aktiv?</mat-checkbox>
-    </div>
-  </div>
+
 
   <div class="form-group">
     <mat-form-field>
-      <input matInput placeholder="Antwort" [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control" required>
+      <input matInput placeholder="Antwort" [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control"
+             required>
     </mat-form-field>
   </div>
 
   <ng-container *ngIf="type=='multipleChoice'">
     <div class="form-group">
-      Antwortmöglichkeiten:
       <div *ngFor="let entry of data.currentQuiz.choices; let i=index">
-        <input [(ngModel)]="data.currentQuiz.choices[i]" class="form-control">
-        <button mat-raised-button color="primary" (click)="removeChoice(entry)">-</button>
+        <mat-form-field>
+          <input matInput placeholder="Antwortmöglichkeiten" [(ngModel)]="data.currentQuiz.choices[i]"
+                 class="form-control">
+        </mat-form-field>
       </div>
+      <button mat-raised-button color="primary" (click)="removeChoice(entry)">-</button>
       <button mat-raised-button color="primary" (click)="addChoice()">+</button>
     </div>
   </ng-container>
@@ -42,16 +41,22 @@
 
   <div class="form-group">
     <mat-form-field>
-    <input matInput placeholder="Hinweis" [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
+      <input matInput placeholder="Hinweis" [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
     </mat-form-field>
   </div>
 
   <div>
     <mat-form-field>
-      <mat-select class="form-control" placeholder="Rätsel an Ort binden" [(ngModel)]="data.currentQuiz.location" name="locationSelect">
+      <mat-select class="form-control" placeholder="Rätsel an Ort binden" [(ngModel)]="data.currentQuiz.location"
+                  name="locationSelect">
         <mat-option *ngFor="let entry of locations" [value]="entry._id">{{entry._id}}</mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+</div>
+<div class="form-group">
+  <div>
+    <mat-checkbox [(ngModel)]="data.currentQuiz.isActive">Rätsel aktiv?</mat-checkbox>
   </div>
 </div>
 <div mat-dialog-actions>
