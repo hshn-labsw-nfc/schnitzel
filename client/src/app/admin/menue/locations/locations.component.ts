@@ -14,15 +14,11 @@ export class AdminLocationsComponent implements OnInit, AfterViewInit {
   @Input() adminToken: string;
 
   constructor(private http: HttpClient, private dialog: MatDialog) {
-    //this.tableHeaders = [];
-    //this.tableHeaders.push('Aktiv?');
-    //this.tableHeaders.push('Raumname');
-    //this.tableHeaders.push('Beschreibung');
   }
 
   public locations : Array<AdminLocation>;
 
-  displayedColumns = ['isActive','name', 'description', 'edit'];
+  displayedColumns = ['isActive','name', 'description','id', 'edit'];
 
   dataSource = new MatTableDataSource();
 

@@ -24,6 +24,11 @@
       <mat-cell *matCellDef="let element"> {{element.sessionLocation}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef> Zeit</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{parseTime(element)}}</mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="progress">
       <mat-header-cell *matHeaderCellDef> Fortschritt</mat-header-cell>
       <mat-cell *matCellDef="let element">

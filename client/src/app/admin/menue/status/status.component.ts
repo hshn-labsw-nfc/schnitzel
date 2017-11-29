@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -16,7 +17,7 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
   public activePlaySessions: Array<PlaySession>;
   public currentMaximized = '';
 
-  displayedColumns = ['name', 'location', 'progress'];
+  displayedColumns = ['name', 'location','time', 'progress'];
 
   dataSource = new MatTableDataSource();
 
@@ -91,6 +92,50 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
+  parseTime(session: PlaySession): string{
+    if(session.startDate !== null) {
+
+      let currentTime: Date;
+
+      if (session.endDate !== null) {
+        currentTime = new Date(session.endDate.getTime() - session.startDate.getTime());
+      } else {
+        currentTime = new Date((new Date().getTime() - session.startDate.getTime()));
+      }
+      currentTime = new Date(currentTime.getTime() + (currentTime.getTimezoneOffset() * 60 * 1000));
+
+      let time = '';
+
+      if (currentTime.getHours() < 10) {
+        time += '0';
+        time += currentTime.getHours();
+      } else {
+        time += currentTime.getHours();
+      }
+
+      time += ':';
+
+      if (currentTime.getMinutes() < 10) {
+        time += '0';
+        time += currentTime.getMinutes();
+      } else {
+        time += currentTime.getMinutes();
+      }
+
+      time += ':';
+
+      if (currentTime.getSeconds() < 10) {
+        time += '0';
+        time += currentTime.getSeconds();
+      } else {
+        time += currentTime.getSeconds();
+      }
+
+      time += '';
+      return time;
+    }
+  }
+
   loadSessions() {
     console.log('loading current play sessions');
     this.http.get('/api/admin/playsessions', {headers: new HttpHeaders().set('X-Auth-Token', this.adminToken)}).subscribe(
@@ -98,7 +143,7 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
         this.activePlaySessions = [];
         for (const d in data) {
           if (data.hasOwnProperty(d)) {
-            this.activePlaySessions.push(
+            const playSession =
               new PlaySession(data[d]['groupName'],
                 data[d]['lastUpdated'],
                 data[d]['location'],
@@ -107,7 +152,19 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
                 data[d]['riddle'],
                 data[d]['task'],
                 data[d]['usedRiddles'],
-                data[d]['_id']));
+                data[d]['_id'],
+                null,
+                null,);
+
+
+            if(!isNullOrUndefined(data[d]['startDate'])){
+              playSession.startDate = new Date(data[d]['startDate']);
+            }
+            if(!isNullOrUndefined(data[d]['endDate'])){
+              playSession.endDate = new Date(data[d]['endDate']);
+            }
+
+            this.activePlaySessions.push(playSession);
           }
         }
         /**
@@ -140,7 +197,9 @@ export class PlaySession {
               public sessionLocationsToVisit: Array<string>,
               public sessionRiddle: string, public task: string,
               public sessionUsedRiddles: Array<string>,
-              public session_id: string) {
+              public session_id: string,
+              public startDate: Date,
+              public endDate: Date) {
 
   }
 }
