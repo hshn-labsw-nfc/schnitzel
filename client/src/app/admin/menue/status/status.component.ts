@@ -17,7 +17,7 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
   public activePlaySessions: Array<PlaySession>;
   public currentMaximized = '';
 
-  displayedColumns = ['name', 'location','time', 'progress'];
+  displayedColumns = ['name', 'location','time','lastActive', 'progress'];
 
   dataSource = new MatTableDataSource();
 
@@ -92,9 +92,8 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  parseTime(session: PlaySession): string{
+  parseTimeSession(session: PlaySession): string {
     if(session.startDate !== null) {
-
       let currentTime: Date;
 
       if (session.endDate !== null) {
@@ -103,37 +102,53 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
         currentTime = new Date((new Date().getTime() - session.startDate.getTime()));
       }
       currentTime = new Date(currentTime.getTime() + (currentTime.getTimezoneOffset() * 60 * 1000));
+      return this.parseTimeToString(currentTime);
+    }
+    return '';
+  }
 
+  parseTimeLast(session: PlaySession): string {
+    if(session.sessionlastUpdated !== null) {
+      let currentTime: Date;
+
+      currentTime = new Date((new Date().getTime() - session.sessionlastUpdated.getTime()));
+
+      currentTime = new Date(currentTime.getTime() + (currentTime.getTimezoneOffset() * 60 * 1000));
+      return this.parseTimeToString(currentTime);
+    }
+    return '';
+  }
+
+  parseTimeToString(interval: Date): string{
       let time = '';
 
-      if (currentTime.getHours() < 10) {
+      if (interval.getHours() < 10) {
         time += '0';
-        time += currentTime.getHours();
+        time += interval.getHours();
       } else {
-        time += currentTime.getHours();
+        time += interval.getHours();
       }
 
       time += ':';
 
-      if (currentTime.getMinutes() < 10) {
+      if (interval.getMinutes() < 10) {
         time += '0';
-        time += currentTime.getMinutes();
+        time += interval.getMinutes();
       } else {
-        time += currentTime.getMinutes();
+        time += interval.getMinutes();
       }
 
       time += ':';
 
-      if (currentTime.getSeconds() < 10) {
+      if (interval.getSeconds() < 10) {
         time += '0';
-        time += currentTime.getSeconds();
+        time += interval.getSeconds();
       } else {
-        time += currentTime.getSeconds();
+        time += interval.getSeconds();
       }
 
       time += '';
       return time;
-    }
   }
 
   loadSessions() {
@@ -145,7 +160,7 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
           if (data.hasOwnProperty(d)) {
             const playSession =
               new PlaySession(data[d]['groupName'],
-                data[d]['lastUpdated'],
+                null,
                 data[d]['location'],
                 data[d]['locationCount'],
                 data[d]['locationsToVisit'],
@@ -162,6 +177,9 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
             }
             if(!isNullOrUndefined(data[d]['endDate'])){
               playSession.endDate = new Date(data[d]['endDate']);
+            }
+            if(!isNullOrUndefined(data[d]['lastUpdated'])){
+              playSession.sessionlastUpdated = new Date(data[d]['lastUpdated']);
             }
 
             this.activePlaySessions.push(playSession);
@@ -191,7 +209,7 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
 
 export class PlaySession {
   constructor(public sessionGroupName: string,
-              public sessionlastUpdated: string,
+              public sessionlastUpdated: Date,
               public sessionLocation: string,
               public sessionLocationCount: string,
               public sessionLocationsToVisit: Array<string>,

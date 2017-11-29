@@ -25,8 +25,13 @@
     </ng-container>
 
     <ng-container matColumnDef="time">
-      <mat-header-cell *matHeaderCellDef> Zeit</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{parseTime(element)}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef> Spielzeit</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{parseTimeSession(element)}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastActive">
+      <mat-header-cell *matHeaderCellDef> Zuletzt aktiv vor</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{parseTimeLast(element)}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="progress">
