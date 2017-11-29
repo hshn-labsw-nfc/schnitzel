@@ -1,7 +1,7 @@
 // TODO: Improve errormessages: hide the real messages, write a errorhandler, ...
 
-var express = require('express');
-var authentificator = require('./authMiddleware');
+const express = require('express');
+const authenticator = require('./authMiddleware');
 
 function getEntries(Model){
     return function(req, res, next){
@@ -17,7 +17,7 @@ function getEntries(Model){
 
 function getEntry(Model) {
     return function (req, res, next) {
-        var id = req.params.id;
+        const id = req.params.id;
         Model.findById(id, function (err, entry) {
             if (err) {
                 res.send(err);
@@ -30,7 +30,7 @@ function getEntry(Model) {
 
 function createEntry(Model) {
     return function (req, res, next) {
-        var model = new Model();
+        const model = new Model();
         Model.schema.eachPath(function(path) {
             if(req.body[path]){
                 model[path] = req.body[path];
@@ -50,7 +50,7 @@ function createEntry(Model) {
 function updateEntry(Model) {
     return function (req, res, next) {
         console.log("req",req.body);
-        var id = req.params.id;
+        const id = req.params.id;
         Model.findById(id, function (err, entry) {
             if (err) {
                 res.send(err);
@@ -74,7 +74,7 @@ function updateEntry(Model) {
 
 function deleteEntry(Model) {
     return function (req, res, next) {
-        var id = req.params.id;
+        const id = req.params.id;
         Model.remove({
             _id: id
         }, function (err, entry) {
@@ -88,8 +88,8 @@ function deleteEntry(Model) {
 }
 
 function buildRouter(Model){
-    var router = express.Router();
-    router.use(authentificator);
+    const router = express.Router();
+    router.use(authenticator);
     router.route('/')
         .get(getEntries(Model))
         .post(createEntry(Model));

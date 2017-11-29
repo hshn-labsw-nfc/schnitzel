@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Location = require('../models/location');
 const Riddle = require('../models/riddle');
+const SolvedRiddle = require('../models/solvedRiddle');
 const Tag = require('../models/tag');
 const PlaySession = require('../models/playSession');
 
@@ -16,12 +17,14 @@ router.get('/sessions/:sessionid', getState);
 router.post('/sessions/:sessionid/riddle', solveRiddle);
 router.post('/sessions/:sessionid/location', checkLocation);
 
+const SINGLE_ANSWER_POINTS = 20;
+const MULTI_ANSWER_POINTS = 20;
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function getAndRemoveRandomElement(arr) {
-  console.log(arr);
   return arr.splice(getRandomInt(0, arr.length), 1)[0];
 }
 
@@ -80,9 +83,9 @@ function startPlaySession(req, res, next) {
             return (!riddle.isActive);
           });
 
-          console.log("nonLocationRiddles", nonLocationRiddles);
-          console.log("locationRiddles", locationRiddles);
-          console.log("inactiveRiddles", inactiveRiddles);
+          // console.log("nonLocationRiddles", nonLocationRiddles);
+          // console.log("locationRiddles", locationRiddles);
+          // console.log("inactiveRiddles", inactiveRiddles);
 
           const riddlecount = nonLocationRiddles.length + locationRiddles.length;
           //TODO way more complicated then this
@@ -177,6 +180,18 @@ function _saveState(playSession, res, callback) {
   });
 }
 
+function _saveSolvedRiddles(solvedRiles, res, callback) {
+  solvedRiles.save(function (err, savedSolvedRiles) {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    if (callback) {
+      callback(savedSolvedRiles);
+    }
+  });
+}
+
 function _finishAdvanceState(playSession, res, callback) {
   const handler = new ResponseHandler(res);
 
@@ -192,9 +207,12 @@ function _finishAdvanceState(playSession, res, callback) {
         return;
       }
       playSession.riddle = _getRiddleID(playSession, riddles);
-      playSession.usedRiddles.push(playSession.riddle);
+      const solvedRiddle = new SolvedRiddle();
+      solvedRiddle.riddle = playSession.riddle;
+      solvedRiddle.tries = 0;
+      SolvedRiddle.create(solvedRiddle);
 
-
+      playSession.solvedRiddles.push(solvedRiddle);
       _saveState(playSession, res, callback);
     });
   } else {
@@ -206,7 +224,7 @@ function _finishAdvanceState(playSession, res, callback) {
 function _getRiddleID(session, riddles) {
 
   const unusedRiddles = riddles.filter(function (riddle) {
-    return session.usedRiddles.indexOf(riddle._id) === -1;
+    return session.solvedRiddles.indexOf(riddle._id) === -1;
   });
 
   const nonLocationRiddles = unusedRiddles.filter(function (riddle) {
@@ -258,6 +276,7 @@ async function getState(req, res, next) {
 function solveRiddle(req, res, next) {
   const sessionID = req.params.sessionid;
   const answer = req.body.answer;
+  console.log("solveRiddle:", req.body);
   if (!answer) {
     res.send(new Error('No answer provided'));
     return;
@@ -282,15 +301,38 @@ function solveRiddle(req, res, next) {
         res.send(err);
         return;
       }
-      if (riddle.answer.toLowerCase().trim() === answer.toLowerCase().trim()) {
-        advanceState(session, res, function () {
-          res.send({correctAnswer: true});
-        });
-      } else {
-        res.send({correctAnswer: false});
-      }
+      SolvedRiddle.findById(session.solvedRiddles[session.solvedRiddles.length - 1], function (err, solvedRiddle) {
+        if (err) {
+          res.send(err);
+        }
+        solvedRiddle.tries++;
+        console.log("Tries:", solvedRiddle.tries);
+
+        if (riddle.answer.toLowerCase().trim() === answer.toLowerCase().trim()) {
+          advanceState(session, res, function () {
+            solvedRiddle.points = _getPoints(riddle, solvedRiddle);
+            console.log("SolvedRiddle:", solvedRiddle);
+            _saveSolvedRiddles(solvedRiddle, res);
+            res.send({correctAnswer: true, points: solvedRiddle.points});
+          });
+        } else {
+          _saveSolvedRiddles(solvedRiddle, res);
+          res.send({correctAnswer: false, points: solvedRiddle.points});
+        }
+      });
     });
   });
+}
+
+function _getPoints(riddle, solvedRiddle) {
+  if (riddle.choices.length === 0) {
+    return SINGLE_ANSWER_POINTS;
+  } else {
+    if (solvedRiddle.tries >= riddle.choices.length) {
+      return 0;
+    }
+    return Math.floor(MULTI_ANSWER_POINTS / solvedRiddle.tries);
+  }
 }
 
 function updateHeat(location, change, callback) {

@@ -2,17 +2,19 @@
 <div mat-dialog-content>
   <mat-slide-toggle #slider (change)="changeType(slider.checked)">Multiple Choice</mat-slide-toggle>
   <div class="form-group">
-    <label class="control-label">
-      Rätselname
-    </label>
-    <input [(ngModel)]="data.currentQuiz.name" name="name" class="form-control" required autofocus>
+    <mat-form-field>
+      <input matInput placeholder="Rätselname" [(ngModel)]="data.currentQuiz.name" name="name" class="form-control"
+             required autofocus>
+    </mat-form-field>
   </div>
 
   <div class="form-group">
-    <label class="control-label">
-      Beschreibung
-    </label>
-    <textarea [(ngModel)]="data.currentQuiz.description" name="description" class="form-control" rows="10" required></textarea>
+    <mat-form-field>
+    <textarea matInput placeholder="Beschreibung" [(ngModel)]="data.currentQuiz.description" name="description"
+              class="form-control"
+              required matTextareaAutosize matAutosizeMinRows="2"
+              matAutosizeMaxRows="5"></textarea>
+    </mat-form-field>
   </div>
   <div class="form-group">
     <div>
@@ -21,10 +23,9 @@
   </div>
 
   <div class="form-group">
-    <label class="control-label">
-      Antwort
-    </label>
-    <input [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control" required>
+    <mat-form-field>
+      <input matInput placeholder="Antwort" [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control" required>
+    </mat-form-field>
   </div>
 
   <ng-container *ngIf="type=='multipleChoice'">
@@ -39,21 +40,20 @@
   </ng-container>
 
 
-
   <div class="form-group">
-    <label class="control-label">
-      Hinweis
-    </label>
-    <input [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
+    <mat-form-field>
+    <input matInput placeholder="Hinweis" [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
+    </mat-form-field>
   </div>
-  <div class="form-group">
-    <label class="control-label">Verknüpfter Ort</label>
-    <div>
-      <p>Falls ausgewählt, wird dieses Rätsel an dem ausgewähltem Ort abgefragt</p>
-    </div>
-    <select class="form-control" [(ngModel)]="data.currentQuiz.location" name="locationSelect">
-      <option *ngFor="let entry of locations" [value]="entry._id" >{{entry._id}}</option>
-    </select>
+
+  <div>
+
+
+    <mat-form-field >
+    <mat-select class="form-control" placeholder="Rätsel an Ort binden" [(ngModel)]="data.currentQuiz.location" name="locationSelect" *ngFor="let entry of locations">
+      <mat-option >{{entry._id}}</mat-option>
+    </mat-select>
+    </mat-form-field>
   </div>
 </div>
 <div mat-dialog-actions>
