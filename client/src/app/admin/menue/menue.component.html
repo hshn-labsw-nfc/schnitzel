@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened="true">
-      <mat-toolbar color="primary">
+      <mat-toolbar>
         <!--<span>Admin Menü:</span>-->
         <mat-toolbar-row *ngFor="let entry of menueItems" (click)="sidenav.close(); currentSelection=entry;">
           <span>{{entry}}</span>
@@ -10,8 +10,8 @@
         </mat-toolbar-row>
       </mat-toolbar>
   </mat-sidenav>
-  <button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">
-    <i class="material-icons">exit_to_app</i>
+  <button mat-mini-fab color="primary" (click)="sidenav.toggle()">
+    <i class="material-icons">menu</i>
   </button>
   <div (click)="sidenav.close()">
     <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>

@@ -1,16 +1,14 @@
-<h1 class="page-header">Gruppenstatus</h1>
+<h1 class="mat-display-2">Gruppenstatus</h1>
 
 <div class="table-responsive">
-  <div class="text-right">
+  <div class="container">
     <button mat-raised-button color="warn" (click)="deleteActiveSessions()">Alle Aktiven Schnitzeljagd-Sessions
       Löschen
     </button>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suchen">
+    </mat-form-field>
   </div>
-</div>
-<div class="example-header">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
 </div>
 <div class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource" matSort>
