@@ -276,11 +276,15 @@ async function getState(req, res, next) {
 function solveRiddle(req, res, next) {
   const sessionID = req.params.sessionid;
   const answer = req.body.answer;
+  const skip = req.body.skip;
   console.log("solveRiddle:", req.body);
-  if (!answer) {
-    res.send(new Error('No answer provided'));
-    return;
+  if (!skip) {
+    if (!answer) {
+      res.send(new Error('No answer provided'));
+      return;
+    }
   }
+
   PlaySession.findById(sessionID, function (err, session) {
     if (err) {
       res.send(err);
@@ -291,7 +295,7 @@ function solveRiddle(req, res, next) {
       return;
     }
     session.lastUpdated = new Date();
-    if (session.task != 'solveRiddle') {
+    if (session.task !== 'solveRiddle') {
       res.send(new Error('Not the time to solve riddles.'));
       return;
     }
@@ -305,20 +309,26 @@ function solveRiddle(req, res, next) {
         if (err) {
           res.send(err);
         }
-        solvedRiddle.tries++;
-        console.log("Tries:", solvedRiddle.tries);
 
-        if (riddle.answer.toLowerCase().trim() === answer.toLowerCase().trim()) {
-          advanceState(session, res, function () {
-            solvedRiddle.points = _getPoints(riddle, solvedRiddle);
-            console.log("SolvedRiddle:", solvedRiddle);
-            _saveSolvedRiddles(solvedRiddle, res);
-            res.send({correctAnswer: true, points: solvedRiddle.points});
-          });
+        if (skip) {
+          solvedRiddle.skipped = true;
+          solvedRiddle.points = 0;
+          res.send({correctAnswer: true, points: solvedRiddle.points});
         } else {
-          _saveSolvedRiddles(solvedRiddle, res);
-          res.send({correctAnswer: false, points: solvedRiddle.points});
+          solvedRiddle.skipped = false;
+          solvedRiddle.tries++;
+
+          if (riddle.answer.toLowerCase().trim() === answer.toLowerCase().trim()) {
+            solvedRiddle.points = _getPoints(riddle, solvedRiddle);
+            advanceState(session, res, function () {
+              res.send({correctAnswer: true, points: solvedRiddle.points});
+            });
+          } else {
+            res.send({correctAnswer: false, points: solvedRiddle.points});
+          }
         }
+        _saveSolvedRiddles(solvedRiddle, res);
+        console.log("SolvedRiddle:", solvedRiddle);
       });
     });
   });
