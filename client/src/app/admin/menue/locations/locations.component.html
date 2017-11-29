@@ -1,15 +1,15 @@
 <ng-container>
-<h1 class="page-header">Orte</h1>
-<div class="text-right">
-  <button mat-raised-button color="primary" (click)="addLocation()">Ort hinzufügen</button>
-</div>
+  <h1 class="mat-display-2">Orte</h1>
 
-  <div class="example-header">
+
+  <div class="container">
+    <button mat-raised-button color="primary" (click)="addLocation()">Ort hinzufügen</button>
     <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
     </mat-form-field>
   </div>
-  <div class="example-container mat-elevation-z8">
+
+  <div class="table-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="isActive">
         <mat-header-cell *matHeaderCellDef> isActive</mat-header-cell>
@@ -42,7 +42,6 @@
       </ng-container>
 
 
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
@@ -52,7 +51,6 @@
                    [pageSizeOptions]="[5, 10, 20, 50]">
     </mat-paginator>
   </div>
-
 
 
 </ng-container>
