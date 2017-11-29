@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminLocation} from '../../locations/admin-location';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar,MatSlideToggleModule} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatSlideToggleModule, MatSlideToggle} from '@angular/material';
 import {AdminQuiz} from '../admin-quiz';
 
 @Component({
@@ -14,6 +14,9 @@ export class AdminQuizDetailComponent implements OnInit {
   pageHeader: string;
   createNewEntry: boolean;
   locations: Array<AdminLocation>;
+
+  @ViewChild('slider')
+  slider:MatSlideToggle;
 
   constructor(public dialogRef: MatDialogRef<AdminQuizDetailComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, public snackBar: MatSnackBar) {
@@ -33,6 +36,7 @@ export class AdminQuizDetailComponent implements OnInit {
     this.loadLocations();
     if(this.data.currentQuiz.choices.length !== 0){
       this.type = 'multipleChoice';
+      this.slider.toggle();
     } else {
       this.type = 'singleAnswer';
     }
