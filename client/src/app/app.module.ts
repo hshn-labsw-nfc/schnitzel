@@ -37,7 +37,8 @@ import {
   MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSelectModule
 } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {SharedSimpleDialogComponent} from './shared/simple-dialog/simple-dialog.component';
@@ -173,7 +174,8 @@ const routes: Routes = [
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelectModule
   ],
   entryComponents: [
     SharedSimpleDialogComponent,
