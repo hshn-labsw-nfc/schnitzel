@@ -338,9 +338,6 @@ function _getPoints(riddle, solvedRiddle) {
   if (riddle.choices.length === 0) {
     return SINGLE_ANSWER_POINTS;
   } else {
-    if (solvedRiddle.tries >= riddle.choices.length) {
-      return 0;
-    }
     return Math.floor(MULTI_ANSWER_POINTS / solvedRiddle.tries);
   }
 }
