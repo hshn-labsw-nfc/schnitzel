@@ -313,7 +313,9 @@ function solveRiddle(req, res, next) {
         if (skip) {
           solvedRiddle.skipped = true;
           solvedRiddle.points = 0;
-          res.send({correctAnswer: true, points: solvedRiddle.points});
+          advanceState(session, res, function () {
+            res.send({correctAnswer: true, points: solvedRiddle.points});
+          });
         } else {
           solvedRiddle.skipped = false;
           solvedRiddle.tries++;
