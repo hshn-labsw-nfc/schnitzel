@@ -6,6 +6,7 @@ const PlaySessionSchema = new Schema({
   groupName: String,
   startDate: Date,
   endDate: Date,
+  points: {type: Number, default: 0},
   locationsToVisit: [String],
   locationCount: Number,
   solvedRiddles: [{type: Schema.Types.ObjectId, ref: 'SolvedRiddle'}],
