@@ -93,6 +93,28 @@ export class UserQuizMultiplechoiceComponent implements OnInit {
   }
 
   /**
+   * skips the current question
+   */
+  skipQuestion(): void {
+    console.log('skipping question');
+    this.http.post('/api/game/sessions/' + this.sessionID + '/riddle', {skip: 'true'}).subscribe(
+      (data) => {
+          this.snackBar.open('Quiz übersprungen!', null, {
+            duration: 2000,
+            horizontalPosition: 'center'
+          });
+          if (!isNullOrUndefined(data['points'])) {
+            this.quizPointEmitter.emit(data['points']);
+          }
+          this.quizOutput.emit();
+      },
+      (err) => {
+        console.log('skip error', err);
+      }
+    );
+  }
+
+  /**
    * opens popup for the map
    */
   openMap(): void {
