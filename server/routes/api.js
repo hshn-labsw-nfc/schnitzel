@@ -1,11 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var adminApi = require('./adminApi');
-var gameApi = require('./gameApi');
+const adminApi = require('./adminApi');
+const gameApi = require('./gameApi');
 
 router.use('/admin', adminApi);
 router.use('/game', gameApi);
-
 
 module.exports = router;

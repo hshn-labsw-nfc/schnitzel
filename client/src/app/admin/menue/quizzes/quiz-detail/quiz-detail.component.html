@@ -1,0 +1,67 @@
+<h1 mat-dialog-title>{{pageHeader}}</h1>
+<div mat-dialog-content>
+  <mat-slide-toggle #slider (change)="changeType(slider.checked)">Multiple Choice</mat-slide-toggle>
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="Rätselname" [(ngModel)]="data.currentQuiz.name" name="name" class="form-control"
+             required autofocus>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <mat-form-field>
+    <textarea matInput placeholder="Beschreibung" [(ngModel)]="data.currentQuiz.description" name="description"
+              class="form-control"
+              required matTextareaAutosize matAutosizeMinRows="2"
+              matAutosizeMaxRows="5"></textarea>
+    </mat-form-field>
+  </div>
+
+
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="Antwort" [(ngModel)]="data.currentQuiz.answer" name="answer" class="form-control"
+             required>
+    </mat-form-field>
+  </div>
+
+  <ng-container *ngIf="type=='multipleChoice'">
+    <div class="form-group">
+      <div *ngFor="let entry of data.currentQuiz.choices; let i=index">
+        <mat-form-field>
+          <input matInput placeholder="Antwortmöglichkeiten" [(ngModel)]="data.currentQuiz.choices[i]"
+                 class="form-control">
+        </mat-form-field>
+        <button mat-mini-fab color="warn" (click)="removeChoice(entry)">-</button>
+      </div>
+      <div>
+      <button mat-mini-fab color="primary" class="add-button" (click)="addChoice()">+</button>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput class="hint" placeholder="Hinweis" [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-select class="form-control" placeholder="Rätsel an Ort binden" [(ngModel)]="data.currentQuiz.location"
+                  name="locationSelect">
+        <mat-option *ngFor="let entry of locations" [value]="entry._id">{{entry._id}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="form-group">
+  <div>
+    <mat-checkbox [(ngModel)]="data.currentQuiz.isActive">Rätsel aktiv?</mat-checkbox>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" tabindex="2" (click)="submit()">Speichern</button>
+  <button mat-raised-button tabindex="-1" (click)="cancel()">Abbrechen</button>
+</div>

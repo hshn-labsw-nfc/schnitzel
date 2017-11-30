@@ -1,0 +1,14 @@
+<div class="order">
+  <div class="centered">
+    <img src="{{imageLogo}}">
+    <h1 class="mat-display-3">Schnitzeljagd</h1>
+    <form role="form" (ngSubmit)="submitLogin(teamname.value)">
+      <div class="form-group">
+        <mat-form-field>
+          <input #teamname matInput placeholder="Gruppenname">
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" type="submit">Start</button>
+    </form>
+  </div>
+</div>

@@ -1,18 +1,16 @@
-# schnitzel
+# NFC-Schnitzeljagd
 
-## HowTo install
-#### install node.js
-#### install bower
-- open a console
-- `npm install -g bower`
+## Table of Contents
+* [Install](#install)
+* [Run](#run)
 
-#### checkout the project
-#### install server dependencies
-- go to /server
-- open  console
-- `npm install`
+## Install
+1. Install [MongoDB](https://www.mongodb.com/download-center#community)
+2. Install [Node.js](https://nodejs.org)
+3. Run [install.bat](install.bat) or [install.sh](install.sh) depending on your operating system
 
-#### install client dependencies
-- got to /client
-- open  console
-- `bower install`
+## Run
+1. Run mongoDB server
+2. In the [server](server/) folder run ```npm start```
+3. In the [client](client/) folder run ```npm start```
+4. Open your browser @ [localhost:4200](http://localhost:4200)

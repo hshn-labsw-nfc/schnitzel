@@ -1,14 +1,18 @@
-var mongoose = require('mongoose')
-    , Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var RiddleSchema   = new Schema({
-    name: String,
-    image: Object,
-    description: String,
-    answer: String,
-    hint: String,
-    location: {type: Schema.Types.ObjectId, ref: 'Location'},
-    heat: Number
+const RiddleSchema = new mongoose.Schema({
+  name: String,
+  image: Object,
+  description: String,
+  answer: String,
+  choices: [String],
+  hint: String,
+  location: {type: mongoose.Schema.Types.ObjectId, ref: 'Location'},
+  heat: Number,
+  isActive: {type: Boolean, default: true}
 });
 
-module.exports = mongoose.model('Riddle', RiddleSchema);
+/** @class Riddle */
+const Riddle = mongoose.model('Riddle', RiddleSchema);
+
+module.exports = Riddle;

@@ -1,0 +1,27 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+h1{
+  padding-top: 20px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.filter {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,51 @@
+<ng-container>
+  <h1 class="mat-display-2">Tags</h1>
+  <div class="container">
+    <button mat-raised-button color="primary" (click)="addTag()">Tag hinzufügen</button>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+  <div class="table-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="tagID">
+        <mat-header-cell *matHeaderCellDef> tagID</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tagID}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="alias">
+        <mat-header-cell *matHeaderCellDef> Alias</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.alias}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.location}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef> URL</mat-header-cell>
+        <mat-cell *matCellDef="let element">url/tag/#/{{element.tagID}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef> edit</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="btn-group" role="group">
+            <button mat-raised-button color="primary" (click)="editTag(element)">editieren</button>
+            <button mat-raised-button color="warn" (click)="deleteTag(element)">entfernen</button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20, 50]">
+    </mat-paginator>
+  </div>
+</ng-container>

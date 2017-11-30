@@ -1,16 +1,18 @@
-var express = require('express');
-var router = express.Router();
-var RestFactory = require('./restfactory');
-var AdminConfigApi = require('./adminConfigApi');
-var AdminSessionApi = require('./adminSessionApi');
+const express = require('express');
+const router = express.Router();
+const RestFactory = require('./restfactory');
+const AdminConfigApi = require('./adminConfigApi');
+const AdminSessionApi = require('./adminSessionApi');
 
-var Location = require('../models/location');
-var Riddle = require('../models/riddle');
-var Tag = require('../models/tag');
-var PlaySession = require('../models/playSession');
+const Location = require('../models/location');
+const Riddle = require('../models/riddle');
+const SolvedRiddles = require('../models/solvedRiddle');
+const Tag = require('../models/tag');
+const PlaySession = require('../models/playSession');
 
 router.use('/locations', RestFactory(Location));
 router.use('/riddles', RestFactory(Riddle));
+router.use('/solvedriddles', RestFactory(SolvedRiddles));
 router.use('/tags', RestFactory(Tag));
 router.use('/playsessions', RestFactory(PlaySession));
 router.use('/config', AdminConfigApi);

@@ -1,0 +1,18 @@
+#progress {
+  text-align: center;
+  width: 100%;
+}
+
+#header {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+
