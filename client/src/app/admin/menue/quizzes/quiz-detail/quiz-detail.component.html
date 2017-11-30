@@ -31,17 +31,19 @@
         <mat-form-field>
           <input matInput placeholder="Antwortmöglichkeiten" [(ngModel)]="data.currentQuiz.choices[i]"
                  class="form-control">
-          <button mat-raised-button color="primary" (click)="removeChoice(entry)">-</button>
         </mat-form-field>
+        <button mat-mini-fab color="warn" (click)="removeChoice(entry)">-</button>
       </div>
-      <button mat-raised-button color="primary" (click)="addChoice()">+</button>
+      <div>
+      <button mat-mini-fab color="primary" class="add-button" (click)="addChoice()">+</button>
+      </div>
     </div>
   </ng-container>
 
 
   <div class="form-group">
     <mat-form-field>
-      <input matInput placeholder="Hinweis" [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
+      <input matInput class="hint" placeholder="Hinweis" [(ngModel)]="data.currentQuiz.hint" name="hint" class="form-control">
     </mat-form-field>
   </div>
 
