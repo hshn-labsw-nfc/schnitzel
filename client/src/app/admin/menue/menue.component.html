@@ -1,21 +1,22 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" opened="true">
-      <mat-toolbar>
-        <!--<span>Admin Menü:</span>-->
-        <mat-toolbar-row *ngFor="let entry of menueItems" (click)="sidenav.close(); currentSelection=entry;">
-          <span>{{entry}}</span>
-        </mat-toolbar-row>
-        <mat-toolbar-row (click)="logout()">
-          <span>Logout</span>
-        </mat-toolbar-row>
-      </mat-toolbar>
+    <mat-list class="sidenav-side">
+      <mat-list-item><h2 class="mat-h2"> Menu </h2></mat-list-item>
+      <mat-divider></mat-divider>
+      <ng-container *ngFor="let entry of menueItems">
+        <mat-list-item (click)="sidenav.close(); currentSelection=entry;"> {{entry}} </mat-list-item>
+      </ng-container>
+      <mat-list-item (click)="logout()"> Logout </mat-list-item>
+    </mat-list>
+
   </mat-sidenav>
-  <button mat-mini-fab color="primary" (click)="sidenav.toggle()">
+  <button class="sidenav-button" mat-mini-fab color="primary" (click)="sidenav.toggle()">
     <i class="material-icons">menu</i>
   </button>
-  <div (click)="sidenav.close()">
+  <div class="sidenav-content" (click)="sidenav.close()">
     <app-admin-status *ngIf="currentSelection=='Status'" [adminToken]="adminToken"></app-admin-status>
-    <app-admin-configuration *ngIf="currentSelection=='Konfiguration'" [adminToken]="adminToken"></app-admin-configuration>
+    <app-admin-configuration *ngIf="currentSelection=='Konfiguration'"
+                             [adminToken]="adminToken"></app-admin-configuration>
     <app-admin-locations *ngIf="currentSelection=='Orte'" [adminToken]="adminToken"></app-admin-locations>
     <app-admin-quizzes *ngIf="currentSelection=='Rätsel'" [adminToken]="adminToken"></app-admin-quizzes>
     <app-admin-tags *ngIf="currentSelection=='Tags'" [adminToken]="adminToken"></app-admin-tags>

@@ -1,52 +1,53 @@
-<h1 class="mat-display-2">Gruppenstatus</h1>
+<ng-container>
+  <h1 class="mat-display-2">Gruppenstatus</h1>
 
+  <div class="container">
+    <button mat-raised-button color="warn" (click)="deleteActiveSessions()">Alle Aktiven Schnitzeljagd-Sessions
+      Löschen
+    </button>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suchen">
+    </mat-form-field>
+  </div>
 
-<div class="container">
-  <button mat-raised-button color="warn" (click)="deleteActiveSessions()">Alle Aktiven Schnitzeljagd-Sessions
-    Löschen
-  </button>
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suchen">
-  </mat-form-field>
-</div>
+  <div class="table-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Gruppenname</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.sessionGroupName}}</mat-cell>
+      </ng-container>
 
-<div class="table-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Gruppenname</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.sessionGroupName}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Ort</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.sessionLocation}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="location">
-      <mat-header-cell *matHeaderCellDef> Ort</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.sessionLocation}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="time">
+        <mat-header-cell *matHeaderCellDef> Spielzeit</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{parseTimeSession(element)}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="time">
-      <mat-header-cell *matHeaderCellDef> Spielzeit</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{parseTimeSession(element)}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="lastActive">
+        <mat-header-cell *matHeaderCellDef> Zuletzt aktiv vor</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{parseTimeLast(element)}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="lastActive">
-      <mat-header-cell *matHeaderCellDef> Zuletzt aktiv vor</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{parseTimeLast(element)}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="progress">
+        <mat-header-cell *matHeaderCellDef> Fortschritt</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-progress-bar
+            [value]="((convertInt(element.sessionLocationCount) - element.sessionLocationsToVisit.length) / convertInt(element.sessionLocationCount))*100"></mat-progress-bar>
+        </mat-cell>
 
-    <ng-container matColumnDef="progress">
-      <mat-header-cell *matHeaderCellDef> Fortschritt</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <mat-progress-bar
-          [value]="((convertInt(element.sessionLocationCount) - element.sessionLocationsToVisit.length) / convertInt(element.sessionLocationCount))*100"></mat-progress-bar>
-      </mat-cell>
+      </ng-container>
 
-    </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-
-  <mat-paginator #paginator
-                 [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 20, 50]">
-  </mat-paginator>
-</div>
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20, 50]">
+    </mat-paginator>
+  </div>
+</ng-container>

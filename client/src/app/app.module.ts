@@ -1,7 +1,22 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material';
+// Material
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatInputModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {AdminComponent} from './admin/admin.component';
@@ -27,19 +42,6 @@ import {AdminQuizDetailComponent} from './admin/menue/quizzes/quiz-detail/quiz-d
 import {AdminTagDetailComponent} from './admin/menue/tags/tag-detail/tag-detail.component';
 import {UserQuizSingleanswerComponent} from './user/task/quiz/quiz-singleanswer/quiz-singleanswer.component';
 import {UserQuizMultiplechoiceComponent} from './user/task/quiz/quiz-multiplechoice/quiz-multiplechoice.component';
-// Material
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatDialogModule,
-  MatInputModule,
-  MatProgressBarModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatToolbarModule,
-  MatSelectModule
-} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {SharedSimpleDialogComponent} from './shared/simple-dialog/simple-dialog.component';
 import {UserLocationMapPopupComponent} from './user/task/location/location-map-popup/location-map-popup.component';
@@ -47,7 +49,6 @@ import {UserLocationCameraPopupComponent} from './user/task/location/location-ca
 import {UserQuizHintPopupComponent} from './user/task/quiz/quiz-hint-popup/quiz-hint-popup.component';
 import {MatCardModule} from '@angular/material/card';
 import {HttpModule} from '@angular/http';
-import {MatPaginatorModule} from '@angular/material';
 
 const routes: Routes = [
   {
@@ -105,15 +106,15 @@ const routes: Routes = [
   },
   {
     path: 'user', component: UserComponent, children: [
-    {
-      path: '',
-      component: UserComponent
-    },
-    {
-      path: '**',
-      redirectTo: '/user'
-    }
-  ]
+      {
+        path: '',
+        component: UserComponent
+      },
+      {
+        path: '**',
+        redirectTo: '/user'
+      }
+    ]
   },
   {
     path: 'tag',
@@ -173,7 +174,8 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule
   ],
   entryComponents: [
     SharedSimpleDialogComponent,
