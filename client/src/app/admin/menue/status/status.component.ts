@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {SharedSimpleDialogComponent} from '../../../shared/simple-dialog/simple-dialog.component';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
   public activePlaySessions: Array<PlaySession>;
   public currentMaximized = '';
 
-  displayedColumns = ['name', 'location','time','lastActive', 'progress'];
+  displayedColumns = ['name', 'location','time','lastActive','points', 'progress'];
 
   dataSource = new MatTableDataSource();
 
@@ -169,7 +169,8 @@ export class AdminStatusComponent implements OnInit, AfterViewInit {
                 data[d]['usedRiddles'],
                 data[d]['_id'],
                 null,
-                null,);
+                null,
+                data[d]['points']);
 
 
             if(!isNullOrUndefined(data[d]['startDate'])){
@@ -217,7 +218,8 @@ export class PlaySession {
               public sessionUsedRiddles: Array<string>,
               public session_id: string,
               public startDate: Date,
-              public endDate: Date) {
+              public endDate: Date,
+              public points: number) {
 
   }
 }

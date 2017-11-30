@@ -32,6 +32,11 @@
         <mat-cell *matCellDef="let element"> {{parseTimeLast(element)}}</mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="points">
+        <mat-header-cell *matHeaderCellDef> Punkte</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.points}}</mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="progress">
         <mat-header-cell *matHeaderCellDef> Fortschritt</mat-header-cell>
         <mat-cell *matCellDef="let element">
