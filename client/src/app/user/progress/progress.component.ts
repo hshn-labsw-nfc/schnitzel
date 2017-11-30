@@ -12,10 +12,12 @@ export class UserProgressComponent implements OnInit {
   @Input() progressDone: number;
   @Input() startDate: Date;
   @Input() endDate: Date;
+  @Input() points: number;
 
   parsedTime: string;
 
   constructor() {
+    this.points = 0;
   }
 
   ngOnInit() {
@@ -25,6 +27,15 @@ export class UserProgressComponent implements OnInit {
     if(this.endDate === null) {
       IntervalObservable.create(1000).subscribe(n => this.parsedTime = this.parseTime());
     }
+  }
+
+  /**
+   *
+   * @param {number} amount
+   */
+  increasePoints(amount: number): void{
+    this.points += amount;
+    console.log('Points got increased by',amount);
   }
 
   /**

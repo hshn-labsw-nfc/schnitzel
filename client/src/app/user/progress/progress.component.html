@@ -4,7 +4,7 @@
       <section class="progress-header">
         <i class="material-icons">gmi_home</i>{{progressDone}}/{{progressCount}}
         <span class="spacer"></span>
-        <i class="material-icons">gmi_star</i>500
+        <i class="material-icons">gmi_star</i>{{points}}
         <span class="spacer"></span>
         <i class="material-icons">gmi_access_time</i>{{parsedTime}}
         <mat-progress-bar id="bar" [value]="(progressDone / progressCount)*100"></mat-progress-bar>

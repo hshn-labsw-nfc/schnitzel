@@ -26,7 +26,7 @@ export class UserComponent implements OnInit{
   startDate: Date = null;
   endDate: Date = null;
 
-  @ViewChild('score') score;
+  @ViewChild('progress') progress;
 
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,  public snackBar: MatSnackBar) { }
@@ -60,7 +60,7 @@ export class UserComponent implements OnInit{
   }
 
   increasePoints(amount: number) {
-    this.score.increasePoints(amount);
+    this.progress.increasePoints(amount);
   }
 
   handleScannedTag() {
