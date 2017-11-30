@@ -31,9 +31,9 @@
         <mat-form-field>
           <input matInput placeholder="Antwortmöglichkeiten" [(ngModel)]="data.currentQuiz.choices[i]"
                  class="form-control">
+          <button mat-raised-button color="primary" (click)="removeChoice(entry)">-</button>
         </mat-form-field>
       </div>
-      <button mat-raised-button color="primary" (click)="removeChoice(entry)">-</button>
       <button mat-raised-button color="primary" (click)="addChoice()">+</button>
     </div>
   </ng-container>
